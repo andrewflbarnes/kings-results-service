@@ -4,7 +4,7 @@ package kingsraceservice.model;
  * @author Barnesly
  *
  */
-public class DummyRace {
+public class Race {
 	
 	private int raceNo;
 	private String division;
@@ -24,7 +24,7 @@ public class DummyRace {
 	 * @param teamOneDsq
 	 * @param teamTwoDsq
 	 */
-	public DummyRace(int raceNo, String division, String teamOne, String teamTwo, String winner, String teamOneDsq,
+	public Race(int raceNo, String division, String teamOne, String teamTwo, String winner, String teamOneDsq,
 			String teamTwoDsq, boolean next) {
 		this.raceNo = raceNo;
 		this.division = division;
@@ -36,7 +36,7 @@ public class DummyRace {
 		this.next = next;
 	}
 	
-	public DummyRace(DummyRace raceToCopy) {
+	public Race(Race raceToCopy) {
 		this.raceNo = raceToCopy.getRaceNo();
 		this.division = raceToCopy.getDivision();
 		this.teamOne = raceToCopy.getTeamOne();
@@ -129,6 +129,32 @@ public class DummyRace {
 	 */
 	public void setNext(boolean next) {
 		this.next = next;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		
+		if (this == null || o == null) {
+			return false;
+		}
+		
+		if (Race.class.equals(o.getClass())) {
+			Race other = (Race)o;
+			
+			if (this.division == null || this.teamOne == null || this.teamTwo == null) {
+				return false;
+			}
+			
+			return this.division.equals(other.getDivision()) &&
+					this.raceNo == other.raceNo &&
+					this.teamOne.equals(other.teamOne) &&
+					this.teamTwo.equals(other.teamTwo);
+		}
+		
+		return false;
 	}
 
 }
