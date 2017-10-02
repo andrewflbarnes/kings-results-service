@@ -1,7 +1,10 @@
 # kings-results-service
 
-Master:[![Master Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=master)](https://travis-ci.org/andrewflbarnes/kings-results-service)
-Develop:[![Develop Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=develop)](https://travis-ci.org/andrewflbarnes/kings-results-service)
+Master:
+[![Master Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=master)](https://travis-ci.org/andrewflbarnes/kings-results-service)
+
+Develop:
+[![Develop Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=develop)](https://travis-ci.org/andrewflbarnes/kings-results-service)
 
 Backend REST server which returns in progress Kings races
 
@@ -20,6 +23,4 @@ Endpoints are:
 - Returns races for the specific season, league and round
 
 Starting the server:
-```
-java -jar kings-race-service.jar --spring.profiles.active=profiles
-```
+`java -jar kings-race-service.jar --spring.profiles.active=profiles`
