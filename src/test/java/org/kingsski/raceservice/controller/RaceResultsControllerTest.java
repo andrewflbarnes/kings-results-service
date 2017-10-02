@@ -1,4 +1,4 @@
-package kingsraceservice.controller;
+package org.kingsski.raceservice.controller;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.raceservice.api.service.RaceService;
+import org.kingsski.raceservice.controller.RaceResultsController;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import kingsraceservice.api.service.RaceService;
 
 /**
  * Test class for {@link RaceResultsController}

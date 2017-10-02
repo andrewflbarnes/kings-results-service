@@ -1,9 +1,9 @@
-package kingsraceservice.api.service;
+package org.kingsski.raceservice.api.service;
 
 import java.util.List;
 
-import kingsraceservice.controller.RaceResultsController;
-import kingsraceservice.model.Race;
+import org.kingsski.raceservice.controller.RaceResultsController;
+import org.kingsski.raceservice.model.Race;
 
 /**
  * This interface defines the API for a service which provided

@@ -1,4 +1,4 @@
-package kingsraceservice.model;
+package org.kingsski.raceservice.model;
 
 import javax.validation.constraints.NotNull;
 
