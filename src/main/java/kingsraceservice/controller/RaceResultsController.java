@@ -11,6 +11,14 @@ import kingsraceservice.api.service.RaceService;
 import kingsraceservice.dummy.service.DummyRaceService;
 import kingsraceservice.model.Race;
 
+/**
+ * This class acts as a REST controller for the Kings Race Service providing
+ * races as requested. The base URL for requests is "/races". All parameters
+ * for this API are path based.
+ * 
+ * This class uses an implementation of {@link RaceService} to provide the
+ * required {@list Race}s
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/races")
@@ -26,21 +34,26 @@ public class RaceResultsController {
 	}
 	
 	@RequestMapping("{league}")
-	public List<Race> races(@PathVariable("league") String league) {
+	public List<Race> racesByLeague(@PathVariable("league") String league) {
 		
-		if ("ALL".equals(league)) {
-			return this.raceService.getRacesAll();
-		} else {
-			return this.raceService.getRacesByLeague(league);
-		}
+		return this.raceService.getRacesByLeague(league);
 	}
 	
 	@RequestMapping("{league}/{round}")
-	public List<Race> races(
+	public List<Race> racesByLeagueByRound(
 			@PathVariable("league") String league,
 			@PathVariable("round") String round) {
 		
 		return this.raceService.getRacesByLeagueAndRound(league, round);
+	}
+	
+	@RequestMapping("{season}/{league}/{round}")
+	public List<Race> racesByLeagueBySeasonByRound(
+			@PathVariable("season") String season,
+			@PathVariable("league") String league,
+			@PathVariable("round") String round) {
+		
+		return this.raceService.getRacesBySeasonAndLeagueAndRound(season, league, round);
 	}
 	
 	public void setRaceService(RaceService raceService) {

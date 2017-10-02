@@ -1,11 +1,18 @@
 package kingsraceservice.model;
 
+import javax.validation.constraints.NotNull;
+
 /**
- * @author Barnesly
- *
+ * This class represents a single displayable Kings race.
+ * 
+ * This class is designed as a DTO/VO only and is not
+ * appropriate for processing actual races!
  */
 public class Race {
-	
+
+	private String league;
+	private String round;
+	private String set;
 	private int raceNo;
 	private String division;
 	private String teamOne;
@@ -16,6 +23,8 @@ public class Race {
 	private boolean next;
 
 	/**
+	 * Standard constructor for a new {@link Race}
+	 * 
 	 * @param raceNo
 	 * @param division
 	 * @param teamOne
@@ -24,8 +33,12 @@ public class Race {
 	 * @param teamOneDsq
 	 * @param teamTwoDsq
 	 */
-	public Race(int raceNo, String division, String teamOne, String teamTwo, String winner, String teamOneDsq,
-			String teamTwoDsq, boolean next) {
+	public Race(@NotNull String league, @NotNull String round, @NotNull String set, int raceNo,
+			@NotNull String division, @NotNull String teamOne, @NotNull String teamTwo,
+			String winner, String teamOneDsq, String teamTwoDsq, boolean next) {
+		this.league = league;
+		this.round = round;
+		this.set = set;
 		this.raceNo = raceNo;
 		this.division = division;
 		this.teamOne = teamOne;
@@ -36,7 +49,15 @@ public class Race {
 		this.next = next;
 	}
 	
+	/**
+	 * Convenience constructor which clones another instance
+	 * 
+	 * @param raceToCopy The {@link Race} to be cloned.
+	 */
 	public Race(Race raceToCopy) {
+		this.league = raceToCopy.getLeague();
+		this.round = raceToCopy.getRound();
+		this.set = raceToCopy.getSet();
 		this.raceNo = raceToCopy.getRaceNo();
 		this.division = raceToCopy.getDivision();
 		this.teamOne = raceToCopy.getTeamOne();
@@ -45,6 +66,48 @@ public class Race {
 		this.teamOneDsq = raceToCopy.getTeamOneDsq();
 		this.teamTwoDsq = raceToCopy.getTeamTwoDsq();
 		this.next = raceToCopy.isNext();
+	}
+
+	/**
+	 * @return the league
+	 */
+	public String getLeague() {
+		return league;
+	}
+
+	/**
+	 * @param league the league to set
+	 */
+	public void setLeague(String league) {
+		this.league = league;
+	}
+
+	/**
+	 * @return the round
+	 */
+	public String getRound() {
+		return round;
+	}
+
+	/**
+	 * @param round the round to set
+	 */
+	public void setRound(String round) {
+		this.round = round;
+	}
+
+	/**
+	 * @return the set
+	 */
+	public String getSet() {
+		return set;
+	}
+
+	/**
+	 * @param set the set to set
+	 */
+	public void setSet(String set) {
+		this.set = set;
 	}
 
 	/**
@@ -144,11 +207,15 @@ public class Race {
 		if (Race.class.equals(o.getClass())) {
 			Race other = (Race)o;
 			
-			if (this.division == null || this.teamOne == null || this.teamTwo == null) {
+			if (this.league == null || this.round == null || this.set == null ||
+					this.division == null || this.teamOne == null || this.teamTwo == null) {
 				return false;
 			}
 			
-			return this.division.equals(other.getDivision()) &&
+			return this.league.equals(other.getLeague()) &&
+					this.round.equals(other.getRound()) &&
+					this.set.equals(other.getSet()) &&
+					this.division.equals(other.getDivision()) &&
 					this.raceNo == other.raceNo &&
 					this.teamOne.equals(other.teamOne) &&
 					this.teamTwo.equals(other.teamTwo);
