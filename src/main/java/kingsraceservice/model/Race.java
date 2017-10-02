@@ -25,13 +25,14 @@ public class Race {
 	/**
 	 * Standard constructor for a new {@link Race}
 	 * 
-	 * @param raceNo
-	 * @param division
-	 * @param teamOne
-	 * @param teamTwo
-	 * @param winner
-	 * @param teamOneDsq
-	 * @param teamTwoDsq
+	 * @param raceNo The number of this race in the current round
+	 * @param division The division this race belongs to
+	 * @param teamOne The first team competing
+	 * @param teamTwo The second team competing
+	 * @param winner The winner of the race
+	 * @param teamOneDsq The reason the first team was disqualified
+	 * @param teamTwoDsq The reason the second team was disqualified
+	 * @param next true if this is the next race being run, false otherwise
 	 */
 	public Race(@NotNull String league, @NotNull String round, @NotNull String set, int raceNo,
 			@NotNull String division, @NotNull String teamOne, @NotNull String teamTwo,
@@ -195,17 +196,17 @@ public class Race {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
 		
-		if (this == null || o == null) {
+		if (obj == null) {
 			return false;
 		}
 		
-		if (Race.class.equals(o.getClass())) {
-			Race other = (Race)o;
+		if (Race.class.equals(obj.getClass())) {
+			Race other = (Race)obj;
 			
 			if (this.league == null || this.round == null || this.set == null ||
 					this.division == null || this.teamOne == null || this.teamTwo == null) {
