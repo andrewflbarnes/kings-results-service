@@ -1,60 +1,63 @@
 package kingsraceservice.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kingsraceservice.model.DummyRace;
+import kingsraceservice.api.service.RaceService;
+import kingsraceservice.dummy.service.DummyRaceService;
+import kingsraceservice.model.Race;
 
+/**
+ * This class acts as a REST controller for the Kings Race Service providing
+ * races as requested. The base URL for requests is "/races". All parameters
+ * for this API are path based.
+ * 
+ * This class uses an implementation of {@link RaceService} to provide the
+ * required {@list Race}s
+ */
+@CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/races")
 public class RaceResultsController {
 	
-	private static final List<DummyRace> RACES;
+	private RaceService raceService;
 	
-	static {
-		List<DummyRace> dummyRaces = new ArrayList<DummyRace>();
-		dummyRaces.add(new DummyRace(1, "M", "SKUM 1", "Leeds 1", "SKUM 1", null, null, false));
-		dummyRaces.add(new DummyRace(2, "M", "SKUM 1", "Sheffield 1", "SKUM 1", null, null, false));
-		dummyRaces.add(new DummyRace(3, "M", "Sheffield 1", "Leeds 1", "Leeds 1", null, null, false));
-		dummyRaces.add(new DummyRace(4, "M", "SKUM 2", "Sheffield 2", "Sheffield 2", "final racer false start", null, false));
-		dummyRaces.add(new DummyRace(5, "L", "SKUM 1", "Leeds 1", "SKUM 1", null, null, false));
-		dummyRaces.add(new DummyRace(6, "L", "Sheffield 1", "DUSSC 1", "Sheffield 1", null, null, false));
-		dummyRaces.add(new DummyRace(7, "B", "Sheffield 1", "Leeds 1", "Sheffield 1", null, null, false));
-		
-		RACES = Collections.unmodifiableList(dummyRaces);
+	{ this.raceService = new DummyRaceService(); }
+	
+	@RequestMapping("")
+	public List<Race> races() {
+		return raceService.getRacesAll();
 	}
 	
-	private int dummyControl = 0;
-	
-	@CrossOrigin(origins = "*")
-	@RequestMapping("/races")
-	public List<DummyRace> races(@RequestParam(value="division", defaultValue="ALL") String division, @RequestParam(value="league", defaultValue="NORTHERN") String league) {
-		dummyControl++;
-		if (dummyControl > RACES.size()) {
-			dummyControl = 1;
-		}
+	@RequestMapping("{league}")
+	public List<Race> racesByLeague(@PathVariable("league") String league) {
 		
-		List<DummyRace> races = new ArrayList<DummyRace>();
-		
-		for (DummyRace race : RACES) {
-			races.add(new DummyRace(race));
-		}
-		
-		for (int i = dummyControl - 1; i < races.size(); i++) {
-			races.get(i).setWinner(null);
-			races.get(i).setTeamOneDsq(null);
-			races.get(i).setTeamTwoDsq(null);
-		}
-
-		races.get(dummyControl - 1).setNext(true);
-		
-		return races;
+		return this.raceService.getRacesByLeague(league);
 	}
 	
+	@RequestMapping("{league}/{round}")
+	public List<Race> racesByLeagueByRound(
+			@PathVariable("league") String league,
+			@PathVariable("round") String round) {
+		
+		return this.raceService.getRacesByLeagueAndRound(league, round);
+	}
+	
+	@RequestMapping("{season}/{league}/{round}")
+	public List<Race> racesByLeagueBySeasonByRound(
+			@PathVariable("season") String season,
+			@PathVariable("league") String league,
+			@PathVariable("round") String round) {
+		
+		return this.raceService.getRacesBySeasonAndLeagueAndRound(season, league, round);
+	}
+	
+	public void setRaceService(RaceService raceService) {
+		this.raceService = raceService;
+	}
 
 }
