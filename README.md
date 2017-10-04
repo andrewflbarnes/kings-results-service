@@ -1,26 +1,26 @@
 # kings-results-service
 
-Master:
+Master:  
 [![Master Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=master)](https://travis-ci.org/andrewflbarnes/kings-results-service)
 
-Develop:
+Develop:  
 [![Develop Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=develop)](https://travis-ci.org/andrewflbarnes/kings-results-service)
 
 Backend REST server which returns in progress Kings races
 
 Endpoints are:
 
-`/races`
-- Returns races for all leagues for the most recent season and round
+- `/races`  
+Returns races for all leagues for the most recent season and round
 
-`/races/league`
-- Returns races for the specific league for the most recent season and round
+- `/races/league`  
+Returns races for the specific league for the most recent season and round
 
-`/races/league/round`
-- Returns races for the specific league and round for the most recent season
+- `/races/league/round`  
+Returns races for the specific league and round for the most recent season
 
-`/races/season/league/round`
-- Returns races for the specific season, league and round
+- `/races/season/league/round`  
+Returns races for the specific season, league and round
 
-Starting the server:
+Starting the server:  
 `java -jar kings-race-service.jar --spring.profiles.active=profiles`
