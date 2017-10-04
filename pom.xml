@@ -33,6 +33,7 @@
 
 
     <build>
+        <finalName>kings-race-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
