@@ -6,7 +6,7 @@
 
   <!-- controllers -->
 
-  <bean id="raceResultsController"
+  <bean id="kingsApiRaceController"
     class="org.kingsski.api.races.controller.KingsApiRaceController">
     <property name="kingsApiRaceService" ref="kingsApiRaceService" />
   </bean>
