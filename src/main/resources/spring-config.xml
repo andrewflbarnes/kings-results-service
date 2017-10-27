@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-        <import resource="spring-controllers.xml"/>
         <import resource="spring-services-dummy.xml"/>
+        <import resource="spring-controllers.xml"/>
 
 </beans>

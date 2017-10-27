@@ -1,32 +1,32 @@
-package org.kingsski.raceservice.api.service;
+package org.kingsski.api.races.controller.service;
 
 import java.util.List;
 
-import org.kingsski.raceservice.controller.RaceResultsController;
-import org.kingsski.raceservice.model.Race;
+import org.kingsski.api.races.controller.KingsApiRaceController;
+import org.kingsski.data.model.RaceDisplayable;
 
 /**
  * This interface defines the API for a service which provided
- * {@link Race}s to the {@link RaceResultsController}
+ * {@link RaceDisplayable}s to the {@link KingsApiRaceController}
  */
-public interface RaceService {
+public interface KingsApiRaceService {
 	
 	/**
 	 * Get races for all leagues and divisions for the latest round in
 	 * the current season
 	 * 
-	 * @return a {@link List} of {@link Race}s
+	 * @return a {@link List} of {@link RaceDisplayable}s
 	 */
-	List<Race> getRacesAll();
+	List<RaceDisplayable> getRacesAll();
 	
 	/**
 	 * Get races for all divisions for a league for the latest round in
 	 * the current season
 	 * 
 	 * @param league the league to get races for
-	 * @return a {@link List} of {@link Race}s
+	 * @return a {@link List} of {@link RaceDisplayable}s
 	 */
-	List<Race> getRacesByLeague(String league);
+	List<RaceDisplayable> getRacesByLeague(String league);
 	
 	/**
 	 * Get races for all divisions for a specific league for a given round
@@ -34,9 +34,9 @@ public interface RaceService {
 	 * 
 	 * @param league The league to get races for
 	 * @param round The round the get races for
-	 * @return a {@link List} of {@link Race}s
+	 * @return a {@link List} of {@link RaceDisplayable}s
 	 */
-	List<Race> getRacesByLeagueAndRound(String league, String round);
+	List<RaceDisplayable> getRacesByLeagueAndRound(String league, String round);
 
 	
 	/**
@@ -48,8 +48,8 @@ public interface RaceService {
 	 * @param round The season to get races for. A season is specified by
 	 * the year it is started in. e.g. for the 2016/2017 season this would
 	 * take the value "2016"
-	 * @return a {@link List} of {@link Race}s
+	 * @return a {@link List} of {@link RaceDisplayable}s
 	 */
-	List<Race> getRacesBySeasonAndLeagueAndRound(String season, String league, String round);
+	List<RaceDisplayable> getRacesBySeasonAndLeagueAndRound(String season, String league, String round);
 
 }
