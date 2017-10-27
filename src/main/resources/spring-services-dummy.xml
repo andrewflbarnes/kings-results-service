@@ -8,6 +8,6 @@
   <!-- services -->
 
   <bean id="raceService"
-    class="org.kingsski.raceservice.dummy.service.DummyRaceService" />
+    class="org.kingsski.api.service.dummy.DummyRaceService" />
 
 </beans>

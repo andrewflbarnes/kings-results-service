@@ -1,11 +1,11 @@
-package org.kingsski.raceservice.dummy.service;
+package org.kingsski.api.service.dummy;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.kingsski.raceservice.api.service.RaceService;
-import org.kingsski.raceservice.model.Race;
+import org.kingsski.api.service.RaceService;
+import org.kingsski.api.model.Race;
 
 /**
  * A dummy implementation of the {@link RaceService}  interface. This class

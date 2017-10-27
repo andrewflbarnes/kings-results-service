@@ -1,4 +1,4 @@
-package org.kingsski.raceservice.controller;
+package org.kingsski.api.controller;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,20 +9,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.raceservice.api.service.RaceService;
-import org.kingsski.raceservice.controller.RaceResultsController;
+import org.kingsski.api.service.RaceService;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * Test class for {@link RaceResultsController}
+ * Test class for {@link RaceController}
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RaceResultsControllerTest {
+public class RaceControllerTest {
 	
 	@Mock
 	private RaceService raceServiceMock;
-	private final RaceResultsController controller = new RaceResultsController();
+	private final RaceController controller = new RaceController();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

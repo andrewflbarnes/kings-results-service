@@ -6,8 +6,8 @@
 
   <!-- controllers -->
 
-  <bean id="raceResultsController"
-    class="org.kingsski.raceservice.controller.RaceResultsController">
+  <bean id="raceController"
+    class="org.kingsski.api.controller.RaceController">
     <property name="raceService" ref="raceService" />
   </bean>
 

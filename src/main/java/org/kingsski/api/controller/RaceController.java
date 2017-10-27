@@ -1,9 +1,9 @@
-package org.kingsski.raceservice.controller;
+package org.kingsski.api.controller;
 
 import java.util.List;
 
-import org.kingsski.raceservice.api.service.RaceService;
-import org.kingsski.raceservice.model.Race;
+import org.kingsski.api.service.RaceService;
+import org.kingsski.api.model.Race;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/races")
-public class RaceResultsController {
+public class RaceController {
 	
 	private RaceService raceService;
 	
