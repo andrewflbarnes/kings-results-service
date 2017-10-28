@@ -72,7 +72,7 @@ public class RaceControllerTest {
 		final String season = "SEASON";
 		final String round = "ROUND";
 		
-		controller.racesByLeagueBySeasonByRound(season, league, round);
+		controller.racesBySeasonByLeagueByRound(season, league, round);
 		
 		verify(raceServiceMock, times(1)).getRacesBySeasonAndLeagueAndRound(season, league, round);
 	}

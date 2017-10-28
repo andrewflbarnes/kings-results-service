@@ -1,14 +1,14 @@
 package org.kingsski.api.controller;
 
-import java.util.List;
-
-import org.kingsski.api.service.RaceService;
 import org.kingsski.api.model.Race;
+import org.kingsski.api.service.RaceService;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * This class acts as a REST controller for the Kings Race Service providing
@@ -44,8 +44,8 @@ public class RaceController {
 		return this.raceService.getRacesByLeagueAndRound(league, round);
 	}
 	
-	@RequestMapping("{season}/{league}/{round}")
-	public List<Race> racesByLeagueBySeasonByRound(
+	@RequestMapping("{season:[0-9]{6}}/{league}/{round}")
+	public List<Race> racesBySeasonByLeagueByRound(
 			@PathVariable("season") String season,
 			@PathVariable("league") String league,
 			@PathVariable("round") String round) {
