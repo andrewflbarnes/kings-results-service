@@ -1,4 +1,4 @@
-package org.kingsski.raceservice.model;
+package org.kingsski.api.model;
 
 import org.junit.Test;
 
