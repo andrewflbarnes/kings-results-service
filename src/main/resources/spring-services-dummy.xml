@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd"
-  profile="dummy">
+       profile="dummy">
 
-  <!-- services -->
-  <bean id="raceService"
-        class="org.kingsski.api.service.dummy.DummyRaceService" />
-  <bean id="teamService"
-        class="org.kingsski.api.service.stub.StubTeamService" />
+    <!-- services -->
+    <bean id="raceService"
+          class="org.kingsski.api.service.dummy.DummyRaceService"/>
+    <bean id="teamService"
+          class="org.kingsski.api.service.dummy.DummyTeamService"/>
 
 </beans>

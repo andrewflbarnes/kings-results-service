@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-        <import resource="spring-controllers.xml"/>
-        <import resource="spring-services-dummy.xml"/>
+    <!-- START  required -->
+    <!-- API controllers, REST controllers are always created by Spring boot -->
+    <import resource="spring-controllers.xml"/>
+    <!-- FINISH required -->
+
+    <!-- START  service choice -->
+    <!-- (profile:dummy) -->
+    <import resource="spring-services-dummy.xml"/>
+    <!-- (profile:stub) -->
+    <import resource="spring-services-stub.xml"/>
+    <!-- FINISH service choice -->
 
 </beans>
