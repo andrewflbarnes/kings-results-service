@@ -6,5 +6,5 @@ notifications:
     rooms:
       - kingsskiclub:BBL9dzzOo8JFgSqRupOaxr4p#software-integrations
     template:
-      - "%{repository} (%{commit}) by ${author} : %{result}"
+      - "%{repository_slug} (%{commit}) to %{branch} by %{author} : %{result}"
       - "Build details: %{build_url}"
