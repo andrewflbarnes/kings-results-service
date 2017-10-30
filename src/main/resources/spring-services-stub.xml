@@ -3,12 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd"
-       profile="dummy">
+       profile="stub">
 
     <!-- services -->
     <bean id="raceService"
-          class="org.kingsski.api.service.dummy.DummyRaceService"/>
+          class="org.kingsski.api.service.stub.StubRaceService"/>
     <bean id="teamService"
-          class="org.kingsski.api.service.dummy.DummyTeamService"/>
+          class="org.kingsski.api.service.stub.StubTeamService"/>
 
 </beans>
