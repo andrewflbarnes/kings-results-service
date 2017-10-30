@@ -1,17 +1,14 @@
 package org.kingsski.api.controller;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.api.service.RaceService;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * Test class for {@link RaceController}
@@ -23,21 +20,9 @@ public class RaceControllerTest {
 	private RaceService raceServiceMock;
 	private final RaceController controller = new RaceController();
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		controller.setRaceService(raceServiceMock);
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	@Test

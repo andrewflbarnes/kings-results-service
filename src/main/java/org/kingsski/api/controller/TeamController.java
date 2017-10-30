@@ -44,8 +44,8 @@ public class TeamController {
 		return this.teamService.getTeamsByLeagueAndDivision(league, division);
 	}
 	
-	@RequestMapping("{season:[0-9]{6}}/{league}/{division}")
-	public List<Team> TeamsBySeasonByLeagueByDivision(
+	@RequestMapping("{season:[0-9]{4}}/{league}/{division}")
+	public List<Team> teamsBySeasonByLeagueByDivision(
 			@PathVariable("season") String season,
 			@PathVariable("league") String league,
 			@PathVariable("division") String division) {

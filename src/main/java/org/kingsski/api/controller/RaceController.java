@@ -44,7 +44,7 @@ public class RaceController {
 		return this.raceService.getRacesByLeagueAndRound(league, round);
 	}
 	
-	@RequestMapping("{season:[0-9]{6}}/{league}/{round}")
+	@RequestMapping("{season:[0-9]{4}}/{league}/{round}")
 	public List<Race> racesBySeasonByLeagueByRound(
 			@PathVariable("season") String season,
 			@PathVariable("league") String league,
