@@ -4,6 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--<bean id="serviceProperties"-->
+          <!--class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>classpath:service.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<context:property-placeholder properties-ref="serviceProperties"/>-->
+
     <!-- START  required -->
     <!-- API controllers, REST controllers are always created by Spring boot -->
     <import resource="spring-controllers.xml"/>

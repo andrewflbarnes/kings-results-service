@@ -7,12 +7,19 @@
     <!-- controllers -->
     <bean id="raceController"
           class="org.kingsski.api.controller.RaceController">
-        <property name="raceService" ref="raceService"/>
+        <property name="raceService" ref="cacheRaceService"/>
     </bean>
 
     <bean id="teamController"
           class="org.kingsski.api.controller.TeamController">
         <property name="teamService" ref="teamService"/>
+    </bean>
+
+    <!-- Cache services -->
+    <bean id="cacheRaceService"
+          class="org.kingsski.api.service.caching.CachingRaceService">
+        <constructor-arg ref="raceService"/>
+        <property name="interval" value="5000"/>
     </bean>
 
 </beans>
