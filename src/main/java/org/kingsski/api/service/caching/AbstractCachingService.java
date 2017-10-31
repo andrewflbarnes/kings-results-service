@@ -89,7 +89,7 @@ public abstract class AbstractCachingService<T> {
 
             if ((cache.getUpdateTime() + interval) < now || items == null || items.isEmpty()) {
                 items = itemsFromService(type, args);
-                cache.getItems(items);
+                cache.setItems(items);
                 cache.setUpdateTime(now);
             }
 
@@ -116,7 +116,7 @@ public abstract class AbstractCachingService<T> {
         /**
          * @param items the list of cached items to set
          */
-        public void getItems(List<T> items) {
+        public void setItems(List<T> items) {
             this.items = items;
         }
 
