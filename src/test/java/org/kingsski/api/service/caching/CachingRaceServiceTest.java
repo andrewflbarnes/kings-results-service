@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CachingRaceServiceTest {
 
-    private static final int INTERVAL = 200;
+    private static final int INTERVAL = 100;
     private static final String LEAGUE = "league";
     private static final String ROUND = "round";
     private static final String SEASON = "season";
@@ -58,7 +58,7 @@ public class CachingRaceServiceTest {
         assertSame(races, races2);
         verify(raceServiceMock, times(1)).getRacesAll();
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
         when(raceServiceMock.getRacesAll()).thenReturn(raceListTwo).thenReturn(raceListOne);
 
@@ -84,7 +84,7 @@ public class CachingRaceServiceTest {
         assertSame(races, races2);
         verify(raceServiceMock, times(1)).getRacesByLeague(LEAGUE);
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
         when(raceServiceMock.getRacesByLeague(any())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
@@ -110,7 +110,7 @@ public class CachingRaceServiceTest {
         assertSame(races, races2);
         verify(raceServiceMock, times(1)).getRacesByLeagueAndRound(LEAGUE, ROUND);
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
         when(raceServiceMock.getRacesByLeagueAndRound(any(), any())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
@@ -136,7 +136,7 @@ public class CachingRaceServiceTest {
         assertSame(races, races2);
         verify(raceServiceMock, times(1)).getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
         when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(any(), any(), any())).thenReturn(raceListTwo).thenReturn(raceListOne);
 

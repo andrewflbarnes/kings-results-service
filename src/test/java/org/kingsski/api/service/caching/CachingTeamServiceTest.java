@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CachingTeamServiceTest {
 
-    private static final int INTERVAL = 200;
+    private static final int INTERVAL = 100;
     private static final String LEAGUE = "league";
     private static final String DIVISION = "division";
     private static final String SEASON = "season";
@@ -58,7 +58,7 @@ public class CachingTeamServiceTest {
         assertSame(teams, teams2);
         verify(teamServiceMock, times(1)).getTeamsAll();
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsAll()).thenReturn(teamListTwo).thenReturn(teamListOne);
 
@@ -84,7 +84,7 @@ public class CachingTeamServiceTest {
         assertSame(teams, teams2);
         verify(teamServiceMock, times(1)).getTeamsByLeague(LEAGUE);
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsByLeague(any())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
@@ -110,7 +110,7 @@ public class CachingTeamServiceTest {
         assertSame(teams, teams2);
         verify(teamServiceMock, times(1)).getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsByLeagueAndDivision(any(), any())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
@@ -136,7 +136,7 @@ public class CachingTeamServiceTest {
         assertSame(teams, teams2);
         verify(teamServiceMock, times(1)).getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
 
-        Thread.sleep(INTERVAL);
+        Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(any(), any(), any())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
