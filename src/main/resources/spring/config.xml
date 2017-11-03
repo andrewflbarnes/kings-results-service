@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- START  controller choice -->
+    <!-- API controllers, REST controllers are always created by Spring boot -->
+    <!-- (profile:nocaching) -->
+    <import resource="controllers/nocaching.xml"/>
+    <!-- (profile:caching) -->
+    <import resource="controllers/caching.xml"/>
+    <!-- FINISH controller choice -->
+
+    <!-- START  service choice -->
+    <!-- (profile:dummy) -->
+    <import resource="services/dummy.xml"/>
+    <!-- (profile:stub) -->
+    <import resource="services/stub.xml"/>
+    <!-- FINISH service choice -->
+
+</beans>

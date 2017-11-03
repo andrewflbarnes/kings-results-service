@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd"
+       profile="caching">
+
+    <!-- controllers -->
+    <bean id="raceController"
+          class="org.kingsski.api.controller.RaceController">
+        <property name="raceService" ref="cacheRaceService"/>
+    </bean>
+
+    <bean id="teamController"
+          class="org.kingsski.api.controller.TeamController">
+        <property name="teamService" ref="cacheTeamService"/>
+    </bean>
+
+    <!-- Cache services -->
+    <bean id="cacheRaceService"
+          class="org.kingsski.api.service.caching.CachingRaceService">
+        <constructor-arg ref="raceService"/>
+        <property name="interval" value="5000"/>
+    </bean>
+
+    <bean id="cacheTeamService"
+          class="org.kingsski.api.service.caching.CachingTeamService">
+        <constructor-arg ref="teamService"/>
+        <property name="interval" value="5000"/>
+    </bean>
+
+</beans>

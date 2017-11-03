@@ -96,6 +96,13 @@ public class RaceTest {
         assertEqualsAndHashCode(RACE_1A, RACE_1C);
         assertEqualsAndHashCode(RACE_1C, RACE_1A);
 
+        assertNotEquals(RACE_1A, null);
+        assertNotEquals(null, RACE_1A);
+
+        Object o = new Object();
+        assertNotEqualsAndHashCode(RACE_1A, o);
+        assertNotEqualsAndHashCode(o, RACE_1A);
+
         assertNotEqualsAndHashCode(RACE_1A, RACE_1U);
         assertNotEqualsAndHashCode(RACE_1U, RACE_1A);
 
@@ -121,15 +128,15 @@ public class RaceTest {
         assertNotEqualsAndHashCode(RACE_NULL, RACE_1A);
     }
 
-    private static void assertNotEqualsAndHashCode(Race expected, Race actual) {
+    private static void assertNotEqualsAndHashCode(Object expected, Object actual) {
         assertEqualsAndHashCode(expected, actual, false);
     }
 
-    private static void assertEqualsAndHashCode(Race expected, Race actual) {
+    private static void assertEqualsAndHashCode(Object expected, Object actual) {
         assertEqualsAndHashCode(expected, actual, true);
     }
 
-    private static void assertEqualsAndHashCode(Race expected, Race actual, boolean shouldBeEqual) {
+    private static void assertEqualsAndHashCode(Object expected, Object actual, boolean shouldBeEqual) {
         if (shouldBeEqual) {
             assertEquals(expected, actual);
             assertEquals(expected.hashCode(), actual.hashCode());
