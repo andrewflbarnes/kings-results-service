@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -74,7 +74,7 @@ public class CachingRaceServiceTest {
 
     @Test
     public void getRacesByLeague() throws Exception {
-        when(raceServiceMock.getRacesByLeague(any())).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceServiceMock.getRacesByLeague(anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesByLeague(LEAGUE);
         List<Race> races2 = cachingRaceService.getRacesByLeague(LEAGUE);
@@ -86,7 +86,7 @@ public class CachingRaceServiceTest {
 
         Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
-        when(raceServiceMock.getRacesByLeague(any())).thenReturn(raceListTwo).thenReturn(raceListOne);
+        when(raceServiceMock.getRacesByLeague(anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesByLeague(LEAGUE);
         List<Race> races4 = cachingRaceService.getRacesByLeague(LEAGUE);
@@ -100,7 +100,7 @@ public class CachingRaceServiceTest {
 
     @Test
     public void getRacesByLeagueAndRound() throws Exception {
-        when(raceServiceMock.getRacesByLeagueAndRound(any(), any())).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceServiceMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
         List<Race> races2 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
@@ -112,7 +112,7 @@ public class CachingRaceServiceTest {
 
         Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
-        when(raceServiceMock.getRacesByLeagueAndRound(any(), any())).thenReturn(raceListTwo).thenReturn(raceListOne);
+        when(raceServiceMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
         List<Race> races4 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
@@ -126,7 +126,7 @@ public class CachingRaceServiceTest {
 
     @Test
     public void getRacesBySeasonAndLeagueAndRound() throws Exception {
-        when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(any(), any(), any())).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
         List<Race> races2 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
@@ -138,7 +138,7 @@ public class CachingRaceServiceTest {
 
         Thread.sleep(INTERVAL*2);
         reset(raceServiceMock);
-        when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(any(), any(), any())).thenReturn(raceListTwo).thenReturn(raceListOne);
+        when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
         List<Race> races4 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);

@@ -2,11 +2,11 @@
 
 Master:  
 [![Master Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=master)](https://travis-ci.org/andrewflbarnes/kings-results-service) 
-[![codecov](https://codecov.io/gh/andrewflbarnes/kings-results-service/branch/master/graph/badge.svg)](https://codecov.io/gh/andrewflbarnes/kings-results-service)
+[![Coverage Status](https://coveralls.io/repos/github/andrewflbarnes/kings-results-service/badge.svg?branch=master)](https://coveralls.io/github/andrewflbarnes/kings-results-service?branch=master)
 
 Develop:  
 [![Develop Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=develop)](https://travis-ci.org/andrewflbarnes/kings-results-service) 
-[![codecov](https://codecov.io/gh/andrewflbarnes/kings-results-service/branch/develop/graph/badge.svg)](https://codecov.io/gh/andrewflbarnes/kings-results-service)
+[![Coverage Status](https://coveralls.io/repos/github/andrewflbarnes/kings-results-service/badge.svg?branch=develop)](https://coveralls.io/github/andrewflbarnes/kings-results-service?branch=develop)
 
 Kings web API implemented as REST server which returns:
 - in progress and historical Kings races

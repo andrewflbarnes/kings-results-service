@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -74,7 +74,7 @@ public class CachingTeamServiceTest {
 
     @Test
     public void getTeamsByLeague() throws Exception {
-        when(teamServiceMock.getTeamsByLeague(any())).thenReturn(teamListOne).thenReturn(teamListTwo);
+        when(teamServiceMock.getTeamsByLeague(anyString())).thenReturn(teamListOne).thenReturn(teamListTwo);
 
         List<Team> teams = cachingTeamService.getTeamsByLeague(LEAGUE);
         List<Team> teams2 = cachingTeamService.getTeamsByLeague(LEAGUE);
@@ -86,7 +86,7 @@ public class CachingTeamServiceTest {
 
         Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
-        when(teamServiceMock.getTeamsByLeague(any())).thenReturn(teamListTwo).thenReturn(teamListOne);
+        when(teamServiceMock.getTeamsByLeague(anyString())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
         List<Team> teams3 = cachingTeamService.getTeamsByLeague(LEAGUE);
         List<Team> teams4 = cachingTeamService.getTeamsByLeague(LEAGUE);
@@ -100,7 +100,7 @@ public class CachingTeamServiceTest {
 
     @Test
     public void getTeamsByLeagueAndDivision() throws Exception {
-        when(teamServiceMock.getTeamsByLeagueAndDivision(any(), any())).thenReturn(teamListOne).thenReturn(teamListTwo);
+        when(teamServiceMock.getTeamsByLeagueAndDivision(anyString(), anyString())).thenReturn(teamListOne).thenReturn(teamListTwo);
 
         List<Team> teams = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
         List<Team> teams2 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
@@ -112,7 +112,7 @@ public class CachingTeamServiceTest {
 
         Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
-        when(teamServiceMock.getTeamsByLeagueAndDivision(any(), any())).thenReturn(teamListTwo).thenReturn(teamListOne);
+        when(teamServiceMock.getTeamsByLeagueAndDivision(anyString(), anyString())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
         List<Team> teams3 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
         List<Team> teams4 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
@@ -126,7 +126,7 @@ public class CachingTeamServiceTest {
 
     @Test
     public void getTeamsBySeasonAndLeagueAndDivision() throws Exception {
-        when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(any(), any(), any())).thenReturn(teamListOne).thenReturn(teamListTwo);
+        when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(anyString(), anyString(), anyString())).thenReturn(teamListOne).thenReturn(teamListTwo);
 
         List<Team> teams = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
         List<Team> teams2 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
@@ -138,7 +138,7 @@ public class CachingTeamServiceTest {
 
         Thread.sleep(INTERVAL*2);
         reset(teamServiceMock);
-        when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(any(), any(), any())).thenReturn(teamListTwo).thenReturn(teamListOne);
+        when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(anyString(), anyString(), anyString())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
         List<Team> teams3 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
         List<Team> teams4 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
