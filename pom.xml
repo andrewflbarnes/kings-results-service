@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.kingsski</groupId>
     <artifactId>kings-race-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Kings Race Service</name>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -10,11 +10,47 @@
         <version>1.5.6.RELEASE</version>
     </parent>
 
+    <profiles>
+        <profile>
+            <id>tomcat</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.boot.container>spring-boot-starter-tomcat</spring.boot.container>
+            </properties>
+        </profile>
+        <profile>
+            <id>jetty</id>
+            <properties>
+                <spring.boot.container>spring-boot-starter-jetty</spring.boot.container>
+            </properties>
+        </profile>
+    </profiles>
+
+    <packaging>war</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- build dependent dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>${spring.boot.container}</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Kings dependencies -->
+        <dependency>
+            <groupId>com.github.andrewflbarnes</groupId>
+            <artifactId>kings-ski-wax</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -33,10 +69,46 @@
 
 
     <build>
+        <finalName>kings-race-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <check />
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                    <!-- aggregated reports for multi-module projects -->
+                    <aggregate>true</aggregate>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -45,6 +117,10 @@
         <repository>
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
     <pluginRepositories>

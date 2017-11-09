@@ -1,4 +1,4 @@
-package org.kingsski.raceservice.model;
+package org.kingsski.api.model;
 
 import javax.validation.constraints.NotNull;
 
@@ -225,4 +225,19 @@ public class Race {
 		return false;
 	}
 
+	@Override
+	public int hashCode() {
+		int prime = 31;
+		int result = 1;
+
+        result = prime * result + (league == null ? 0 : league.hashCode());
+        result = prime * result + (round == null ? 0 : round.hashCode());
+        result = prime * result + (set == null ? 0 : set.hashCode());
+        result = prime * result + (division == null ? 0 : division.hashCode());
+        result = prime * result + raceNo;
+        result = prime * result + (teamOne == null ? 0 : teamOne.hashCode());
+        result = prime * result + (teamTwo == null ? 0 : teamTwo.hashCode());
+
+		return result;
+	}
 }

@@ -1,44 +1,28 @@
-package org.kingsski.raceservice.controller;
+package org.kingsski.api.controller;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.kingsski.api.service.RaceService;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.kingsski.raceservice.api.service.RaceService;
-import org.kingsski.raceservice.controller.RaceResultsController;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 /**
- * Test class for {@link RaceResultsController}
+ * Test class for {@link RaceController}
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RaceResultsControllerTest {
+public class RaceControllerTest {
 	
 	@Mock
 	private RaceService raceServiceMock;
-	private final RaceResultsController controller = new RaceResultsController();
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	private final RaceController controller = new RaceController();
 
 	@Before
 	public void setUp() throws Exception {
 		controller.setRaceService(raceServiceMock);
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	@Test
@@ -73,7 +57,7 @@ public class RaceResultsControllerTest {
 		final String season = "SEASON";
 		final String round = "ROUND";
 		
-		controller.racesByLeagueBySeasonByRound(season, league, round);
+		controller.racesBySeasonByLeagueByRound(season, league, round);
 		
 		verify(raceServiceMock, times(1)).getRacesBySeasonAndLeagueAndRound(season, league, round);
 	}
