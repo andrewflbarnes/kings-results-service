@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
  * This class is designed as a DTO/VO only and is not
  * appropriate for processing actual races!
  */
-public class Race {
+public class DisplayableRace {
 
 	private String league;
 	private String round;
@@ -23,7 +23,7 @@ public class Race {
 	private boolean next;
 
 	/**
-	 * Standard constructor for a new {@link Race}
+	 * Standard constructor for a new {@link DisplayableRace}
 	 * 
 	 * @param raceNo The number of this race in the current round
 	 * @param division The division this race belongs to
@@ -34,9 +34,9 @@ public class Race {
 	 * @param teamTwoDsq The reason the second team was disqualified
 	 * @param next true if this is the next race being run, false otherwise
 	 */
-	public Race(@NotNull String league, @NotNull String round, @NotNull String set, int raceNo,
-			@NotNull String division, @NotNull String teamOne, @NotNull String teamTwo,
-			String winner, String teamOneDsq, String teamTwoDsq, boolean next) {
+	public DisplayableRace(@NotNull String league, @NotNull String round, @NotNull String set, int raceNo,
+						   @NotNull String division, @NotNull String teamOne, @NotNull String teamTwo,
+						   String winner, String teamOneDsq, String teamTwoDsq, boolean next) {
 		this.league = league;
 		this.round = round;
 		this.set = set;
@@ -53,9 +53,9 @@ public class Race {
 	/**
 	 * Convenience constructor which clones another instance
 	 * 
-	 * @param raceToCopy The {@link Race} to be cloned.
+	 * @param raceToCopy The {@link DisplayableRace} to be cloned.
 	 */
-	public Race(Race raceToCopy) {
+	public DisplayableRace(DisplayableRace raceToCopy) {
 		this.league = raceToCopy.getLeague();
 		this.round = raceToCopy.getRound();
 		this.set = raceToCopy.getSet();
@@ -205,8 +205,8 @@ public class Race {
 			return false;
 		}
 		
-		if (Race.class.equals(obj.getClass())) {
-			Race other = (Race)obj;
+		if (DisplayableRace.class.equals(obj.getClass())) {
+			DisplayableRace other = (DisplayableRace)obj;
 			
 			if (this.league == null || this.round == null || this.set == null ||
 					this.division == null || this.teamOne == null || this.teamTwo == null) {

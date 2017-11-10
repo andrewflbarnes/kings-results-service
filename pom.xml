@@ -3,7 +3,7 @@
     <groupId>org.kingsski</groupId>
     <artifactId>kings-race-service</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>Kings Race Service</name>
+    <name>kings-race-service</name>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

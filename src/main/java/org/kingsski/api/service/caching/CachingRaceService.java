@@ -1,6 +1,6 @@
 package org.kingsski.api.service.caching;
 
-import org.kingsski.api.model.Race;
+import org.kingsski.api.model.DisplayableRace;
 import org.kingsski.api.service.RaceService;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * Decorator implementation of {@link RaceService} which caches results provided by another {@link RaceService}.
  * Extends the {@link AbstractCachingService} class to provide the caching functionality.
  */
-public class CachingRaceService extends AbstractCachingService<Race> implements RaceService {
+public class CachingRaceService extends AbstractCachingService<DisplayableRace> implements RaceService {
 
     private static final String ALL = "ALL";
     private static final String LEAGUE = "LEAGUE";
@@ -27,27 +27,27 @@ public class CachingRaceService extends AbstractCachingService<Race> implements 
     }
 
     @Override
-    public List<Race> getRacesAll() {
+    public List<DisplayableRace> getRacesAll() {
         return getFromCache(ALL);
     }
 
     @Override
-    public List<Race> getRacesByLeague(String league) {
+    public List<DisplayableRace> getRacesByLeague(String league) {
         return getFromCache(LEAGUE, league);
     }
 
     @Override
-    public List<Race> getRacesByLeagueAndRound(String league, String round) {
+    public List<DisplayableRace> getRacesByLeagueAndRound(String league, String round) {
         return getFromCache(LEAGUE_ROUND, league, round);
     }
 
     @Override
-    public List<Race> getRacesBySeasonAndLeagueAndRound(String season, String league, String round) {
+    public List<DisplayableRace> getRacesBySeasonAndLeagueAndRound(String season, String league, String round) {
         return getFromCache(SEASON_LEAGUE_ROUND, season, league, round);
     }
 
     @Override
-    protected List<Race> itemsFromService(String type, String... args) {
+    protected List<DisplayableRace> itemsFromService(String type, String... args) {
         switch (type) {
             case ALL:
                 return raceService.getRacesAll();
