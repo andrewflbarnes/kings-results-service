@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class RaceTest {
+public class DisplayableRaceTest {
 
     private static final int NO_1 = 1;
     private static final int NO_2 = 2;
@@ -23,27 +23,27 @@ public class RaceTest {
     private static final String SET_K = "Knockouts";
 
     // Base race
-    private static final Race RACE_1A = new Race(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1A = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
     // Identical to 1A
-    private static final Race RACE_1B = new Race(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1B = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
     // Identical to 1A other than transient fields
-    private static final Race RACE_1C = new Race(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, DUMMY, DUMMY, DUMMY, true);
+    private static final DisplayableRace RACE_1C = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, DUMMY, DUMMY, DUMMY, true);
     // Different league
-    private static final Race RACE_1U = new Race(LEAGUE_S, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1U = new DisplayableRace(LEAGUE_S, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
     // Different round
-    private static final Race RACE_1V = new Race(LEAGUE_N, RND_2, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1V = new DisplayableRace(LEAGUE_N, RND_2, SET_K, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
     // Different set
-    private static final Race RACE_1W = new Race(LEAGUE_N, RND_1, SET_1, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1W = new DisplayableRace(LEAGUE_N, RND_1, SET_1, NO_1, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
     // Different division
-    private static final Race RACE_1X = new Race(LEAGUE_N, RND_1, SET_K, NO_1, DIV_L, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1X = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_1, DIV_L, TEAM_1, TEAM_2, null, null, null, false);
     // Different team 1
-    private static final Race RACE_1Y = new Race(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_3, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_1Y = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_3, TEAM_2, null, null, null, false);
     // Different team 2
-    private static final Race RACE_1Z = new Race(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_3, null, null, null, false);
+    private static final DisplayableRace RACE_1Z = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_1, DIV_M, TEAM_1, TEAM_3, null, null, null, false);
     // Different race number
-    private static final Race RACE_2A = new Race(LEAGUE_N, RND_1, SET_K, NO_2, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
+    private static final DisplayableRace RACE_2A = new DisplayableRace(LEAGUE_N, RND_1, SET_K, NO_2, DIV_M, TEAM_1, TEAM_2, null, null, null, false);
     // all null
-    private static final Race RACE_NULL = new Race(null, null, null, 0, null, null, null, null, null, null, false);
+    private static final DisplayableRace RACE_NULL = new DisplayableRace(null, null, null, 0, null, null, null, null, null, null, false);
 
     @Test
     public void testConstructor() {
@@ -52,7 +52,7 @@ public class RaceTest {
         final String dsq2 = "DSQ_2";
         final boolean next = true;
 
-        Race race = new Race(LEAGUE_N, RND_1, SET_1, NO_1, DIV_L, TEAM_1, TEAM_2, winner, dsq1, dsq2, next);
+        DisplayableRace race = new DisplayableRace(LEAGUE_N, RND_1, SET_1, NO_1, DIV_L, TEAM_1, TEAM_2, winner, dsq1, dsq2, next);
 
         assertEquals(LEAGUE_N, race.getLeague());
         assertEquals(RND_1, race.getRound());
@@ -69,7 +69,7 @@ public class RaceTest {
 
     @Test
     public void testCopyOfConstructor() {
-        Race copy = new Race(RACE_1C);
+        DisplayableRace copy = new DisplayableRace(RACE_1C);
 
         assertEqualsAndHashCode(RACE_1C, copy);
 
