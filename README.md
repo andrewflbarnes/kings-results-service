@@ -1,12 +1,9 @@
-# kings-results-service
+# kings-race-service
 
 Master:  
 [![Master Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=master)](https://travis-ci.org/andrewflbarnes/kings-results-service) 
 [![Coverage Status](https://coveralls.io/repos/github/andrewflbarnes/kings-results-service/badge.svg?branch=master)](https://coveralls.io/github/andrewflbarnes/kings-results-service?branch=master)
-
-Develop:  
-[![Develop Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=develop)](https://travis-ci.org/andrewflbarnes/kings-results-service) 
-[![Coverage Status](https://coveralls.io/repos/github/andrewflbarnes/kings-results-service/badge.svg?branch=develop)](https://coveralls.io/github/andrewflbarnes/kings-results-service?branch=develop)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=org.kingsski:kings-race-service)](https://sonarcloud.io/dashboard?id=org.kingsski:kings-race-service)
 
 Kings web API implemented as REST server which returns:
 - in progress and historical Kings races
@@ -38,3 +35,7 @@ Available profiles:
 Dummy services return the same (or similar) objects for all paths
 - `stub`  
 Stub services return an empty object list for all paths
+- `caching`  
+Service results are cached to reduce system load
+- `nocaching`  
+Service results are not cached to ensure results are up to date

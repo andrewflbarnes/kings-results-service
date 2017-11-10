@@ -17,6 +17,7 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 notifications:
+  email: false
   slack:
     rooms:
       - kingsskiclub:BBL9dzzOo8JFgSqRupOaxr4p#software-integrations
