@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,7 +23,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/teams")
 public class TeamController {
-	
+
+	@Resource(name = "repositoryTeamService")
 	private TeamService teamService;
 	
 	@RequestMapping("")
@@ -52,10 +54,9 @@ public class TeamController {
 		
 		return this.teamService.getTeamsBySeasonAndLeagueAndDivision(season, league, division);
 	}
-	
-	@Required
+
+	// TODO Remove (only used in test)
 	public void setTeamService(TeamService teamService) {
 		this.teamService = teamService;
 	}
-
 }

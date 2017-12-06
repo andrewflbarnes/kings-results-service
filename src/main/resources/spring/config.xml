@@ -18,6 +18,8 @@
     <import resource="services/dummy.xml"/>
     <!-- (profile:stub) -->
     <import resource="services/stub.xml"/>
+    <!-- (profile:repository) -->
+    <import resource="services/repository.xml"/>
     <!-- FINISH service choice -->
 
 </beans>

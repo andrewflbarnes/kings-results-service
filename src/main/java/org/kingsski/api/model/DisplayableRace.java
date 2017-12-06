@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 public class DisplayableRace {
 
+	private int raceId;
 	private String league;
 	private String round;
 	private String set;
