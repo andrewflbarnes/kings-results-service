@@ -1,7 +1,7 @@
 package org.kingsski.api.service.repository;
 
+import org.kingsski.api.model.DisplayableTeam;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,38 +15,35 @@ public class RepositoryTeamService implements TeamService {
     private TeamRepository teamRepository;
 
     @Override
-    public List<Team> getTeamsAll() {
-        List<Team> teams = new ArrayList<>();
+    public List<DisplayableTeam> getTeamsAll() {
+        List<DisplayableTeam> teams = new ArrayList<>();
         teamRepository
                 .findAll()
-                .forEach(t -> teams.add(t.asTeam()));
+                .forEach(t -> {
+                    t.updateScores();
+                    teams.add(t);
+                });
         return teams;
     }
 
     @Override
-    public List<Team> getTeamsByLeague(String league) {
-        List<Team> teams = new ArrayList<>();
-        teamRepository
-                .findByWordpressTeamPK_League(league)
-                .forEach(t -> teams.add(t.asTeam()));
+    public List<DisplayableTeam> getTeamsByLeague(String league) {
+        List<DisplayableTeam> teams = teamRepository.findByLeague(league);
+        teams.forEach(DisplayableTeam::updateScores);
         return teams;
     }
 
     @Override
-    public List<Team> getTeamsByLeagueAndDivision(String league, String division) {
-        List<Team> teams = new ArrayList<>();
-        teamRepository
-                .findByWordpressTeamPK_LeagueAndWordpressTeamPK_Division(league, division)
-                .forEach(t -> teams.add(t.asTeam()));
+    public List<DisplayableTeam> getTeamsByLeagueAndDivision(String league, String division) {
+        List<DisplayableTeam> teams = teamRepository.findByLeagueAndDivision(league, division);
+        teams.forEach(DisplayableTeam::updateScores);
         return teams;
     }
 
     @Override
-    public List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
-        List<Team> teams = new ArrayList<>();
-        teamRepository
-                .findByWordpressTeamPK_LeagueAndWordpressTeamPK_Division(league, division)
-                .forEach(t -> teams.add(t.asTeam()));
+    public List<DisplayableTeam> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
+        List<DisplayableTeam> teams = teamRepository.findByLeagueAndDivision(league, division);
+        teams.forEach(DisplayableTeam::updateScores);
         return teams;
     }
 }

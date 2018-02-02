@@ -1,7 +1,7 @@
 package org.kingsski.api.service.dummy;
 
+import org.kingsski.api.model.DisplayableTeam;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,18 +9,18 @@ import java.util.List;
 
 /**
  * A dummy implementation of the {@link TeamService}  interface. This class
- * has a single static list of {@link Team}s which it returns for all
+ * has a single static list of {@link DisplayableTeam}s which it returns for all
  * method calls.
  *
  * @author Barnesly
  */
 public class DummyTeamService implements TeamService {
 
-    private static final List<Team> TEAMS;
+    private static final List<DisplayableTeam> TEAMS;
 
     // Static initialiser for the TEAMS variable
     static {
-        List<Team> dummyTeams = new ArrayList<Team>();
+        List<DisplayableTeam> dummyTeams = new ArrayList<DisplayableTeam>();
         dummyTeams.add(createTeam(1, "NORTHERN", "SKUM", "SKUM 1", "M", 20));
         dummyTeams.add(createTeam(2, "NORTHERN", "SKUM", "SKUM 2", "M", 10));
         dummyTeams.add(createTeam(3, "NORTHERN", "SKUM", "SKUM 3", "M", 2));
@@ -41,34 +41,27 @@ public class DummyTeamService implements TeamService {
     }
 
     @Override
-    public List<Team> getTeamsAll() {
+    public List<DisplayableTeam> getTeamsAll() {
         return TEAMS;
     }
 
     @Override
-    public List<Team> getTeamsByLeague(String league) {
+    public List<DisplayableTeam> getTeamsByLeague(String league) {
         return TEAMS;
     }
 
     @Override
-    public List<Team> getTeamsByLeagueAndDivision(String league, String division) {
+    public List<DisplayableTeam> getTeamsByLeagueAndDivision(String league, String division) {
         return TEAMS;
     }
 
     @Override
-    public List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
+    public List<DisplayableTeam> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
         return TEAMS;
     }
 
-    private static Team createTeam(int id, String league, String club, String name, String div, int score) {
-        Team team = new Team();
-        team.setTeamId(id);
-        team.setClubName(club);
-        team.setTeamName(name);
-        team.setLeague(league);
-        team.setDivision(div);
-        team.setScoreR1(score);
-        return team;
+    private static DisplayableTeam createTeam(int id, String league, String club, String name, String div, int score) {
+        return new DisplayableTeam(name, league, div, id, score, 0, 0, 0);
     }
 
 }

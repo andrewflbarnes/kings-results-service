@@ -3,8 +3,8 @@ package org.kingsski.api.service.caching;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.api.model.DisplayableTeam;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -29,15 +29,15 @@ public class CachingTeamServiceTest {
     private static final String DIVISION = "division";
     private static final String SEASON = "season";
 
-    private final Team teamMock = mock(Team.class);
+    private final DisplayableTeam teamMock = mock(DisplayableTeam.class);
     private final TeamService teamServiceMock = mock(TeamService.class);
     @Spy
     private final CachingTeamService cachingTeamService = new CachingTeamService(teamServiceMock);
 
-    private final List<Team> teamListOne = new ArrayList<Team>() {{
+    private final List<DisplayableTeam> teamListOne = new ArrayList<DisplayableTeam>() {{
         add(teamMock);
     }};
-    private final List<Team> teamListTwo = new ArrayList<Team>() {{
+    private final List<DisplayableTeam> teamListTwo = new ArrayList<DisplayableTeam>() {{
         add(teamMock);
     }};
 
@@ -50,8 +50,8 @@ public class CachingTeamServiceTest {
     public void getTeamsAll() throws Exception {
         when(teamServiceMock.getTeamsAll()).thenReturn(teamListOne).thenReturn(teamListTwo);
 
-        List<Team> teams = cachingTeamService.getTeamsAll();
-        List<Team> teams2 = cachingTeamService.getTeamsAll();
+        List<DisplayableTeam> teams = cachingTeamService.getTeamsAll();
+        List<DisplayableTeam> teams2 = cachingTeamService.getTeamsAll();
 
         assertNotNull(teams);
         assertNotNull(teams2);
@@ -62,8 +62,8 @@ public class CachingTeamServiceTest {
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsAll()).thenReturn(teamListTwo).thenReturn(teamListOne);
 
-        List<Team> teams3 = cachingTeamService.getTeamsAll();
-        List<Team> teams4 = cachingTeamService.getTeamsAll();
+        List<DisplayableTeam> teams3 = cachingTeamService.getTeamsAll();
+        List<DisplayableTeam> teams4 = cachingTeamService.getTeamsAll();
 
         assertNotNull(teams3);
         assertNotNull(teams4);
@@ -76,8 +76,8 @@ public class CachingTeamServiceTest {
     public void getTeamsByLeague() throws Exception {
         when(teamServiceMock.getTeamsByLeague(anyString())).thenReturn(teamListOne).thenReturn(teamListTwo);
 
-        List<Team> teams = cachingTeamService.getTeamsByLeague(LEAGUE);
-        List<Team> teams2 = cachingTeamService.getTeamsByLeague(LEAGUE);
+        List<DisplayableTeam> teams = cachingTeamService.getTeamsByLeague(LEAGUE);
+        List<DisplayableTeam> teams2 = cachingTeamService.getTeamsByLeague(LEAGUE);
 
         assertNotNull(teams);
         assertNotNull(teams2);
@@ -88,8 +88,8 @@ public class CachingTeamServiceTest {
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsByLeague(anyString())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
-        List<Team> teams3 = cachingTeamService.getTeamsByLeague(LEAGUE);
-        List<Team> teams4 = cachingTeamService.getTeamsByLeague(LEAGUE);
+        List<DisplayableTeam> teams3 = cachingTeamService.getTeamsByLeague(LEAGUE);
+        List<DisplayableTeam> teams4 = cachingTeamService.getTeamsByLeague(LEAGUE);
 
         assertNotNull(teams3);
         assertNotNull(teams4);
@@ -102,8 +102,8 @@ public class CachingTeamServiceTest {
     public void getTeamsByLeagueAndDivision() throws Exception {
         when(teamServiceMock.getTeamsByLeagueAndDivision(anyString(), anyString())).thenReturn(teamListOne).thenReturn(teamListTwo);
 
-        List<Team> teams = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
-        List<Team> teams2 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
+        List<DisplayableTeam> teams = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
+        List<DisplayableTeam> teams2 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
 
         assertNotNull(teams);
         assertNotNull(teams2);
@@ -114,8 +114,8 @@ public class CachingTeamServiceTest {
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsByLeagueAndDivision(anyString(), anyString())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
-        List<Team> teams3 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
-        List<Team> teams4 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
+        List<DisplayableTeam> teams3 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
+        List<DisplayableTeam> teams4 = cachingTeamService.getTeamsByLeagueAndDivision(LEAGUE, DIVISION);
 
         assertNotNull(teams3);
         assertNotNull(teams4);
@@ -128,8 +128,8 @@ public class CachingTeamServiceTest {
     public void getTeamsBySeasonAndLeagueAndDivision() throws Exception {
         when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(anyString(), anyString(), anyString())).thenReturn(teamListOne).thenReturn(teamListTwo);
 
-        List<Team> teams = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
-        List<Team> teams2 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
+        List<DisplayableTeam> teams = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
+        List<DisplayableTeam> teams2 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
 
         assertNotNull(teams);
         assertNotNull(teams2);
@@ -140,8 +140,8 @@ public class CachingTeamServiceTest {
         reset(teamServiceMock);
         when(teamServiceMock.getTeamsBySeasonAndLeagueAndDivision(anyString(), anyString(), anyString())).thenReturn(teamListTwo).thenReturn(teamListOne);
 
-        List<Team> teams3 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
-        List<Team> teams4 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
+        List<DisplayableTeam> teams3 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
+        List<DisplayableTeam> teams4 = cachingTeamService.getTeamsBySeasonAndLeagueAndDivision(SEASON, LEAGUE, DIVISION);
 
         assertNotNull(teams3);
         assertNotNull(teams4);

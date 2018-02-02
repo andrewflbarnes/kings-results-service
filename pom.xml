@@ -80,13 +80,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Kings dependencies -->
-        <dependency>
-            <groupId>com.github.andrewflbarnes</groupId>
-            <artifactId>kings-ski-wax</artifactId>
-            <version>0.1.0</version>
-        </dependency>
-
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
