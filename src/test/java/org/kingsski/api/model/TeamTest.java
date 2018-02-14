@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class DisplayableTeamTest {
+public class TeamTest {
 
     private static final String TEAM = "TEAM";
     private static final String LEAGUE = "LEAGUE";
@@ -18,7 +18,7 @@ public class DisplayableTeamTest {
 
     @Test
     public void testConstructor() {
-        DisplayableTeam team = new DisplayableTeam(TEAM, LEAGUE, DIVISION, POSITION, SCORE_1, SCORE_2, SCORE_3, SCORE_4);
+        Team team = new Team(TEAM, LEAGUE, DIVISION, POSITION, SCORE_1, SCORE_2, SCORE_3, SCORE_4);
 
         assertEquals(TEAM, team.getTeam());
         assertEquals(LEAGUE, team.getLeague());
@@ -37,7 +37,7 @@ public class DisplayableTeamTest {
 
     @Test
     public void testScoreUpdate() {
-        DisplayableTeam team = new DisplayableTeam(TEAM, LEAGUE, DIVISION, POSITION, SCORE_1, 0, 0, 0);
+        Team team = new Team(TEAM, LEAGUE, DIVISION, POSITION, SCORE_1, 0, 0, 0);
 
         assertEquals(SCORE_1, team.getR1());
         assertEquals(0, team.getR2());

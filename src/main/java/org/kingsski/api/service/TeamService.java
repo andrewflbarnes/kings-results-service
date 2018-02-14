@@ -1,13 +1,13 @@
 package org.kingsski.api.service;
 
 import org.kingsski.api.controller.TeamController;
-import org.kingsski.api.model.DisplayableTeam;
+import org.kingsski.api.model.Team;
 
 import java.util.List;
 
 /**
  * This interface defines the API for a service which provided
- * {@link DisplayableTeam}s to the {@link TeamController}
+ * {@link Team}s to the {@link TeamController}
  */
 public interface TeamService {
 	
@@ -15,18 +15,18 @@ public interface TeamService {
 	 * Get Teams for all leagues and divisions for the latest division in
 	 * the current season
 	 * 
-	 * @return a {@link List} of {@link DisplayableTeam}s
+	 * @return a {@link List} of {@link Team}s
 	 */
-	List<DisplayableTeam> getTeamsAll();
+	List<Team> getTeamsAll();
 	
 	/**
 	 * Get Teams for all divisions for a league for the latest division in
 	 * the current season
 	 * 
 	 * @param league the league to get Teams for
-	 * @return a {@link List} of {@link DisplayableTeam}s
+	 * @return a {@link List} of {@link Team}s
 	 */
-	List<DisplayableTeam> getTeamsByLeague(String league);
+	List<Team> getTeamsByLeague(String league);
 	
 	/**
 	 * Get Teams for all divisions for a specific league for a given division
@@ -34,9 +34,9 @@ public interface TeamService {
 	 * 
 	 * @param league The league to get Teams for
 	 * @param division The division the get Teams for
-	 * @return a {@link List} of {@link DisplayableTeam}s
+	 * @return a {@link List} of {@link Team}s
 	 */
-	List<DisplayableTeam> getTeamsByLeagueAndDivision(String league, String division);
+	List<Team> getTeamsByLeagueAndDivision(String league, String division);
 
 	
 	/**
@@ -49,8 +49,8 @@ public interface TeamService {
 	 * @param league The league to get Teams for
 	 * @param division The division to get Teams for
 	 *
-	 * @return a {@link List} of {@link DisplayableTeam}s
+	 * @return a {@link List} of {@link Team}s
 	 */
-	List<DisplayableTeam> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division);
+	List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division);
 
 }

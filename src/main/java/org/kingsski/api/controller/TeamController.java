@@ -1,6 +1,6 @@
 package org.kingsski.api.controller;
 
-import org.kingsski.api.model.DisplayableTeam;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,7 @@ import java.util.List;
  * for this API are path based.
  * 
  * This class uses an implementation of {@link TeamService} to provide the
- * required {@link DisplayableTeam}s
+ * required {@link Team}s
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,18 +27,18 @@ public class TeamController {
 	private TeamService teamService;
 	
 	@RequestMapping("")
-	public List<DisplayableTeam> teams() {
+	public List<Team> teams() {
 		return teamService.getTeamsAll();
 	}
 	
 	@RequestMapping("{league}")
-	public List<DisplayableTeam> teamsByLeague(@PathVariable("league") String league) {
+	public List<Team> teamsByLeague(@PathVariable("league") String league) {
 		
 		return this.teamService.getTeamsByLeague(league);
 	}
 	
 	@RequestMapping("{league}/{division}")
-	public List<DisplayableTeam> teamsByLeagueByDivision(
+	public List<Team> teamsByLeagueByDivision(
 			@PathVariable("league") String league,
 			@PathVariable("division") String division) {
 		
@@ -46,7 +46,7 @@ public class TeamController {
 	}
 	
 	@RequestMapping("{season:[0-9]{4}}/{league}/{division}")
-	public List<DisplayableTeam> teamsBySeasonByLeagueByDivision(
+	public List<Team> teamsBySeasonByLeagueByDivision(
 			@PathVariable("season") String season,
 			@PathVariable("league") String league,
 			@PathVariable("division") String division) {

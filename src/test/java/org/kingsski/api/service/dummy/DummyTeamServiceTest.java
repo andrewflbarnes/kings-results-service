@@ -1,7 +1,7 @@
 package org.kingsski.api.service.dummy;
 
 import org.junit.Test;
-import org.kingsski.api.model.DisplayableTeam;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class DummyTeamServiceTest {
 
     @Test
     public void getTeamsAll() throws Exception {
-        List<DisplayableTeam> teams = SERVICE.getTeamsAll();
+        List<Team> teams = SERVICE.getTeamsAll();
 
         assertNotNull(teams);
         assertFalse(teams.isEmpty());
@@ -23,8 +23,8 @@ public class DummyTeamServiceTest {
 
     @Test
     public void getTeamsByLeague() throws Exception {
-        List<DisplayableTeam> teams = SERVICE.getTeamsByLeague("LEAGUE");
-        List<DisplayableTeam> teams2 = SERVICE.getTeamsByLeague("OTHERLEAGUE");
+        List<Team> teams = SERVICE.getTeamsByLeague("LEAGUE");
+        List<Team> teams2 = SERVICE.getTeamsByLeague("OTHERLEAGUE");
 
         assertNotNull(teams);
         assertFalse(teams.isEmpty());
@@ -37,8 +37,8 @@ public class DummyTeamServiceTest {
 
     @Test
     public void getTeamsByLeagueAndDivision() throws Exception {
-        List<DisplayableTeam> teams = SERVICE.getTeamsByLeagueAndDivision("LEAGUE", "DIVISION");
-        List<DisplayableTeam> teams2 = SERVICE.getTeamsByLeagueAndDivision("OTHERLEAGUE", "OTHERDIVISION");
+        List<Team> teams = SERVICE.getTeamsByLeagueAndDivision("LEAGUE", "DIVISION");
+        List<Team> teams2 = SERVICE.getTeamsByLeagueAndDivision("OTHERLEAGUE", "OTHERDIVISION");
 
         assertNotNull(teams);
         assertFalse(teams.isEmpty());
@@ -51,8 +51,8 @@ public class DummyTeamServiceTest {
 
     @Test
     public void getTeamsBySeasonAndLeagueAndDivision() throws Exception {
-        List<DisplayableTeam> teams = SERVICE.getTeamsBySeasonAndLeagueAndDivision("SEASON", "LEAGUE", "DIVISION");
-        List<DisplayableTeam> teams2 = SERVICE.getTeamsBySeasonAndLeagueAndDivision("OTHERSEASON", "OTHERLEAGUE", "OTHERDIVISION");
+        List<Team> teams = SERVICE.getTeamsBySeasonAndLeagueAndDivision("SEASON", "LEAGUE", "DIVISION");
+        List<Team> teams2 = SERVICE.getTeamsBySeasonAndLeagueAndDivision("OTHERSEASON", "OTHERLEAGUE", "OTHERDIVISION");
 
         assertNotNull(teams);
         assertFalse(teams.isEmpty());

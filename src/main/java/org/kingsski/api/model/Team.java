@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "kings_teams", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"league", "division", "position"})
 })
-public class DisplayableTeam {
+public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +48,7 @@ public class DisplayableTeam {
     @Transient
     private int orderedScore4;
 
-    public DisplayableTeam(String team, String league, String division, int position, int r1, int r2, int r3, int r4) {
+    public Team(String team, String league, String division, int position, int r1, int r2, int r3, int r4) {
         this.team = team;
         this.league = league;
         this.division = division;

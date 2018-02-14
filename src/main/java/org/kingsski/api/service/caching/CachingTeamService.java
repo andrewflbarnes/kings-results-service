@@ -1,6 +1,6 @@
 package org.kingsski.api.service.caching;
 
-import org.kingsski.api.model.DisplayableTeam;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * Decorator implementation of {@link TeamService} which caches results provided by another {@link TeamService}.
  * Extends the {@link AbstractCachingService} class to provide the caching functionality.
  */
-public class CachingTeamService extends AbstractCachingService<DisplayableTeam> implements TeamService {
+public class CachingTeamService extends AbstractCachingService<Team> implements TeamService {
 
     private static final String ALL = "ALL";
     private static final String LEAGUE = "LEAGUE";
@@ -27,27 +27,27 @@ public class CachingTeamService extends AbstractCachingService<DisplayableTeam> 
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsAll() {
+    public List<Team> getTeamsAll() {
         return getFromCache(ALL);
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsByLeague(String league) {
+    public List<Team> getTeamsByLeague(String league) {
         return getFromCache(LEAGUE, league);
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsByLeagueAndDivision(String league, String division) {
+    public List<Team> getTeamsByLeagueAndDivision(String league, String division) {
         return getFromCache(LEAGUE_DIVISION, league, division);
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
+    public List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
         return getFromCache(SEASON_LEAGUE_DIVISION, season, league, division);
     }
 
     @Override
-    protected List<DisplayableTeam> itemsFromService(String type, String... args) {
+    protected List<Team> itemsFromService(String type, String... args) {
         switch (type) {
             case ALL:
                 return teamService.getTeamsAll();

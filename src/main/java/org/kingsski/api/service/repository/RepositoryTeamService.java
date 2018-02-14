@@ -1,6 +1,6 @@
 package org.kingsski.api.service.repository;
 
-import org.kingsski.api.model.DisplayableTeam;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ public class RepositoryTeamService implements TeamService {
     private TeamRepository teamRepository;
 
     @Override
-    public List<DisplayableTeam> getTeamsAll() {
-        List<DisplayableTeam> teams = new ArrayList<>();
+    public List<Team> getTeamsAll() {
+        List<Team> teams = new ArrayList<>();
         teamRepository
                 .findAll()
                 .forEach(t -> {
@@ -27,23 +27,23 @@ public class RepositoryTeamService implements TeamService {
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsByLeague(String league) {
-        List<DisplayableTeam> teams = teamRepository.findByLeague(league);
-        teams.forEach(DisplayableTeam::updateScores);
+    public List<Team> getTeamsByLeague(String league) {
+        List<Team> teams = teamRepository.findByLeague(league);
+        teams.forEach(Team::updateScores);
         return teams;
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsByLeagueAndDivision(String league, String division) {
-        List<DisplayableTeam> teams = teamRepository.findByLeagueAndDivision(league, division);
-        teams.forEach(DisplayableTeam::updateScores);
+    public List<Team> getTeamsByLeagueAndDivision(String league, String division) {
+        List<Team> teams = teamRepository.findByLeagueAndDivision(league, division);
+        teams.forEach(Team::updateScores);
         return teams;
     }
 
     @Override
-    public List<DisplayableTeam> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
-        List<DisplayableTeam> teams = teamRepository.findByLeagueAndDivision(league, division);
-        teams.forEach(DisplayableTeam::updateScores);
+    public List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
+        List<Team> teams = teamRepository.findByLeagueAndDivision(league, division);
+        teams.forEach(Team::updateScores);
         return teams;
     }
 }

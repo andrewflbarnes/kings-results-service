@@ -3,11 +3,11 @@ package org.kingsski.api.service;
 import java.util.List;
 
 import org.kingsski.api.controller.RaceController;
-import org.kingsski.api.model.DisplayableRace;
+import org.kingsski.api.model.Race;
 
 /**
  * This interface defines the API for a service which provided
- * {@link DisplayableRace}s to the {@link RaceController}
+ * {@link Race}s to the {@link RaceController}
  */
 public interface RaceService {
 	
@@ -15,18 +15,18 @@ public interface RaceService {
 	 * Get races for all leagues and divisions for the latest round in
 	 * the current season
 	 * 
-	 * @return a {@link List} of {@link DisplayableRace}s
+	 * @return a {@link List} of {@link Race}s
 	 */
-	List<DisplayableRace> getRacesAll();
+	List<Race> getRacesAll();
 	
 	/**
 	 * Get races for all divisions for a league for the latest round in
 	 * the current season
 	 * 
 	 * @param league the league to get races for
-	 * @return a {@link List} of {@link DisplayableRace}s
+	 * @return a {@link List} of {@link Race}s
 	 */
-	List<DisplayableRace> getRacesByLeague(String league);
+	List<Race> getRacesByLeague(String league);
 	
 	/**
 	 * Get races for all divisions for a specific league for a given round
@@ -34,9 +34,9 @@ public interface RaceService {
 	 * 
 	 * @param league The league to get races for
 	 * @param round The round the get races for
-	 * @return a {@link List} of {@link DisplayableRace}s
+	 * @return a {@link List} of {@link Race}s
 	 */
-	List<DisplayableRace> getRacesByLeagueAndRound(String league, String round);
+	List<Race> getRacesByLeagueAndRound(String league, String round);
 
 	
 	/**
@@ -48,8 +48,8 @@ public interface RaceService {
 	 * @param round The season to get races for. A season is specified by
 	 * the year it is started in. e.g. for the 2016/2017 season this would
 	 * take the value "2016"
-	 * @return a {@link List} of {@link DisplayableRace}s
+	 * @return a {@link List} of {@link Race}s
 	 */
-	List<DisplayableRace> getRacesBySeasonAndLeagueAndRound(String season, String league, String round);
+	List<Race> getRacesBySeasonAndLeagueAndRound(String season, String league, String round);
 
 }
