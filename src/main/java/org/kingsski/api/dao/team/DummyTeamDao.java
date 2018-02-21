@@ -1,20 +1,20 @@
-package org.kingsski.api.service.dummy;
+package org.kingsski.api.dao.team;
 
+import org.kingsski.api.dao.team.TeamDao;
 import org.kingsski.api.model.Team;
-import org.kingsski.api.service.TeamService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * A dummy implementation of the {@link TeamService}  interface. This class
+ * A dummy implementation of the {@link TeamDao}  interface. This class
  * has a single static list of {@link Team}s which it returns for all
  * method calls.
  *
  * @author Barnesly
  */
-public class DummyTeamService implements TeamService {
+public class DummyTeamDao implements TeamDao {
 
     private static final List<Team> TEAMS;
 

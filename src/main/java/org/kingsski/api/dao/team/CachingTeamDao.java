@@ -1,29 +1,29 @@
-package org.kingsski.api.service.caching;
+package org.kingsski.api.dao.team;
 
+import org.kingsski.api.dao.caching.AbstractCachingDao;
 import org.kingsski.api.model.Team;
-import org.kingsski.api.service.TeamService;
 
 import java.util.List;
 
 /**
- * Decorator implementation of {@link TeamService} which caches results provided by another {@link TeamService}.
- * Extends the {@link AbstractCachingService} class to provide the caching functionality.
+ * Decorator implementation of {@link TeamDao} which caches results provided by another {@link TeamDao}.
+ * Extends the {@link AbstractCachingDao} class to provide the caching functionality.
  */
-public class CachingTeamService extends AbstractCachingService<Team> implements TeamService {
+public class CachingTeamDao extends AbstractCachingDao<Team> implements TeamDao {
 
     private static final String ALL = "ALL";
     private static final String LEAGUE = "LEAGUE";
     private static final String LEAGUE_DIVISION = "LEAGUE_DIVISION";
     private static final String SEASON_LEAGUE_DIVISION = "SEASON_LEAGUE_DIVISION";
 
-    private TeamService teamService;
+    private TeamDao teamDao;
 
     /**
      * Default constructor
      */
-    public CachingTeamService(TeamService teamService) {
+    public CachingTeamDao(TeamDao teamDao) {
         super();
-        this.teamService = teamService;
+        this.teamDao = teamDao;
     }
 
     @Override
@@ -50,15 +50,15 @@ public class CachingTeamService extends AbstractCachingService<Team> implements 
     protected List<Team> itemsFromService(String type, String... args) {
         switch (type) {
             case ALL:
-                return teamService.getTeamsAll();
+                return teamDao.getTeamsAll();
             case LEAGUE:
-                return teamService.getTeamsByLeague(args[0]);
+                return teamDao.getTeamsByLeague(args[0]);
             case LEAGUE_DIVISION:
-                return teamService.getTeamsByLeagueAndDivision(args[0], args[1]);
+                return teamDao.getTeamsByLeagueAndDivision(args[0], args[1]);
             case SEASON_LEAGUE_DIVISION:
-                return teamService.getTeamsBySeasonAndLeagueAndDivision(args[0], args[1], args[2]);
+                return teamDao.getTeamsBySeasonAndLeagueAndDivision(args[0], args[1], args[2]);
             default:
-                throw new IllegalArgumentException("Unrecognised CachingTeamService type: \"" + type + "\"");
+                throw new IllegalArgumentException("Unrecognised CachingTeamDao type: \"" + type + "\"");
         }
     }
 }

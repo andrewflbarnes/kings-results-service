@@ -1,17 +1,18 @@
-package org.kingsski.api.service.stub;
+package org.kingsski.api.dao.race;
 
 import org.junit.Test;
+import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.race.StubRaceDao;
 import org.kingsski.api.model.Race;
-import org.kingsski.api.service.RaceService;
 
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class StubRaceServiceTest {
+public class StubRaceDaoTest {
 
-    private static final RaceService SERVICE = new StubRaceService();
+    private static final RaceDao SERVICE = new StubRaceDao();
 
     @Test
     public void getRacesAll() throws Exception {

@@ -15,47 +15,46 @@ import java.util.List;
  * races as requested. The base URL for requests is "/races". All parameters
  * for this API are path based.
  * 
- * This class uses an implementation of {@link RaceService} to provide the
- * required {@list Race}s
+ * This class uses {@link RaceService} to provide the required {@link Race}s
  */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/races")
 public class RaceController {
-	
-	private RaceService raceService;
-	
-	@RequestMapping("")
-	public List<Race> races() {
-		return raceService.getRacesAll();
-	}
-	
-	@RequestMapping("{league}")
-	public List<Race> racesByLeague(@PathVariable("league") String league) {
-		
-		return this.raceService.getRacesByLeague(league);
-	}
-	
-	@RequestMapping("{league}/{round}")
-	public List<Race> racesByLeagueByRound(
-			@PathVariable("league") String league,
-			@PathVariable("round") String round) {
-		
-		return this.raceService.getRacesByLeagueAndRound(league, round);
-	}
-	
-	@RequestMapping("{season:[0-9]{4}}/{league}/{round}")
-	public List<Race> racesBySeasonByLeagueByRound(
-			@PathVariable("season") String season,
-			@PathVariable("league") String league,
-			@PathVariable("round") String round) {
-		
-		return this.raceService.getRacesBySeasonAndLeagueAndRound(season, league, round);
-	}
-	
-	@Required
-	public void setRaceService(RaceService raceService) {
-		this.raceService = raceService;
-	}
+
+    private RaceService raceService;
+
+    @RequestMapping("")
+    public List<Race> races() {
+        return raceService.getRacesAll();
+    }
+
+    @RequestMapping("{league}")
+    public List<Race> racesByLeague(@PathVariable("league") String league) {
+
+        return raceService.getRacesByLeague(league);
+    }
+
+    @RequestMapping("{league}/{round}")
+    public List<Race> racesByLeagueByRound(
+            @PathVariable("league") String league,
+            @PathVariable("round") String round) {
+
+        return raceService.getRacesByLeagueAndRound(league, round);
+    }
+
+    @RequestMapping("{season:[0-9]{4}}/{league}/{round}")
+    public List<Race> racesBySeasonByLeagueByRound(
+            @PathVariable("season") String season,
+            @PathVariable("league") String league,
+            @PathVariable("round") String round) {
+
+        return raceService.getRacesBySeasonAndLeagueAndRound(season, league, round);
+    }
+
+    @Required
+    public void setRaceService(RaceService raceService) {
+        this.raceService = raceService;
+    }
 
 }

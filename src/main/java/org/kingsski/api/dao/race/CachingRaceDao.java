@@ -1,29 +1,29 @@
-package org.kingsski.api.service.caching;
+package org.kingsski.api.dao.race;
 
+import org.kingsski.api.dao.caching.AbstractCachingDao;
 import org.kingsski.api.model.Race;
-import org.kingsski.api.service.RaceService;
 
 import java.util.List;
 
 /**
- * Decorator implementation of {@link RaceService} which caches results provided by another {@link RaceService}.
- * Extends the {@link AbstractCachingService} class to provide the caching functionality.
+ * Decorator implementation of {@link RaceDao} which caches results provided by another {@link RaceDao}.
+ * Extends the {@link AbstractCachingDao} class to provide the caching functionality.
  */
-public class CachingRaceService extends AbstractCachingService<Race> implements RaceService {
+public class CachingRaceDao extends AbstractCachingDao<Race> implements RaceDao {
 
     private static final String ALL = "ALL";
     private static final String LEAGUE = "LEAGUE";
     private static final String LEAGUE_ROUND = "LEAGUE_ROUND";
     private static final String SEASON_LEAGUE_ROUND = "SEASON_LEAGUE_ROUND";
 
-    private RaceService raceService;
+    private RaceDao raceDao;
 
     /**
      * Default constructor
      */
-    public CachingRaceService(RaceService raceService) {
+    public CachingRaceDao(RaceDao raceDao) {
         super();
-        this.raceService = raceService;
+        this.raceDao = raceDao;
     }
 
     @Override
@@ -50,15 +50,15 @@ public class CachingRaceService extends AbstractCachingService<Race> implements 
     protected List<Race> itemsFromService(String type, String... args) {
         switch (type) {
             case ALL:
-                return raceService.getRacesAll();
+                return raceDao.getRacesAll();
             case LEAGUE:
-                return raceService.getRacesByLeague(args[0]);
+                return raceDao.getRacesByLeague(args[0]);
             case LEAGUE_ROUND:
-                return raceService.getRacesByLeagueAndRound(args[0], args[1]);
+                return raceDao.getRacesByLeagueAndRound(args[0], args[1]);
             case SEASON_LEAGUE_ROUND:
-                return raceService.getRacesBySeasonAndLeagueAndRound(args[0], args[1], args[2]);
+                return raceDao.getRacesBySeasonAndLeagueAndRound(args[0], args[1], args[2]);
             default:
-                throw new IllegalArgumentException("Unrecognised CachingRaceService type: \"" + type + "\"");
+                throw new IllegalArgumentException("Unrecognised CachingRaceDao type: \"" + type + "\"");
         }
     }
 }

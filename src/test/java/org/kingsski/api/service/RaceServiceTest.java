@@ -1,9 +1,9 @@
-package org.kingsski.api.controller;
+package org.kingsski.api.service;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.service.RaceService;
+import org.kingsski.api.dao.race.RaceDao;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -11,35 +11,35 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
- * Test class for {@link RaceController}
+ * Test class for {@link RaceService}
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RaceControllerTest {
+public class RaceServiceTest {
 
     @Mock
-    private RaceService raceServiceMock;
+    private RaceDao raceDaoMock;
 
-    private final RaceController controller = new RaceController();
+    private final RaceService raceService = new RaceService();
 
     @Before
     public void setUp() throws Exception {
-        controller.setRaceService(raceServiceMock);
+        raceService.setRaceDao(raceDaoMock);
     }
 
     @Test
     public void testGetAllRaces() {
-        controller.races();
+        raceService.getRacesAll();
 
-        verify(raceServiceMock, times(1)).getRacesAll();
+        verify(raceDaoMock, times(1)).getRacesAll();
     }
 
     @Test
     public void testGetRacesByLeague() {
         final String league = "LEAGUE";
 
-        controller.racesByLeague(league);
+        raceService.getRacesByLeague(league);
 
-        verify(raceServiceMock, times(1)).getRacesByLeague(league);
+        verify(raceDaoMock, times(1)).getRacesByLeague(league);
     }
 
     @Test
@@ -47,9 +47,9 @@ public class RaceControllerTest {
         final String league = "LEAGUE";
         final String round = "ROUND";
 
-        controller.racesByLeagueByRound(league, round);
+        raceService.getRacesByLeagueAndRound(league, round);
 
-        verify(raceServiceMock, times(1)).getRacesByLeagueAndRound(league, round);
+        verify(raceDaoMock, times(1)).getRacesByLeagueAndRound(league, round);
     }
 
     @Test
@@ -58,8 +58,8 @@ public class RaceControllerTest {
         final String season = "SEASON";
         final String round = "ROUND";
 
-        controller.racesBySeasonByLeagueByRound(season, league, round);
+        raceService.getRacesBySeasonAndLeagueAndRound(season, league, round);
 
-        verify(raceServiceMock, times(1)).getRacesBySeasonAndLeagueAndRound(season, league, round);
+        verify(raceDaoMock, times(1)).getRacesBySeasonAndLeagueAndRound(season, league, round);
     }
 }

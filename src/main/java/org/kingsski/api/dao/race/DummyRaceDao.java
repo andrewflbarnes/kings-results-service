@@ -1,14 +1,14 @@
-package org.kingsski.api.service.dummy;
+package org.kingsski.api.dao.race;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.kingsski.api.dao.race.RaceDao;
 import org.kingsski.api.model.Race;
-import org.kingsski.api.service.RaceService;
 
 /**
- * A dummy implementation of the {@link RaceService}  interface. This class
+ * A dummy implementation of the {@link RaceDao}  interface. This class
  * has a single static list of {@link Race}s which it returns for all
  * method calls.
  * <p>
@@ -22,7 +22,7 @@ import org.kingsski.api.service.RaceService;
  *
  * @author Barnesly
  */
-public class DummyRaceService implements RaceService {
+public class DummyRaceDao implements RaceDao {
 
     private static final List<Race> RACES;
 

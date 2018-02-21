@@ -1,17 +1,15 @@
-package org.kingsski.api.service.repository;
+package org.kingsski.api.dao.team;
 
 import org.kingsski.api.model.Team;
-import org.kingsski.api.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RepositoryTeamService implements TeamService {
+public class RepositoryTeamDao implements TeamDao {
 
-    @Autowired
     private TeamRepository teamRepository;
 
     @Override
@@ -45,5 +43,10 @@ public class RepositoryTeamService implements TeamService {
         List<Team> teams = teamRepository.findByLeagueAndDivision(league, division);
         teams.forEach(Team::updateScores);
         return teams;
+    }
+
+    @Required
+    public void setTeamRepository(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
     }
 }

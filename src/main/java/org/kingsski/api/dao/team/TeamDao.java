@@ -1,17 +1,15 @@
-package org.kingsski.api.service;
+package org.kingsski.api.dao.team;
 
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.controller.TeamController;
 import org.kingsski.api.model.Team;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 
 /**
- * This class defines the service providing {@link Team}s
+ * This interface defines the API for a dao which provided
+ * {@link Team}s to the {@link TeamController}
  */
-public class TeamService {
-
-    private TeamDao teamDao;
+public interface TeamDao {
 
     /**
      * Get Teams for all leagues and divisions for the latest division in
@@ -19,9 +17,7 @@ public class TeamService {
      *
      * @return a {@link List} of {@link Team}s
      */
-    public List<Team> getTeamsAll() {
-        return teamDao.getTeamsAll();
-    }
+    List<Team> getTeamsAll();
 
     /**
      * Get Teams for all divisions for a league for the latest division in
@@ -30,9 +26,7 @@ public class TeamService {
      * @param league the league to get Teams for
      * @return a {@link List} of {@link Team}s
      */
-    public List<Team> getTeamsByLeague(String league) {
-        return teamDao.getTeamsByLeague(league);
-    }
+    List<Team> getTeamsByLeague(String league);
 
     /**
      * Get Teams for all divisions for a specific league for a given division
@@ -42,9 +36,8 @@ public class TeamService {
      * @param division The division the get Teams for
      * @return a {@link List} of {@link Team}s
      */
-    public List<Team> getTeamsByLeagueAndDivision(String league, String division) {
-        return teamDao.getTeamsByLeagueAndDivision(league, division);
-    }
+    List<Team> getTeamsByLeagueAndDivision(String league, String division);
+
 
     /**
      * Get Teams for all divisions for a specific league for a given division
@@ -58,12 +51,6 @@ public class TeamService {
      *
      * @return a {@link List} of {@link Team}s
      */
-    public List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
-        return teamDao.getTeamsBySeasonAndLeagueAndDivision(season, league, division);
-    }
+    List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division);
 
-    @Required
-    public void setTeamDao(TeamDao teamDao) {
-        this.teamDao = teamDao;
-    }
 }
