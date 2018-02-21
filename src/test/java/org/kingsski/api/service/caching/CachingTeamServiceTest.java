@@ -3,8 +3,8 @@ package org.kingsski.api.service.caching;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 

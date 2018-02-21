@@ -1,13 +1,12 @@
 package org.kingsski.api.service.stub;
 
 import org.junit.Test;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 

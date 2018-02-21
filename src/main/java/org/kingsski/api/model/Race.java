@@ -8,8 +8,9 @@ import javax.validation.constraints.NotNull;
  * This class is designed as a DTO/VO only and is not
  * appropriate for processing actual races!
  */
-public class DisplayableRace {
+public class Race {
 
+	private int raceId;
 	private String league;
 	private String round;
 	private String set;
@@ -23,7 +24,7 @@ public class DisplayableRace {
 	private boolean next;
 
 	/**
-	 * Standard constructor for a new {@link DisplayableRace}
+	 * Standard constructor for a new {@link Race}
 	 * 
 	 * @param raceNo The number of this race in the current round
 	 * @param division The division this race belongs to
@@ -34,9 +35,9 @@ public class DisplayableRace {
 	 * @param teamTwoDsq The reason the second team was disqualified
 	 * @param next true if this is the next race being run, false otherwise
 	 */
-	public DisplayableRace(@NotNull String league, @NotNull String round, @NotNull String set, int raceNo,
-						   @NotNull String division, @NotNull String teamOne, @NotNull String teamTwo,
-						   String winner, String teamOneDsq, String teamTwoDsq, boolean next) {
+	public Race(@NotNull String league, @NotNull String round, @NotNull String set, int raceNo,
+				@NotNull String division, @NotNull String teamOne, @NotNull String teamTwo,
+				String winner, String teamOneDsq, String teamTwoDsq, boolean next) {
 		this.league = league;
 		this.round = round;
 		this.set = set;
@@ -53,9 +54,9 @@ public class DisplayableRace {
 	/**
 	 * Convenience constructor which clones another instance
 	 * 
-	 * @param raceToCopy The {@link DisplayableRace} to be cloned.
+	 * @param raceToCopy The {@link Race} to be cloned.
 	 */
-	public DisplayableRace(DisplayableRace raceToCopy) {
+	public Race(Race raceToCopy) {
 		this.league = raceToCopy.getLeague();
 		this.round = raceToCopy.getRound();
 		this.set = raceToCopy.getSet();
@@ -205,8 +206,8 @@ public class DisplayableRace {
 			return false;
 		}
 		
-		if (DisplayableRace.class.equals(obj.getClass())) {
-			DisplayableRace other = (DisplayableRace)obj;
+		if (Race.class.equals(obj.getClass())) {
+			Race other = (Race)obj;
 			
 			if (this.league == null || this.round == null || this.set == null ||
 					this.division == null || this.teamOne == null || this.teamTwo == null) {

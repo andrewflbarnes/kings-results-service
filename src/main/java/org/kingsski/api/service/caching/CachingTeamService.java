@@ -1,7 +1,7 @@
 package org.kingsski.api.service.caching;
 
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package org.kingsski.api.service.dummy;
 
 import org.junit.Test;
-import org.kingsski.api.model.DisplayableRace;
+import org.kingsski.api.model.Race;
 import org.kingsski.api.service.RaceService;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class DummyRaceServiceTest {
 
     @Test
     public void getRacesAll() throws Exception {
-        List<DisplayableRace> races = SERVICE.getRacesAll();
+        List<Race> races = SERVICE.getRacesAll();
 
         assertNotNull(races);
         assertFalse(races.isEmpty());
@@ -24,8 +24,8 @@ public class DummyRaceServiceTest {
 
     @Test
     public void getRacesByLeague() throws Exception {
-        List<DisplayableRace> races = SERVICE.getRacesByLeague("LEAGUE");
-        List<DisplayableRace> races2 = SERVICE.getRacesByLeague("OTHERLEAGUE");
+        List<Race> races = SERVICE.getRacesByLeague("LEAGUE");
+        List<Race> races2 = SERVICE.getRacesByLeague("OTHERLEAGUE");
 
         assertNotNull(races);
         assertFalse(races.isEmpty());
@@ -38,8 +38,8 @@ public class DummyRaceServiceTest {
 
     @Test
     public void getRacesByLeagueAndRound() throws Exception {
-        List<DisplayableRace> races = SERVICE.getRacesByLeagueAndRound("LEAGUE", "ROUND");
-        List<DisplayableRace> races2 = SERVICE.getRacesByLeagueAndRound("OTHERLEAGUE", "OTHERROUND");
+        List<Race> races = SERVICE.getRacesByLeagueAndRound("LEAGUE", "ROUND");
+        List<Race> races2 = SERVICE.getRacesByLeagueAndRound("OTHERLEAGUE", "OTHERROUND");
 
         assertNotNull(races);
         assertFalse(races.isEmpty());
@@ -52,8 +52,8 @@ public class DummyRaceServiceTest {
 
     @Test
     public void getRacesBySeasonAndLeagueAndRound() throws Exception {
-        List<DisplayableRace> races = SERVICE.getRacesBySeasonAndLeagueAndRound("SEASON", "LEAGUE", "ROUND");
-        List<DisplayableRace> races2 = SERVICE.getRacesBySeasonAndLeagueAndRound("OTHERSEASON", "OTHERLEAGUE", "OTHERROUND");
+        List<Race> races = SERVICE.getRacesBySeasonAndLeagueAndRound("SEASON", "LEAGUE", "ROUND");
+        List<Race> races2 = SERVICE.getRacesBySeasonAndLeagueAndRound("OTHERSEASON", "OTHERLEAGUE", "OTHERROUND");
 
         assertNotNull(races);
         assertFalse(races.isEmpty());

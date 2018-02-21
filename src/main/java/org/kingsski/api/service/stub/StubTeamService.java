@@ -1,7 +1,7 @@
 package org.kingsski.api.service.stub;
 
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;

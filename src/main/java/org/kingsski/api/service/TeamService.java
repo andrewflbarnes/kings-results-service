@@ -1,7 +1,7 @@
 package org.kingsski.api.service;
 
 import org.kingsski.api.controller.TeamController;
-import org.kingsski.wax.data.Team;
+import org.kingsski.api.model.Team;
 
 import java.util.List;
 

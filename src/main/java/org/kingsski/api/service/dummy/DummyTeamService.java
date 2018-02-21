@@ -1,7 +1,7 @@
 package org.kingsski.api.service.dummy;
 
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,14 +61,7 @@ public class DummyTeamService implements TeamService {
     }
 
     private static Team createTeam(int id, String league, String club, String name, String div, int score) {
-        Team team = new Team();
-        team.setTeamId(id);
-        team.setClubName(club);
-        team.setTeamName(name);
-        team.setLeague(league);
-        team.setDivision(div);
-        team.setScoreR1(score);
-        return team;
+        return new Team(name, league, div, id, score, 0, 0, 0);
     }
 
 }

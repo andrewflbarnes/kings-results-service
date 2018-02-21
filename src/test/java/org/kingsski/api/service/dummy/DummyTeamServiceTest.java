@@ -1,12 +1,14 @@
 package org.kingsski.api.service.dummy;
 
 import org.junit.Test;
+import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
-import org.kingsski.wax.data.Team;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class DummyTeamServiceTest {
     private static final TeamService SERVICE = new DummyTeamService();

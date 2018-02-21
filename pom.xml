@@ -10,7 +10,14 @@
         <version>1.5.6.RELEASE</version>
     </parent>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <spring.boot.version>1.5.9.RELEASE</spring.boot.version>
+        <hsqldb.version>2.4.0</hsqldb.version>
+    </properties>
+
     <profiles>
+        <!-- containers -->
         <profile>
             <id>tomcat</id>
             <activation>
@@ -26,6 +33,26 @@
                 <spring.boot.container>spring-boot-starter-jetty</spring.boot.container>
             </properties>
         </profile>
+        <profile>
+            <id>undertow</id>
+            <properties>
+                <spring.boot.container>spring-boot-starter-undertow</spring.boot.container>
+            </properties>
+        </profile>
+        <!-- db -->
+        <profile>
+            <id>mysql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>6.0.6</version>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
     <packaging>war</packaging>
@@ -35,19 +62,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+        </dependency>
 
         <!-- build dependent dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>${spring.boot.container}</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- Kings dependencies -->
-        <dependency>
-            <groupId>com.github.andrewflbarnes</groupId>
-            <artifactId>kings-ski-wax</artifactId>
-            <version>0.1.0</version>
         </dependency>
 
         <!-- Test dependencies -->
@@ -62,11 +92,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
 
     <build>
         <finalName>kings-race-service</finalName>

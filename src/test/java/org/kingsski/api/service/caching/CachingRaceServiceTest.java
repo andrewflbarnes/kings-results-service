@@ -3,7 +3,7 @@ package org.kingsski.api.service.caching;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.model.DisplayableRace;
+import org.kingsski.api.model.Race;
 import org.kingsski.api.service.RaceService;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -29,15 +29,15 @@ public class CachingRaceServiceTest {
     private static final String ROUND = "round";
     private static final String SEASON = "season";
 
-    private final DisplayableRace raceMock = mock(DisplayableRace.class);
+    private final Race raceMock = mock(Race.class);
     private final RaceService raceServiceMock = mock(RaceService.class);
     @Spy
     private final CachingRaceService cachingRaceService = new CachingRaceService(raceServiceMock);
 
-    private final List<DisplayableRace> raceListOne = new ArrayList<DisplayableRace>() {{
+    private final List<Race> raceListOne = new ArrayList<Race>() {{
         add(raceMock);
     }};
-    private final List<DisplayableRace> raceListTwo = new ArrayList<DisplayableRace>() {{
+    private final List<Race> raceListTwo = new ArrayList<Race>() {{
         add(raceMock);
     }};
 
@@ -50,8 +50,8 @@ public class CachingRaceServiceTest {
     public void getRacesAll() throws Exception {
         when(raceServiceMock.getRacesAll()).thenReturn(raceListOne).thenReturn(raceListTwo);
 
-        List<DisplayableRace> races = cachingRaceService.getRacesAll();
-        List<DisplayableRace> races2 = cachingRaceService.getRacesAll();
+        List<Race> races = cachingRaceService.getRacesAll();
+        List<Race> races2 = cachingRaceService.getRacesAll();
 
         assertNotNull(races);
         assertNotNull(races2);
@@ -62,8 +62,8 @@ public class CachingRaceServiceTest {
         reset(raceServiceMock);
         when(raceServiceMock.getRacesAll()).thenReturn(raceListTwo).thenReturn(raceListOne);
 
-        List<DisplayableRace> races3 = cachingRaceService.getRacesAll();
-        List<DisplayableRace> races4 = cachingRaceService.getRacesAll();
+        List<Race> races3 = cachingRaceService.getRacesAll();
+        List<Race> races4 = cachingRaceService.getRacesAll();
 
         assertNotNull(races3);
         assertNotNull(races4);
@@ -76,8 +76,8 @@ public class CachingRaceServiceTest {
     public void getRacesByLeague() throws Exception {
         when(raceServiceMock.getRacesByLeague(anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
-        List<DisplayableRace> races = cachingRaceService.getRacesByLeague(LEAGUE);
-        List<DisplayableRace> races2 = cachingRaceService.getRacesByLeague(LEAGUE);
+        List<Race> races = cachingRaceService.getRacesByLeague(LEAGUE);
+        List<Race> races2 = cachingRaceService.getRacesByLeague(LEAGUE);
 
         assertNotNull(races);
         assertNotNull(races2);
@@ -88,8 +88,8 @@ public class CachingRaceServiceTest {
         reset(raceServiceMock);
         when(raceServiceMock.getRacesByLeague(anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
-        List<DisplayableRace> races3 = cachingRaceService.getRacesByLeague(LEAGUE);
-        List<DisplayableRace> races4 = cachingRaceService.getRacesByLeague(LEAGUE);
+        List<Race> races3 = cachingRaceService.getRacesByLeague(LEAGUE);
+        List<Race> races4 = cachingRaceService.getRacesByLeague(LEAGUE);
 
         assertNotNull(races3);
         assertNotNull(races4);
@@ -102,8 +102,8 @@ public class CachingRaceServiceTest {
     public void getRacesByLeagueAndRound() throws Exception {
         when(raceServiceMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
-        List<DisplayableRace> races = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
-        List<DisplayableRace> races2 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
+        List<Race> races = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
+        List<Race> races2 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
 
         assertNotNull(races);
         assertNotNull(races2);
@@ -114,8 +114,8 @@ public class CachingRaceServiceTest {
         reset(raceServiceMock);
         when(raceServiceMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
-        List<DisplayableRace> races3 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
-        List<DisplayableRace> races4 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
+        List<Race> races3 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
+        List<Race> races4 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
 
         assertNotNull(races3);
         assertNotNull(races4);
@@ -128,8 +128,8 @@ public class CachingRaceServiceTest {
     public void getRacesBySeasonAndLeagueAndRound() throws Exception {
         when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
-        List<DisplayableRace> races = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
-        List<DisplayableRace> races2 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
+        List<Race> races = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
+        List<Race> races2 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
 
         assertNotNull(races);
         assertNotNull(races2);
@@ -140,8 +140,8 @@ public class CachingRaceServiceTest {
         reset(raceServiceMock);
         when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
-        List<DisplayableRace> races3 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
-        List<DisplayableRace> races4 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
+        List<Race> races3 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
+        List<Race> races4 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
 
         assertNotNull(races3);
         assertNotNull(races4);
