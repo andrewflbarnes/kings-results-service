@@ -1,6 +1,5 @@
 package org.kingsski.api.dao.team;
 
-import org.kingsski.api.dao.team.TeamDao;
 import org.kingsski.api.model.Team;
 
 import java.util.ArrayList;
@@ -17,25 +16,37 @@ import java.util.List;
 public class DummyTeamDao implements TeamDao {
 
     private static final List<Team> TEAMS;
+    private static final String NORTHERN = "NORTHERN";
+    private static final String SKUM = "SKUM";
+    private static final String MIXED = "M";
+    private static final String SKUM1 = "SKUM 1";
+    private static final String SKUM2 = "SKUM 2";
+    private static final String SKKUM3 = "SKUM 3";
+    private static final String SKUM4 = "SKUM 4";
+    private static final String LADIES = "L";
+    private static final String BOARD = "B";
+    private static final String LEEDS = "Leeds";
+    private static final String LEEDS1 = "Leeds 1";
+    private static final String LEEDS2 = "Leeds 2";
 
     // Static initialiser for the TEAMS variable
     static {
-        List<Team> dummyTeams = new ArrayList<Team>();
-        dummyTeams.add(createTeam(1, "NORTHERN", "SKUM", "SKUM 1", "M", 20));
-        dummyTeams.add(createTeam(2, "NORTHERN", "SKUM", "SKUM 2", "M", 10));
-        dummyTeams.add(createTeam(3, "NORTHERN", "SKUM", "SKUM 3", "M", 2));
-        dummyTeams.add(createTeam(4, "NORTHERN", "SKUM", "SKUM 4", "M", 0));
-        dummyTeams.add(createTeam(5, "NORTHERN", "SKUM", "SKUM 1", "L", 10));
-        dummyTeams.add(createTeam(6, "NORTHERN", "SKUM", "SKUM 2", "L", 2));
-        dummyTeams.add(createTeam(7, "NORTHERN", "SKUM", "SKUM 1", "B", 10));
-        dummyTeams.add(createTeam(8, "NORTHERN", "SKUM", "SKUM 2", "B", 2));
+        List<Team> dummyTeams = new ArrayList<>();
+        dummyTeams.add(createTeam(1, NORTHERN, SKUM, SKUM1, MIXED, 20));
+        dummyTeams.add(createTeam(2, NORTHERN, SKUM, SKUM2, MIXED, 10));
+        dummyTeams.add(createTeam(3, NORTHERN, SKUM, SKKUM3, MIXED, 2));
+        dummyTeams.add(createTeam(4, NORTHERN, SKUM, SKUM4, MIXED, 0));
+        dummyTeams.add(createTeam(5, NORTHERN, SKUM, SKUM1, LADIES, 10));
+        dummyTeams.add(createTeam(6, NORTHERN, SKUM, SKUM2, LADIES, 2));
+        dummyTeams.add(createTeam(7, NORTHERN, SKUM, SKUM1, BOARD, 10));
+        dummyTeams.add(createTeam(8, NORTHERN, SKUM, SKUM2, BOARD, 2));
 
-        dummyTeams.add(createTeam(1, "NORTHERN", "Leeds", "Leeds 1", "M", 18));
-        dummyTeams.add(createTeam(2, "NORTHERN", "Leeds", "Leeds 2", "M", 14));
-        dummyTeams.add(createTeam(3, "NORTHERN", "Leeds", "Leeds 1", "L", 8));
-        dummyTeams.add(createTeam(4, "NORTHERN", "Leeds", "Leeds 2", "L", 4));
-        dummyTeams.add(createTeam(5, "NORTHERN", "Leeds", "Leeds 1", "B", 6));
-        dummyTeams.add(createTeam(6, "NORTHERN", "Leeds", "Leeds 2", "B", 3));
+        dummyTeams.add(createTeam(1, NORTHERN, LEEDS, LEEDS1, MIXED, 18));
+        dummyTeams.add(createTeam(2, NORTHERN, LEEDS, LEEDS2, MIXED, 14));
+        dummyTeams.add(createTeam(3, NORTHERN, LEEDS, LEEDS1, LADIES, 8));
+        dummyTeams.add(createTeam(4, NORTHERN, LEEDS, LEEDS2, LADIES, 4));
+        dummyTeams.add(createTeam(5, NORTHERN, LEEDS, LEEDS1, BOARD, 6));
+        dummyTeams.add(createTeam(6, NORTHERN, LEEDS, LEEDS2, BOARD, 3));
 
         TEAMS = Collections.unmodifiableList(dummyTeams);
     }
