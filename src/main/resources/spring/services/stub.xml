@@ -5,10 +5,10 @@
                 http://www.springframework.org/schema/beans/spring-beans.xsd"
        profile="stub">
 
-    <!-- services -->
-    <bean id="raceService"
-          class="org.kingsski.api.service.stub.StubRaceService"/>
+    <!-- daos -->
+    <bean id="raceDao"
+          class="org.kingsski.api.dao.race.StubRaceDao"/>
     <bean id="teamService"
-          class="org.kingsski.api.service.stub.StubTeamService"/>
+          class="org.kingsski.api.dao.team.StubTeamDao"/>
 
 </beans>

@@ -1,13 +1,13 @@
-package org.kingsski.api.service.stub;
+package org.kingsski.api.dao.race;
 
+import org.kingsski.api.dao.race.RaceDao;
 import org.kingsski.api.model.Race;
-import org.kingsski.api.service.RaceService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class StubRaceService implements RaceService {
+public class StubRaceDao implements RaceDao {
     private static final List<Race> RACES = Collections.unmodifiableList(new ArrayList<Race>());
 
     @Override

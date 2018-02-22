@@ -4,6 +4,17 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- controllers -->
+    <bean id="raceController"
+          class="org.kingsski.api.controller.RaceController">
+        <property name="raceService" ref="raceService"/>
+    </bean>
+
+    <bean id="teamController"
+          class="org.kingsski.api.controller.TeamController">
+        <property name="teamService" ref="teamService"/>
+    </bean>
+
     <!-- START  controller choice -->
     <!-- API controllers, REST controllers are always created by Spring boot -->
     <!-- (profile:nocaching) -->
@@ -12,13 +23,13 @@
     <import resource="controllers/caching.xml"/>
     <!-- FINISH controller choice -->
 
-    <!-- START  service choice -->
+    <!-- START  dao choice -->
     <!-- (profile:dummy) -->
     <import resource="services/dummy.xml"/>
     <!-- (profile:stub) -->
     <import resource="services/stub.xml"/>
     <!-- (profile:repository) -->
     <import resource="services/repository.xml"/>
-    <!-- FINISH service choice -->
+    <!-- FINISH dao choice -->
 
 </beans>

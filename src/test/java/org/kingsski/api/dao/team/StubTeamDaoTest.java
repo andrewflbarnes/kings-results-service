@@ -1,8 +1,9 @@
-package org.kingsski.api.service.stub;
+package org.kingsski.api.dao.team;
 
 import org.junit.Test;
+import org.kingsski.api.dao.team.StubTeamDao;
 import org.kingsski.api.model.Team;
-import org.kingsski.api.service.TeamService;
+import org.kingsski.api.dao.team.TeamDao;
 
 import java.util.List;
 
@@ -10,8 +11,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class StubTeamServiceTest {
-    private static final TeamService SERVICE = new StubTeamService();
+public class StubTeamDaoTest {
+    private static final TeamDao SERVICE = new StubTeamDao();
 
     @Test
     public void getTeamsAll() throws Exception {

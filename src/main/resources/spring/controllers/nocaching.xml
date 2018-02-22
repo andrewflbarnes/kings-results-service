@@ -5,14 +5,14 @@
                 http://www.springframework.org/schema/beans/spring-beans.xsd"
        profile="nocaching">
 
-    <!-- controllers -->
-    <bean id="raceController"
-          class="org.kingsski.api.controller.RaceController">
-        <property name="raceService" ref="raceService"/>
+    <!-- services -->
+    <bean id="raceService"
+          class="org.kingsski.api.service.RaceService">
+        <property name="raceDao" ref="raceDao"/>
     </bean>
 
-    <bean id="teamController"
-          class="org.kingsski.api.controller.TeamController">
+    <bean id="teamService"
+          class="org.kingsski.api.service.TeamService">
         <property name="teamService" ref="teamService"/>
     </bean>
 

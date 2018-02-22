@@ -1,10 +1,11 @@
-package org.kingsski.api.service.caching;
+package org.kingsski.api.dao.race;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.api.dao.race.CachingRaceDao;
+import org.kingsski.api.dao.race.RaceDao;
 import org.kingsski.api.model.Race;
-import org.kingsski.api.service.RaceService;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CachingRaceServiceTest {
+public class CachingRaceDaoTest {
 
     private static final int INTERVAL = 100;
     private static final String LEAGUE = "league";
@@ -30,9 +31,9 @@ public class CachingRaceServiceTest {
     private static final String SEASON = "season";
 
     private final Race raceMock = mock(Race.class);
-    private final RaceService raceServiceMock = mock(RaceService.class);
+    private final RaceDao raceDaoMock = mock(RaceDao.class);
     @Spy
-    private final CachingRaceService cachingRaceService = new CachingRaceService(raceServiceMock);
+    private final CachingRaceDao cachingRaceService = new CachingRaceDao(raceDaoMock);
 
     private final List<Race> raceListOne = new ArrayList<Race>() {{
         add(raceMock);
@@ -48,7 +49,7 @@ public class CachingRaceServiceTest {
 
     @Test
     public void getRacesAll() throws Exception {
-        when(raceServiceMock.getRacesAll()).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceDaoMock.getRacesAll()).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesAll();
         List<Race> races2 = cachingRaceService.getRacesAll();
@@ -56,11 +57,11 @@ public class CachingRaceServiceTest {
         assertNotNull(races);
         assertNotNull(races2);
         assertSame(races, races2);
-        verify(raceServiceMock, times(1)).getRacesAll();
+        verify(raceDaoMock, times(1)).getRacesAll();
 
         Thread.sleep(INTERVAL*2);
-        reset(raceServiceMock);
-        when(raceServiceMock.getRacesAll()).thenReturn(raceListTwo).thenReturn(raceListOne);
+        reset(raceDaoMock);
+        when(raceDaoMock.getRacesAll()).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesAll();
         List<Race> races4 = cachingRaceService.getRacesAll();
@@ -69,12 +70,12 @@ public class CachingRaceServiceTest {
         assertNotNull(races4);
         assertSame(races3, races4);
         assertNotSame(races2, races3);
-        verify(raceServiceMock, times(1)).getRacesAll();
+        verify(raceDaoMock, times(1)).getRacesAll();
     }
 
     @Test
     public void getRacesByLeague() throws Exception {
-        when(raceServiceMock.getRacesByLeague(anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceDaoMock.getRacesByLeague(anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesByLeague(LEAGUE);
         List<Race> races2 = cachingRaceService.getRacesByLeague(LEAGUE);
@@ -82,11 +83,11 @@ public class CachingRaceServiceTest {
         assertNotNull(races);
         assertNotNull(races2);
         assertSame(races, races2);
-        verify(raceServiceMock, times(1)).getRacesByLeague(LEAGUE);
+        verify(raceDaoMock, times(1)).getRacesByLeague(LEAGUE);
 
         Thread.sleep(INTERVAL*2);
-        reset(raceServiceMock);
-        when(raceServiceMock.getRacesByLeague(anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
+        reset(raceDaoMock);
+        when(raceDaoMock.getRacesByLeague(anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesByLeague(LEAGUE);
         List<Race> races4 = cachingRaceService.getRacesByLeague(LEAGUE);
@@ -95,12 +96,12 @@ public class CachingRaceServiceTest {
         assertNotNull(races4);
         assertSame(races3, races4);
         assertNotSame(races2, races3);
-        verify(raceServiceMock, times(1)).getRacesByLeague(LEAGUE);
+        verify(raceDaoMock, times(1)).getRacesByLeague(LEAGUE);
     }
 
     @Test
     public void getRacesByLeagueAndRound() throws Exception {
-        when(raceServiceMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceDaoMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
         List<Race> races2 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
@@ -108,11 +109,11 @@ public class CachingRaceServiceTest {
         assertNotNull(races);
         assertNotNull(races2);
         assertSame(races, races2);
-        verify(raceServiceMock, times(1)).getRacesByLeagueAndRound(LEAGUE, ROUND);
+        verify(raceDaoMock, times(1)).getRacesByLeagueAndRound(LEAGUE, ROUND);
 
         Thread.sleep(INTERVAL*2);
-        reset(raceServiceMock);
-        when(raceServiceMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
+        reset(raceDaoMock);
+        when(raceDaoMock.getRacesByLeagueAndRound(anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
         List<Race> races4 = cachingRaceService.getRacesByLeagueAndRound(LEAGUE, ROUND);
@@ -121,12 +122,12 @@ public class CachingRaceServiceTest {
         assertNotNull(races4);
         assertSame(races3, races4);
         assertNotSame(races2, races3);
-        verify(raceServiceMock, times(1)).getRacesByLeagueAndRound(LEAGUE, ROUND);
+        verify(raceDaoMock, times(1)).getRacesByLeagueAndRound(LEAGUE, ROUND);
     }
 
     @Test
     public void getRacesBySeasonAndLeagueAndRound() throws Exception {
-        when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
+        when(raceDaoMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListOne).thenReturn(raceListTwo);
 
         List<Race> races = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
         List<Race> races2 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
@@ -134,11 +135,11 @@ public class CachingRaceServiceTest {
         assertNotNull(races);
         assertNotNull(races2);
         assertSame(races, races2);
-        verify(raceServiceMock, times(1)).getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
+        verify(raceDaoMock, times(1)).getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
 
         Thread.sleep(INTERVAL*2);
-        reset(raceServiceMock);
-        when(raceServiceMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
+        reset(raceDaoMock);
+        when(raceDaoMock.getRacesBySeasonAndLeagueAndRound(anyString(), anyString(), anyString())).thenReturn(raceListTwo).thenReturn(raceListOne);
 
         List<Race> races3 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
         List<Race> races4 = cachingRaceService.getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
@@ -147,7 +148,7 @@ public class CachingRaceServiceTest {
         assertNotNull(races4);
         assertSame(races3, races4);
         assertNotSame(races2, races3);
-        verify(raceServiceMock, times(1)).getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
+        verify(raceDaoMock, times(1)).getRacesBySeasonAndLeagueAndRound(SEASON, LEAGUE, ROUND);
     }
 
 }

@@ -1,8 +1,9 @@
-package org.kingsski.api.service.dummy;
+package org.kingsski.api.dao.team;
 
 import org.junit.Test;
+import org.kingsski.api.dao.team.DummyTeamDao;
+import org.kingsski.api.dao.team.TeamDao;
 import org.kingsski.api.model.Team;
-import org.kingsski.api.service.TeamService;
 
 import java.util.List;
 
@@ -10,8 +11,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-public class DummyTeamServiceTest {
-    private static final TeamService SERVICE = new DummyTeamService();
+public class DummyTeamDaoTest {
+    private static final TeamDao SERVICE = new DummyTeamDao();
 
     @Test
     public void getTeamsAll() throws Exception {

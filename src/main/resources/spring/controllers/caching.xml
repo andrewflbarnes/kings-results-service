@@ -5,26 +5,26 @@
                 http://www.springframework.org/schema/beans/spring-beans.xsd"
        profile="caching">
 
-    <!-- controllers -->
-    <bean id="raceController"
-          class="org.kingsski.api.controller.RaceController">
-        <property name="raceService" ref="cacheRaceService"/>
+    <!-- services -->
+    <bean id="raceService"
+          class="org.kingsski.api.service.RaceService">
+        <property name="raceDao" ref="cachingRaceDao"/>
     </bean>
 
-    <bean id="teamController"
-          class="org.kingsski.api.controller.TeamController">
-        <property name="teamService" ref="cacheTeamService"/>
+    <bean id="teamService"
+          class="org.kingsski.api.service.TeamService">
+        <property name="teamService" ref="cachingTeamDao"/>
     </bean>
 
-    <!-- Cache services -->
+    <!-- caching daos -->
     <bean id="cacheRaceService"
-          class="org.kingsski.api.service.caching.CachingRaceService">
+          class="org.kingsski.api.dao.race.CachingRaceDao">
         <constructor-arg ref="raceService"/>
         <property name="interval" value="5000"/>
     </bean>
 
     <bean id="cacheTeamService"
-          class="org.kingsski.api.service.caching.CachingTeamService">
+          class="org.kingsski.api.dao.team.CachingTeamDao">
         <constructor-arg ref="teamService"/>
         <property name="interval" value="5000"/>
     </bean>

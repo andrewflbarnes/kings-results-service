@@ -1,14 +1,13 @@
-package org.kingsski.api.service.dummy;
+package org.kingsski.api.dao.race;
+
+import org.kingsski.api.model.Race;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.kingsski.api.model.Race;
-import org.kingsski.api.service.RaceService;
-
 /**
- * A dummy implementation of the {@link RaceService}  interface. This class
+ * A dummy implementation of the {@link RaceDao}  interface. This class
  * has a single static list of {@link Race}s which it returns for all
  * method calls.
  * <p>
@@ -22,20 +21,32 @@ import org.kingsski.api.service.RaceService;
  *
  * @author Barnesly
  */
-public class DummyRaceService implements RaceService {
+public class DummyRaceDao implements RaceDao {
 
     private static final List<Race> RACES;
+    private static final String NORTHERN = "Northern";
+    private static final String ROUND = "1";
+    private static final String KNOCKOUTS = "Knockouts";
+    private static final String MIXED = "M";
+    private static final String BOARD = "B";
+    private static final String LADIES = "L";
+    private static final String SKUM1 = "SKUM 1";
+    private static final String LEEDS1 = "Leeds 1";
+    private static final String SHEFF1 = "Sheffield 1";
+    private static final String SKUM2 = "SKUM 2";
+    private static final String SHEFF2 = "Sheffield 2";
+    private static final String DUSSC1 = "DUSSC 1";
 
     // Static initialiser for the {@code RACES} variable
     static {
-        List<Race> dummyRaces = new ArrayList<Race>();
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 1, "M", "SKUM 1", "Leeds 1", "SKUM 1", null, null, false));
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 2, "M", "SKUM 1", "Sheffield 1", "SKUM 1", null, null, false));
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 3, "M", "Sheffield 1", "Leeds 1", "Leeds 1", null, null, false));
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 4, "M", "SKUM 2", "Sheffield 2", "Sheffield 2", "final racer false start", null, false));
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 5, "L", "SKUM 1", "Leeds 1", "SKUM 1", null, null, false));
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 6, "L", "Sheffield 1", "DUSSC 1", "Sheffield 1", null, null, false));
-        dummyRaces.add(new Race("Northern", "1", "Knockouts", 7, "B", "Sheffield 1", "Leeds 1", "Sheffield 1", null, null, false));
+        List<Race> dummyRaces = new ArrayList<>();
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 1, MIXED, SKUM1, LEEDS1, SKUM1, null, null, false));
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 2, MIXED, SKUM1, SHEFF1, SKUM1, null, null, false));
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 3, MIXED, SHEFF1, LEEDS1, LEEDS1, null, null, false));
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 4, MIXED, SKUM2, SHEFF2, SHEFF2, "final racer false start", null, false));
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 5, LADIES, SKUM1, LEEDS1, SKUM1, null, null, false));
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 6, LADIES, SHEFF1, DUSSC1, SHEFF1, null, null, false));
+        dummyRaces.add(new Race(NORTHERN, ROUND, KNOCKOUTS, 7, BOARD, SHEFF1, LEEDS1, SHEFF1, null, null, false));
 
         RACES = Collections.unmodifiableList(dummyRaces);
     }
@@ -76,7 +87,7 @@ public class DummyRaceService implements RaceService {
             dummyControl = 1;
         }
 
-        List<Race> races = new ArrayList<Race>();
+        List<Race> races = new ArrayList<>();
 
         for (Race race : RACES) {
             races.add(new Race(race));
