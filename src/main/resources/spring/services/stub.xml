@@ -8,7 +8,7 @@
     <!-- daos -->
     <bean id="raceDao"
           class="org.kingsski.api.dao.race.StubRaceDao"/>
-    <bean id="teamService"
+    <bean id="teamDao"
           class="org.kingsski.api.dao.team.StubTeamDao"/>
 
 </beans>

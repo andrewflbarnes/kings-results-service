@@ -2,12 +2,10 @@ package org.kingsski.api.dao.team;
 
 import org.kingsski.api.model.Team;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class RepositoryTeamDao implements TeamDao {
 
     private TeamRepository teamRepository;

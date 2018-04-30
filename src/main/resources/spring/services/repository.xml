@@ -8,7 +8,10 @@
     <!-- daos -->
     <bean id="raceDao"
           class="org.kingsski.api.dao.race.DummyRaceDao"/>
-    <bean id="teamService"
-          class="org.kingsski.api.dao.team.RepositoryTeamDao"/>
+    <bean id="teamDao"
+          class="org.kingsski.api.dao.team.RepositoryTeamDao">
+        <property name="teamRepository" ref="teamRepository" />
+    </bean>
+    <bean id="teamRepository" class="org.kingsski.api.dao.team.TeamRepository" />
 
 </beans>

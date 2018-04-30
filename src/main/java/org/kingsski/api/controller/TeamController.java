@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/teams")
 public class TeamController {
 
-    @Resource(name = "repositoryTeamService")
+    @Resource(name = "teamService")
     private TeamService teamService;
 
     @RequestMapping("")

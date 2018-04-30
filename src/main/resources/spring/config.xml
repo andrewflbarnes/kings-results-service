@@ -15,6 +15,21 @@
         <property name="teamService" ref="teamService"/>
     </bean>
 
+    <bean id="individualController"
+          class="org.kingsski.api.controller.IndividualController">
+        <property name="individualService" ref="individualService"/>
+    </bean>
+
+    <!-- FIXME move this -->
+
+    <bean id="individualService"
+          class="org.kingsski.api.service.IndividualService">
+        <property name="individualDao" ref="individualDao"/>
+    </bean>
+
+    <bean id="individualDao"
+          class="org.kingsski.api.dao.individual.StubIndividualDao"/>
+
     <!-- START  controller choice -->
     <!-- API controllers, REST controllers are always created by Spring boot -->
     <!-- (profile:nocaching) -->

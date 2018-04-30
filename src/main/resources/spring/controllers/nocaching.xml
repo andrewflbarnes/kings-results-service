@@ -13,7 +13,7 @@
 
     <bean id="teamService"
           class="org.kingsski.api.service.TeamService">
-        <property name="teamService" ref="teamService"/>
+        <property name="teamDao" ref="teamDao"/>
     </bean>
 
 </beans>
