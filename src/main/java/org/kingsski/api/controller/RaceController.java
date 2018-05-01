@@ -2,7 +2,6 @@ package org.kingsski.api.controller;
 
 import org.kingsski.api.model.Race;
 import org.kingsski.api.service.RaceService;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +22,10 @@ import java.util.List;
 public class RaceController {
 
     private RaceService raceService;
+
+    public RaceController(RaceService raceService) {
+        this.raceService = raceService;
+    }
 
     @RequestMapping("")
     public List<Race> races() {
@@ -51,10 +54,4 @@ public class RaceController {
 
         return raceService.getRacesBySeasonAndLeagueAndRound(season, league, round);
     }
-
-    @Required
-    public void setRaceService(RaceService raceService) {
-        this.raceService = raceService;
-    }
-
 }

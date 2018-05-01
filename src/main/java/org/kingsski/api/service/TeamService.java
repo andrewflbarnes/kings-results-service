@@ -2,7 +2,6 @@ package org.kingsski.api.service;
 
 import org.kingsski.api.dao.team.TeamDao;
 import org.kingsski.api.model.Team;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 
@@ -12,6 +11,10 @@ import java.util.List;
 public class TeamService {
 
     private TeamDao teamDao;
+
+    public TeamService(TeamDao teamDao) {
+        this.teamDao = teamDao;
+    }
 
     /**
      * Get Teams for all leagues and divisions for the latest division in
@@ -60,10 +63,5 @@ public class TeamService {
      */
     public List<Team> getTeamsBySeasonAndLeagueAndDivision(String season, String league, String division) {
         return teamDao.getTeamsBySeasonAndLeagueAndDivision(season, league, division);
-    }
-
-    @Required
-    public void setTeamDao(TeamDao teamDao) {
-        this.teamDao = teamDao;
     }
 }

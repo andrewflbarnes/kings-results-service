@@ -13,8 +13,7 @@ public class RaceService {
 
     private RaceDao raceDao;
 
-    @Required
-    public void setRaceDao(RaceDao raceDao) {
+    public RaceService(RaceDao raceDao) {
         this.raceDao = raceDao;
     }
     

@@ -19,11 +19,11 @@ public class RaceServiceTest {
     @Mock
     private RaceDao raceDaoMock;
 
-    private final RaceService raceService = new RaceService();
+    private RaceService raceService;
 
     @Before
     public void setUp() throws Exception {
-        raceService.setRaceDao(raceDaoMock);
+        raceService = new RaceService(raceDaoMock);
     }
 
     @Test

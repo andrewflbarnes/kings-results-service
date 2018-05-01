@@ -19,11 +19,11 @@ public class RaceControllerTest {
     @Mock
     private RaceService raceServiceMock;
 
-    private final RaceController controller = new RaceController();
+    private RaceController controller;
 
     @Before
     public void setUp() throws Exception {
-        controller.setRaceService(raceServiceMock);
+        controller = new RaceController(raceServiceMock);
     }
 
     @Test

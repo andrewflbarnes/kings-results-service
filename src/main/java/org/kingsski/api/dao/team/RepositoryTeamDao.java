@@ -10,6 +10,10 @@ public class RepositoryTeamDao implements TeamDao {
 
     private TeamRepository teamRepository;
 
+    public RepositoryTeamDao(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
+
     @Override
     public List<Team> getTeamsAll() {
         List<Team> teams = new ArrayList<>();
@@ -41,10 +45,5 @@ public class RepositoryTeamDao implements TeamDao {
         List<Team> teams = teamRepository.findByLeagueAndDivision(league, division);
         teams.forEach(Team::updateScores);
         return teams;
-    }
-
-    @Required
-    public void setTeamRepository(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
     }
 }

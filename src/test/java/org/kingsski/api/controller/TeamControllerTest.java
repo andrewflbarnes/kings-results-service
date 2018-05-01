@@ -19,11 +19,11 @@ public class TeamControllerTest {
     @Mock
     private TeamService teamServiceMock;
 
-    private final TeamController controller = new TeamController();
+    private TeamController controller;
 
     @Before
     public void setUp() throws Exception {
-        controller.setTeamService(teamServiceMock);
+        controller = new TeamController(teamServiceMock);
     }
 
     @Test

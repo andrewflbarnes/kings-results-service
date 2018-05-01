@@ -19,11 +19,11 @@ public class TeamServiceTest {
     @Mock
     private TeamDao teamDaoMock;
 
-    private final TeamService teamService = new TeamService();
+    private TeamService teamService;
 
     @Before
     public void setUp() throws Exception {
-        teamService.setTeamDao(teamDaoMock);
+        teamService = new TeamService(teamDaoMock);
     }
 
     @Test

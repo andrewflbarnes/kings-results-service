@@ -46,6 +46,8 @@ public class Team {
     @Transient
     private int orderedScore4;
 
+    public Team() {}
+
     public Team(String team, String league, String division, int position, int r1, int r2, int r3, int r4) {
         this.team = team;
         this.league = league;

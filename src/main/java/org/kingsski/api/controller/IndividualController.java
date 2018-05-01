@@ -2,7 +2,6 @@ package org.kingsski.api.controller;
 
 import org.kingsski.api.model.Individual;
 import org.kingsski.api.service.IndividualService;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +24,10 @@ public class IndividualController {
 
     private IndividualService individualService;
 
+    public IndividualController(IndividualService individualService) {
+        this.individualService = individualService;
+    }
+
     @RequestMapping("")
     public List<Individual> individuals(@RequestParam(value = "club",required = false) String club) {
         if (club == null || club.isEmpty()) {
@@ -38,10 +41,4 @@ public class IndividualController {
     public List<Individual> individualsByDiscipline(@PathVariable("discipline") String discipline) {
         return individualService.getIndividualsByDiscipline(discipline);
     }
-
-    @Required
-    public void setIndividualService(IndividualService individualService) {
-        this.individualService = individualService;
-    }
-
 }

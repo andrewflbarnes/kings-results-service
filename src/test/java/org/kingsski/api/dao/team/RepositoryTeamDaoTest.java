@@ -34,11 +34,11 @@ public class RepositoryTeamDaoTest {
     @Mock
     private TeamRepository teamRepositoryMock;
 
-    private final RepositoryTeamDao repositoryTeamDao = new RepositoryTeamDao();
+    private RepositoryTeamDao repositoryTeamDao;
 
     @Before
     public void setUp() {
-        repositoryTeamDao.setTeamRepository(teamRepositoryMock);
+        repositoryTeamDao = new RepositoryTeamDao(teamRepositoryMock);
         when(teamRepositoryMock.findAll()).thenReturn(ALL_TEAMS);
         when(teamRepositoryMock.findByLeague(LEAGUE)).thenReturn(L_TEAMS);
         when(teamRepositoryMock.findByLeagueAndDivision(LEAGUE, DIVISION)).thenReturn(LD_TEAMS);

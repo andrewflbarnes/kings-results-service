@@ -2,7 +2,6 @@ package org.kingsski.api.service;
 
 import org.kingsski.api.dao.individual.IndividualDao;
 import org.kingsski.api.model.Individual;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 
@@ -13,8 +12,7 @@ public class IndividualService {
 
     private IndividualDao individualDao;
 
-    @Required
-    public void setIndividualDao(IndividualDao individualDao) {
+    public IndividualService(IndividualDao individualDao) {
         this.individualDao = individualDao;
     }
     
