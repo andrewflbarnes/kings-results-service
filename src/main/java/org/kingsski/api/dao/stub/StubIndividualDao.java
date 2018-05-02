@@ -1,5 +1,6 @@
-package org.kingsski.api.dao.individual;
+package org.kingsski.api.dao.stub;
 
+import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.model.Individual;
 
 import java.util.Collections;

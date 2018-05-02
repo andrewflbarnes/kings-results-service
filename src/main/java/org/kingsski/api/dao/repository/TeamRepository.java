@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao.repository;
 
 import org.kingsski.api.model.Team;
 import org.springframework.data.repository.CrudRepository;

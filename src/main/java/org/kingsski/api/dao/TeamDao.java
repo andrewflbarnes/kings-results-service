@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao;
 
 import org.kingsski.api.controller.TeamController;
 import org.kingsski.api.model.Team;

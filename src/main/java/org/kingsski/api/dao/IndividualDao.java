@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.individual;
+package org.kingsski.api.dao;
 
 import org.kingsski.api.model.Individual;
 

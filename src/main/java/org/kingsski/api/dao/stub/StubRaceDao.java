@@ -1,6 +1,6 @@
-package org.kingsski.api.dao.race;
+package org.kingsski.api.dao.stub;
 
-import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.model.Race;
 
 import java.util.ArrayList;

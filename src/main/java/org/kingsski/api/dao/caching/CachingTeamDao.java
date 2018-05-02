@@ -1,5 +1,6 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao.caching;
 
+import org.kingsski.api.dao.TeamDao;
 import org.kingsski.api.dao.caching.AbstractCachingDao;
 import org.kingsski.api.model.Team;
 

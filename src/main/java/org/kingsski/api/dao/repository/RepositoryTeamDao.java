@@ -1,7 +1,7 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao.repository;
 
+import org.kingsski.api.dao.TeamDao;
 import org.kingsski.api.model.Team;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.util.ArrayList;
 import java.util.List;

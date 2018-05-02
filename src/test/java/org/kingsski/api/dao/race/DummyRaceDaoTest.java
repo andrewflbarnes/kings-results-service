@@ -1,8 +1,8 @@
 package org.kingsski.api.dao.race;
 
 import org.junit.Test;
-import org.kingsski.api.dao.race.DummyRaceDao;
-import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.RaceDao;
+import org.kingsski.api.dao.dummy.DummyRaceDao;
 import org.kingsski.api.model.Race;
 
 import java.util.List;

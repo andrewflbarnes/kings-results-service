@@ -1,8 +1,8 @@
 package org.kingsski.api.config;
 
-import org.kingsski.api.dao.individual.IndividualDao;
-import org.kingsski.api.dao.race.RaceDao;
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.dao.IndividualDao;
+import org.kingsski.api.dao.RaceDao;
+import org.kingsski.api.dao.TeamDao;
 
 public interface DaoConfig {
 

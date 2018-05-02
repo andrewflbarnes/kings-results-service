@@ -1,6 +1,6 @@
 package org.kingsski.api.service;
 
-import org.kingsski.api.dao.individual.IndividualDao;
+import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.model.Individual;
 
 import java.util.List;

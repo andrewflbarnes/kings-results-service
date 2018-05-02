@@ -1,5 +1,6 @@
-package org.kingsski.api.dao.race;
+package org.kingsski.api.dao.caching;
 
+import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.caching.AbstractCachingDao;
 import org.kingsski.api.model.Race;
 

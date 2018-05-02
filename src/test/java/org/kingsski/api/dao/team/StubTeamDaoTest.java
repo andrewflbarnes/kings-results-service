@@ -1,9 +1,9 @@
 package org.kingsski.api.dao.team;
 
 import org.junit.Test;
-import org.kingsski.api.dao.team.StubTeamDao;
+import org.kingsski.api.dao.stub.StubTeamDao;
 import org.kingsski.api.model.Team;
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.dao.TeamDao;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package org.kingsski.api.service;
 
-import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.model.Race;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 

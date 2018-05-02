@@ -1,7 +1,7 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao.stub;
 
 import org.kingsski.api.model.Team;
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.dao.TeamDao;
 
 import java.util.ArrayList;
 import java.util.Collections;

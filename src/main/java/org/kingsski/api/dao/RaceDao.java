@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.race;
+package org.kingsski.api.dao;
 
 import java.util.List;
 

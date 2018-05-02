@@ -3,7 +3,7 @@ package org.kingsski.api.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.dao.TeamDao;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 

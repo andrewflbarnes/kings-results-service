@@ -1,6 +1,6 @@
 package org.kingsski.api.service;
 
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.dao.TeamDao;
 import org.kingsski.api.model.Team;
 
 import java.util.List;
