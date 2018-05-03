@@ -4,35 +4,32 @@ import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
-import org.kingsski.api.dao.delegate.DaoDelegateFactory;
-import org.kingsski.api.dao.caching.CachingRaceDao;
-import org.kingsski.api.dao.caching.CachingTeamDao;
 
-public class CachingDaoFactory implements DaoFactory {
+public class CachingDaoFactory implements org.kingsski.api.dao.DaoFactory {
 
-    private DaoDelegateFactory daoDelegateFactory;
+    private DaoFactory daoFactory;
 
-    public CachingDaoFactory(DaoDelegateFactory daoDelegateFactory) {
-        this.daoDelegateFactory = daoDelegateFactory;
+    public CachingDaoFactory(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
     }
 
     @Override
     public String getDbProfile() {
-        return daoDelegateFactory.getDbProfile();
+        return daoFactory.getDbProfile();
     }
 
     @Override
     public TeamDao teamDao() {
-        return new CachingTeamDao(daoDelegateFactory.teamDao());
+        return new CachingTeamDao(daoFactory.teamDao());
     }
 
     @Override
     public RaceDao raceDao() {
-        return new CachingRaceDao(daoDelegateFactory.raceDao());
+        return new CachingRaceDao(daoFactory.raceDao());
     }
 
     @Override
     public IndividualDao individualDao() {
-        return daoDelegateFactory.individualDao();
+        return daoFactory.individualDao();
     }
 }

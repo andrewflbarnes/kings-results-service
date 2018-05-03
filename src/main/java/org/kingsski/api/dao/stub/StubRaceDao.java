@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class StubRaceDao implements RaceDao {
+
     private static final List<Race> RACES = Collections.unmodifiableList(new ArrayList<Race>());
 
     @Override

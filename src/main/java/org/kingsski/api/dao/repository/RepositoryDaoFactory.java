@@ -1,21 +1,17 @@
-package org.kingsski.api.dao.delegate;
+package org.kingsski.api.dao.repository;
 
+import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
-import org.kingsski.api.dao.repository.RepositoryTeamDao;
-import org.kingsski.api.dao.repository.TeamRepository;
 import org.kingsski.api.dao.stub.StubIndividualDao;
 import org.kingsski.api.dao.stub.StubRaceDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Configuration
-@Profile("repository")
-public class RepositoryDaoDelegateFactory implements DaoDelegateFactory {
+import javax.annotation.Resource;
 
-    @Autowired
+public class RepositoryDaoFactory implements DaoFactory {
+
+    @Resource
     private TeamRepository teamRepository;
 
     @Override

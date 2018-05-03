@@ -1,22 +1,24 @@
-package org.kingsski.api.dao.delegate;
+package org.kingsski.api.dao.jdbc;
 
+import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
-import org.kingsski.api.dao.jdbc.JdbcTeamDao;
 import org.kingsski.api.dao.stub.StubIndividualDao;
 import org.kingsski.api.dao.stub.StubRaceDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-@Configuration
-@Profile("jdbc")
-public class JdbcDaoDelegateFactory implements DaoDelegateFactory {
+import java.util.Map;
 
-    @Autowired
+public class JdbcDaoFactory implements DaoFactory {
+
     private JdbcTemplate jdbcTemplate;
+    private Map<String, String> jdbcSharedStatements;
+
+    public JdbcDaoFactory(JdbcTemplate jdbcTemplate, Map<String, String> jdbcSharedStatements) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.jdbcSharedStatements = jdbcSharedStatements;
+    }
 
     @Override
     public String getDbProfile() {
@@ -25,7 +27,7 @@ public class JdbcDaoDelegateFactory implements DaoDelegateFactory {
 
     @Override
     public TeamDao teamDao() {
-        return new JdbcTeamDao(jdbcTemplate);
+        return new JdbcTeamDao(jdbcTemplate, jdbcSharedStatements);
     }
 
     @Override

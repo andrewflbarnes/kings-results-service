@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class StubIndividualDao implements IndividualDao {
+
     private static final List<Individual> INDIVIDUALS = Collections.emptyList();
+
     @Override
     public List<Individual> getAllIndividuals() {
         return INDIVIDUALS;

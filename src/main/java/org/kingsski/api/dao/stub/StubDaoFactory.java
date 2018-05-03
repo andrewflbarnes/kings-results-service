@@ -1,17 +1,11 @@
-package org.kingsski.api.dao.delegate;
+package org.kingsski.api.dao.stub;
 
+import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
-import org.kingsski.api.dao.stub.StubIndividualDao;
-import org.kingsski.api.dao.stub.StubRaceDao;
-import org.kingsski.api.dao.stub.StubTeamDao;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Configuration
-@Profile("stub")
-public class StubDaoDelegateFactory implements DaoDelegateFactory {
+public class StubDaoFactory implements DaoFactory {
 
     @Override
     public String getDbProfile() {
