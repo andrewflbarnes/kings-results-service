@@ -1,7 +1,7 @@
 package org.kingsski.api.config;
 
+import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.service.RaceService;
-import org.kingsski.api.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class RaceConfig {
 
     @Autowired
-    private DaoConfig daoConfig;
+    private DaoFactory daoFactory;
 
     @Bean
     public RaceService raceService() {
-        return new RaceService(daoConfig.raceDao());
+        return new RaceService(daoFactory.raceDao());
     }
 }

@@ -1,10 +1,12 @@
-package org.kingsski.api.config;
+package org.kingsski.api.dao;
 
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
 
-public interface DaoConfig {
+public interface DaoFactory {
+
+    String getDbProfile();
 
     TeamDao teamDao();
 

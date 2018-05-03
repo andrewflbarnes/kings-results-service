@@ -1,35 +1,26 @@
 package org.kingsski.api.config.dao;
 
-import org.kingsski.api.config.DaoConfig;
-import org.kingsski.api.config.DaoDelegateConfig;
-import org.kingsski.api.dao.IndividualDao;
-import org.kingsski.api.dao.caching.CachingRaceDao;
-import org.kingsski.api.dao.RaceDao;
-import org.kingsski.api.dao.caching.CachingTeamDao;
-import org.kingsski.api.dao.TeamDao;
+import org.kingsski.api.dao.caching.CachingDaoFactory;
+import org.kingsski.api.dao.delegate.DaoDelegateFactory;
+import org.kingsski.api.dao.DaoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
 @Profile("caching")
-public class CachingDaoConfig implements DaoConfig {
+public class CachingDaoConfig {
 
     @Autowired
-    private DaoDelegateConfig daoDelegateConfig;
+    @Qualifier("delegate")
+    private DaoDelegateFactory daoDelegateFactory;
 
-    @Override
-    public TeamDao teamDao() {
-        return new CachingTeamDao(daoDelegateConfig.teamDao());
-    }
-
-    @Override
-    public RaceDao raceDao() {
-        return new CachingRaceDao(daoDelegateConfig.raceDao());
-    }
-
-    @Override
-    public IndividualDao individualDao() {
-        return daoDelegateConfig.individualDao();
+    @Bean
+    @Primary
+    public DaoFactory daoDelegateConfig() {
+        return new CachingDaoFactory(daoDelegateFactory);
     }
 }
