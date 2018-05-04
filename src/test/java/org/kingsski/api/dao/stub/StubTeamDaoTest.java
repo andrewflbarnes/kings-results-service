@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao.stub;
 
 import org.junit.Test;
 import org.kingsski.api.dao.stub.StubTeamDao;

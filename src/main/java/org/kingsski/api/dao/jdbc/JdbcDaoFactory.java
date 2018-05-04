@@ -4,7 +4,6 @@ import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
-import org.kingsski.api.dao.stub.StubIndividualDao;
 import org.kingsski.api.dao.stub.StubRaceDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -37,6 +36,6 @@ public class JdbcDaoFactory implements DaoFactory {
 
     @Override
     public IndividualDao individualDao() {
-        return new StubIndividualDao();
+        return new JdbcIndividualDao(jdbcTemplate, jdbcSharedStatements);
     }
 }

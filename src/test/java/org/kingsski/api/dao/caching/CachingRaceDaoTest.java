@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.race;
+package org.kingsski.api.dao.caching;
 
 import org.junit.Before;
 import org.junit.Test;

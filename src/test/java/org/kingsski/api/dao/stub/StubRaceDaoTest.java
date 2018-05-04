@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.race;
+package org.kingsski.api.dao.stub;
 
 import org.junit.Test;
 import org.kingsski.api.dao.RaceDao;

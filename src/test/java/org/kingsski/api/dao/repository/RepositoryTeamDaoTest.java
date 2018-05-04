@@ -1,4 +1,4 @@
-package org.kingsski.api.dao.team;
+package org.kingsski.api.dao.repository;
 
 import org.junit.Before;
 import org.junit.Test;

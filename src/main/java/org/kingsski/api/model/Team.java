@@ -1,6 +1,7 @@
 package org.kingsski.api.model;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -186,6 +187,7 @@ public class Team {
 
     public static class TeamMapper implements RowMapper<Team> {
 
+        @Nullable
         @Override
         public Team mapRow(ResultSet resultSet, int i) throws SQLException {
             Team team = new Team();
