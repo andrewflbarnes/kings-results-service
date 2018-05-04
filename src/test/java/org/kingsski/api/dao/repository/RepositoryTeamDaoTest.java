@@ -3,11 +3,9 @@ package org.kingsski.api.dao.repository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.dao.repository.RepositoryTeamDao;
-import org.kingsski.api.dao.repository.TeamRepository;
 import org.kingsski.api.model.Team;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
 import java.util.List;
