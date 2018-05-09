@@ -29,7 +29,7 @@ public class IndividualController {
     }
 
     @RequestMapping("")
-    public List<Individual> individuals(@RequestParam(value = "club",required = false) String club) {
+    public List<Individual> individuals(@RequestParam(value = "club", required = false) String club) {
         if (club == null || club.isEmpty()) {
             return individualService.getIndividualsAll();
         } else {

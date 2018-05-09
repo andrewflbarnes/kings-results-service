@@ -101,4 +101,41 @@ public class Individual {
             return indi;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (Individual.class.equals(obj.getClass())) {
+            Individual other = (Individual)obj;
+
+            if (this.discipline == null || this.club == null || this.name == null) {
+                return false;
+            }
+
+            return this.discipline.equals(other.getDiscipline()) &&
+                    this.club.equals(other.getClub()) &&
+                    this.name.equals(other.getName());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+
+        result = prime * result + (discipline == null ? 0 : discipline.hashCode());
+        result = prime * result + (club == null ? 0 : club.hashCode());
+        result = prime * result + (name == null ? 0 : name.hashCode());
+
+        return result;
+    }
 }

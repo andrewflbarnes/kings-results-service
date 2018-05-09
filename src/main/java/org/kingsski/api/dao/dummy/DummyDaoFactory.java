@@ -25,6 +25,6 @@ public class DummyDaoFactory implements DaoFactory {
 
     @Override
     public IndividualDao individualDao() {
-        return new StubIndividualDao();
+        return new DummyIndividualDao();
     }
 }

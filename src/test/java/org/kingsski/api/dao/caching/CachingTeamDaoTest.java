@@ -7,7 +7,7 @@ import org.kingsski.api.dao.TeamDao;
 import org.kingsski.api.dao.caching.CachingTeamDao;
 import org.kingsski.api.model.Team;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;

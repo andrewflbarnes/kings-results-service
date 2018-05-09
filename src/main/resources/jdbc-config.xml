@@ -12,22 +12,40 @@
     <!--<context:component-scan base-package="com.foo" />-->
 
     <util:map id="jdbcShared" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
-        <entry key="jdbcTeamSelectAll">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcTeamDao.SELECT_ALL" />
+            </key>
             <value>SELECT * FROM kings_teams</value>
         </entry>
-        <entry key="jdbcTeamSelectLeague">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcTeamDao.SELECT_BY_LEAGUE" />
+            </key>
             <value>SELECT * FROM kings_teams WHERE league = ?</value>
         </entry>
-        <entry key="jdbcTeamSelectLeagueDivision">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcTeamDao.SELECT_BY_LEAGUE_DIVISION" />
+            </key>
             <value>SELECT * FROM kings_teams WHERE league = ? AND discipline = ?</value>
         </entry>
-        <entry key="jdbcIndividualSelectAll">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcIndividualDao.SELECT_ALL" />
+            </key>
             <value>SELECT * FROM kings_individuals</value>
         </entry>
-        <entry key="jdbcIndividualSelectDiscipline">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcIndividualDao.SELECT_BY_DISCIPLINE" />
+            </key>
             <value>SELECT * FROM kings_individuals WHERE discipline = ?</value>
         </entry>
-        <entry key="jdbcIndividualSelectClub">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcIndividualDao.SELECT_BY_CLUB" />
+            </key>
             <value>SELECT * FROM kings_individuals WHERE club = ?</value>
         </entry>
     </util:map>
