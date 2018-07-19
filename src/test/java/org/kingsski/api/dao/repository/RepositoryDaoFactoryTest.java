@@ -1,16 +1,9 @@
 package org.kingsski.api.dao.repository;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.kingsski.api.config.TestJdbcConfig;
 import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.stub.StubIndividualDao;
 import org.kingsski.api.dao.stub.StubRaceDao;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.annotation.Resource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;

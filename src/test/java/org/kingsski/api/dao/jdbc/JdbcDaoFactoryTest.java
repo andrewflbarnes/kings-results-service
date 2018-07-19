@@ -2,14 +2,14 @@ package org.kingsski.api.dao.caching;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.config.TestJdbcConfig;
 import org.kingsski.api.dao.DaoFactory;
 import org.kingsski.api.dao.IndividualDao;
 import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.dao.TeamDao;
 import org.kingsski.api.dao.jdbc.JdbcIndividualDao;
+import org.kingsski.api.dao.jdbc.JdbcRaceDao;
 import org.kingsski.api.dao.jdbc.JdbcTeamDao;
-import org.kingsski.api.dao.stub.StubRaceDao;
+import org.kingsski.api.test.config.TestJdbcConfig;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ActiveProfiles;
@@ -53,7 +53,15 @@ public class JdbcDaoFactoryTest {
     public void raceDao() {
         RaceDao raceDao = daoFactory.raceDao();
 
-        assertEquals(StubRaceDao.class, raceDao.getClass());
+        assertEquals(JdbcRaceDao.class, raceDao.getClass());
+        assertEquals(jdbcTemplate.query(JdbcRaceDao.SELECT_ALL, (RowMapper)null),
+                raceDao.getRacesAll());
+        assertEquals(jdbcTemplate.query(JdbcRaceDao.SELECT_BY_LEAGUE, (RowMapper)null),
+                raceDao.getRacesByLeague(""));
+        assertEquals(jdbcTemplate.query(JdbcRaceDao.SELECT_BY_LEAGUE_ROUND, (RowMapper)null),
+                raceDao.getRacesByLeagueAndRound("", ""));
+        assertEquals(jdbcTemplate.query(JdbcRaceDao.SELECT_BY_LEAGUE_ROUND, (RowMapper)null),
+                raceDao.getRacesBySeasonAndLeagueAndRound("", "", ""));
     }
 
     @Test
