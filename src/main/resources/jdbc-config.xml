@@ -8,10 +8,25 @@
                            http://www.springframework.org/schema/util/spring-util.xsd"
        profile="jdbc">
 
-    <!--<context:property-placeholder location="classpath:/database.properties" />-->
-    <!--<context:component-scan base-package="com.foo" />-->
-
     <util:map id="jdbcShared" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcRaceDao.SELECT_ALL" />
+            </key>
+            <value>SELECT * FROM kings_races</value>
+        </entry>
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcRaceDao.SELECT_BY_LEAGUE" />
+            </key>
+            <value>SELECT * FROM kings_races WHERE league = ?</value>
+        </entry>
+        <entry>
+            <key>
+                <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcRaceDao.SELECT_BY_LEAGUE_ROUND" />
+            </key>
+            <value>SELECT * FROM kings_races WHERE league = ? AND round = ?</value>
+        </entry>
         <entry>
             <key>
                 <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcTeamDao.SELECT_ALL" />

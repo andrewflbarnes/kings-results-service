@@ -1,6 +1,11 @@
 package org.kingsski.api.model;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.Nullable;
+
 import javax.validation.constraints.NotNull;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * This class represents a single displayable Kings race.
@@ -10,7 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 public class Race {
 
-    private int raceId;
+    private int id;
     private String league;
     private String round;
     private String set;
@@ -73,6 +78,20 @@ public class Race {
     }
 
     /**
+     * @return the race ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the race ID to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * @return the league
      */
     public String getLeague() {
@@ -122,10 +141,24 @@ public class Race {
     }
 
     /**
+     * @param raceNo the race number
+     */
+    public void setRaceNo(int raceNo) {
+        this.raceNo = raceNo;
+    }
+
+    /**
      * @return the division
      */
     public String getDivision() {
         return division;
+    }
+
+    /**
+     * @param division the division to set
+     */
+    public void setDivision(String division) {
+        this.division = division;
     }
 
     /**
@@ -136,10 +169,24 @@ public class Race {
     }
 
     /**
+     * @param teamOne the name of the first team competing
+     */
+    public void setTeamOne(String teamOne) {
+        this.teamOne = teamOne;
+    }
+
+    /**
      * @return the teamTwo
      */
     public String getTeamTwo() {
         return teamTwo;
+    }
+
+    /**
+     * @param teamTwo the name of the second team competing
+     */
+    public void setTeamTwo(String teamTwo) {
+        this.teamTwo = teamTwo;
     }
 
     /**
@@ -242,5 +289,28 @@ public class Race {
         result = prime * result + (teamTwo == null ? 0 : teamTwo.hashCode());
 
         return result;
+    }
+
+    public static class RaceMapper implements RowMapper<Race> {
+
+        @Nullable
+        @Override
+        public Race mapRow(ResultSet resultSet, int i) throws SQLException {
+            Race race = new Race();
+            race.setId(resultSet.getInt(1));
+            race.setLeague(resultSet.getString(2));
+            race.setRound(resultSet.getString(3));
+            race.setSet(resultSet.getString(4));
+            race.setRaceNo(resultSet.getInt(5));
+            race.setDivision(resultSet.getString(6));
+            race.setTeamOne(resultSet.getString(7));
+            race.setTeamTwo(resultSet.getString(8));
+            race.setWinner(resultSet.getString(9));
+            race.setTeamOneDsq(resultSet.getString(10));
+            race.setTeamTwoDsq(resultSet.getString(11));
+            race.setNext(resultSet.getBoolean(12));
+
+            return race;
+        }
     }
 }

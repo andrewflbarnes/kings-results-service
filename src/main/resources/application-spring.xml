@@ -4,9 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--<context:property-placeholder location="classpath:/database.properties" />-->
-    <!--<context:component-scan base-package="com.foo" />-->
-
     <import resource="jdbc-config.xml" />
 
 </beans>

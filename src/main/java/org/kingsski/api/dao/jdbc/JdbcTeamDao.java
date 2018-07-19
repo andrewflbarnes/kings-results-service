@@ -7,18 +7,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 import java.util.Map;
 
-public class JdbcTeamDao implements TeamDao {
+public class JdbcTeamDao extends AbstractJdbcDao implements TeamDao {
 
     public static final String SELECT_ALL = "jdbcTeamSelectAll";
     public static final String SELECT_BY_LEAGUE = "jdbcTeamSelectLeague";
     public static final String SELECT_BY_LEAGUE_DIVISION = "jdbcTeamSelectLeagueDivision";
 
-    private JdbcTemplate jdbcTemplate;
-    private Map<String, String> jdbcStatements;
-
     public JdbcTeamDao(JdbcTemplate jdbcTemplate, Map<String, String> jdbcStatements) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.jdbcStatements = jdbcStatements;
+        super(jdbcTemplate, jdbcStatements);
     }
 
     @Override

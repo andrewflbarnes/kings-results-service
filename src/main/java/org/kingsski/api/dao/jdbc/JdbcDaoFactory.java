@@ -31,7 +31,7 @@ public class JdbcDaoFactory implements DaoFactory {
 
     @Override
     public RaceDao raceDao() {
-        return new StubRaceDao();
+        return new JdbcRaceDao(jdbcTemplate, jdbcSharedStatements);
     }
 
     @Override

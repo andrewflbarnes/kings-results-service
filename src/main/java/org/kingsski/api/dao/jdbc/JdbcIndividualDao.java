@@ -7,18 +7,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 import java.util.Map;
 
-public class JdbcIndividualDao implements IndividualDao {
+public class JdbcIndividualDao extends AbstractJdbcDao implements IndividualDao {
 
     public static final String SELECT_ALL = "jdbcIndividualSelectAll";
     public static final String SELECT_BY_DISCIPLINE = "jdbcIndividualSelectDiscipline";
     public static final String SELECT_BY_CLUB = "jdbcIndividualSelectClub";
 
-    private JdbcTemplate jdbcTemplate;
-    private Map<String, String> jdbcStatements;
-
     public JdbcIndividualDao(JdbcTemplate jdbcTemplate, Map<String, String> jdbcStatements) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.jdbcStatements = jdbcStatements;
+        super(jdbcTemplate, jdbcStatements);
     }
 
     @Override
