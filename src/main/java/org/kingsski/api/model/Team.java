@@ -192,10 +192,10 @@ public class Team {
         public Team mapRow(ResultSet resultSet, int i) throws SQLException {
             Team team = new Team();
             team.setId(resultSet.getInt(1));
-            team.setLeague(resultSet.getString(2));
+            team.setTeam(resultSet.getString(2));
             team.setDivision(resultSet.getString(3));
-            team.setPosition(resultSet.getInt(4));
-            team.setTeam(resultSet.getString(5));
+            team.setLeague(resultSet.getString(4));
+            team.setPosition(resultSet.getInt(5));
             team.setR1(resultSet.getInt(6));
             team.setR2(resultSet.getInt(7));
             team.setR3(resultSet.getInt(8));

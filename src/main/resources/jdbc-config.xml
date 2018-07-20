@@ -43,7 +43,7 @@
             <key>
                 <util:constant static-field="org.kingsski.api.dao.jdbc.JdbcTeamDao.SELECT_BY_LEAGUE_DIVISION" />
             </key>
-            <value>SELECT * FROM kings_teams WHERE league = ? AND discipline = ?</value>
+            <value>SELECT * FROM kings_teams WHERE league = ? AND division = ?</value>
         </entry>
         <entry>
             <key>

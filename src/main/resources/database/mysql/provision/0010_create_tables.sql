@@ -1,5 +1,6 @@
 CREATE TABLE `kings_teams` (
   `id`          bigint(20)      NOT NULL AUTO_INCREMENT,
+  `team`        varchar(255)    NOT NULL,
   `division`    varchar(255)    NOT NULL,
   `league`      varchar(255)    NOT NULL,
   `position`    int(11)         DEFAULT 0,
@@ -7,10 +8,9 @@ CREATE TABLE `kings_teams` (
   `r2`          int(11)         DEFAULT 0,
   `r3`          int(11)         DEFAULT 0,
   `r4`          int(11)         DEFAULT 0,
-  `team`        varchar(255)    NOT NULL,
   `total`       int(11)         DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `team_ldp` (`league`,`division`,`position`);
+  UNIQUE KEY `team_ldp` (`league`,`division`,`position`));
 
 CREATE TABLE `kings_races` (
   `id`              bigint(20)      NOT NULL AUTO_INCREMENT,
