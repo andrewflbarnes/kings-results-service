@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.api.service.RaceService;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,11 +19,11 @@ public class RaceControllerTest {
     @Mock
     private RaceService raceServiceMock;
 
-    private final RaceController controller = new RaceController();
+    private RaceController controller;
 
     @Before
     public void setUp() throws Exception {
-        controller.setRaceService(raceServiceMock);
+        controller = new RaceController(raceServiceMock);
     }
 
     @Test

@@ -129,20 +129,12 @@ public class RaceTest {
     }
 
     private static void assertNotEqualsAndHashCode(Object expected, Object actual) {
-        assertEqualsAndHashCode(expected, actual, false);
+        assertNotEquals(expected, actual);
+        assertNotEquals(expected.hashCode(), actual.hashCode());
     }
 
     private static void assertEqualsAndHashCode(Object expected, Object actual) {
-        assertEqualsAndHashCode(expected, actual, true);
-    }
-
-    private static void assertEqualsAndHashCode(Object expected, Object actual, boolean shouldBeEqual) {
-        if (shouldBeEqual) {
-            assertEquals(expected, actual);
-            assertEquals(expected.hashCode(), actual.hashCode());
-        } else {
-            assertNotEquals(expected, actual);
-            assertNotEquals(expected.hashCode(), actual.hashCode());
-        }
+        assertEquals(expected, actual);
+        assertEquals(expected.hashCode(), actual.hashCode());
     }
 }

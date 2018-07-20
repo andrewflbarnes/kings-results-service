@@ -3,9 +3,9 @@ package org.kingsski.api.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.RaceDao;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,11 +19,11 @@ public class RaceServiceTest {
     @Mock
     private RaceDao raceDaoMock;
 
-    private final RaceService raceService = new RaceService();
+    private RaceService raceService;
 
     @Before
     public void setUp() throws Exception {
-        raceService.setRaceDao(raceDaoMock);
+        raceService = new RaceService(raceDaoMock);
     }
 
     @Test

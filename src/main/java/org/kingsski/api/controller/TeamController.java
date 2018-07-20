@@ -1,6 +1,5 @@
 package org.kingsski.api.controller;
 
-import org.kingsski.api.dao.team.TeamDao;
 import org.kingsski.api.model.Team;
 import org.kingsski.api.service.TeamService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -23,8 +21,11 @@ import java.util.List;
 @RequestMapping("/teams")
 public class TeamController {
 
-    @Resource(name = "repositoryTeamService")
     private TeamService teamService;
+
+    public TeamController(TeamService teamService) {
+        this.teamService = teamService;
+    }
 
     @RequestMapping("")
     public List<Team> teams() {
@@ -52,10 +53,5 @@ public class TeamController {
             @PathVariable("division") String division) {
 
         return this.teamService.getTeamsBySeasonAndLeagueAndDivision(season, league, division);
-    }
-
-    // TODO Remove (only used in test)
-    public void setTeamService(TeamService teamService) {
-        this.teamService = teamService;
     }
 }

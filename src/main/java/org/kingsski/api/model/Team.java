@@ -1,5 +1,8 @@
 package org.kingsski.api.model;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Entity
 @Table(name = "kings_teams", uniqueConstraints = {
@@ -45,6 +50,8 @@ public class Team {
     private int orderedScore3;
     @Transient
     private int orderedScore4;
+
+    public Team() {}
 
     public Team(String team, String league, String division, int position, int r1, int r2, int r3, int r4) {
         this.team = team;
@@ -176,5 +183,26 @@ public class Team {
         this.orderedScore3 = scores[2];
         this.orderedScore4 = scores[3];
         this.total = this.r1 + this.r2 + this.r3 + this.r4;
+    }
+
+    public static class TeamMapper implements RowMapper<Team> {
+
+        @Nullable
+        @Override
+        public Team mapRow(ResultSet resultSet, int i) throws SQLException {
+            Team team = new Team();
+            team.setId(resultSet.getInt(1));
+            team.setLeague(resultSet.getString(2));
+            team.setDivision(resultSet.getString(3));
+            team.setPosition(resultSet.getInt(4));
+            team.setTeam(resultSet.getString(5));
+            team.setR1(resultSet.getInt(6));
+            team.setR2(resultSet.getInt(7));
+            team.setR3(resultSet.getInt(8));
+            team.setR4(resultSet.getInt(9));
+            // should be handled implicitly but maybe we want a check?
+//            team.setTotal(rs.getInt(10));
+            return team;
+        }
     }
 }

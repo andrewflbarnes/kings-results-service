@@ -3,9 +3,9 @@ package org.kingsski.api.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.api.dao.team.TeamDao;
+import org.kingsski.api.dao.TeamDao;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,11 +19,11 @@ public class TeamServiceTest {
     @Mock
     private TeamDao teamDaoMock;
 
-    private final TeamService teamService = new TeamService();
+    private TeamService teamService;
 
     @Before
     public void setUp() throws Exception {
-        teamService.setTeamDao(teamDaoMock);
+        teamService = new TeamService(teamDaoMock);
     }
 
     @Test

@@ -1,6 +1,6 @@
 package org.kingsski.api.dao.caching;
 
-import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.RaceDao;
 
 import java.util.List;
 import java.util.Map;

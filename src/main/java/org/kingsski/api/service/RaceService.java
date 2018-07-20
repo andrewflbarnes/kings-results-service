@@ -1,8 +1,7 @@
 package org.kingsski.api.service;
 
-import org.kingsski.api.dao.race.RaceDao;
+import org.kingsski.api.dao.RaceDao;
 import org.kingsski.api.model.Race;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 
@@ -13,8 +12,7 @@ public class RaceService {
 
     private RaceDao raceDao;
 
-    @Required
-    public void setRaceDao(RaceDao raceDao) {
+    public RaceService(RaceDao raceDao) {
         this.raceDao = raceDao;
     }
     
