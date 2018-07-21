@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestJdbcDaoConfig.class })
-@ActiveProfiles({ "jdbc" })
 public class JdbcDaoFactoryTest {
 
     @Resource

@@ -23,12 +23,26 @@
         <!-- test -->
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
+        <failsafe.version>2.22.0</failsafe.version>
     </properties>
 
     <packaging>pom</packaging>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
