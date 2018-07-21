@@ -84,7 +84,7 @@
                     <url>${db.base.url}</url>
                     <username>${db.username}</username>
                     <password>${db.password}</password>
-                    <skip>${skipTests}</skip>
+                    <skip>${skipIntegrationTests}</skip>
                 </configuration>
                 <executions>
                     <execution>

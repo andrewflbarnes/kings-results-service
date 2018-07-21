@@ -12,6 +12,7 @@
 
     <properties>
         <!-- maven -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- project -->
@@ -28,12 +29,29 @@
 
     <packaging>pom</packaging>
 
+    <profiles>
+        <profile>
+            <id>skipIntegrationTests</id>
+            <activation>
+                <property>
+                    <name>skipTests</name>
+                </property>
+            </activation>
+            <properties>
+                <skipIntegrationTests>true</skipIntegrationTests>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${failsafe.version}</version>
+                <configuration>
+                    <skip>${skipIntegrationTests}</skip>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
