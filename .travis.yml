@@ -25,6 +25,6 @@ install: true
 before_script:
 - cp data/src/test/resources/travis-test.properties data/src/test/resources/test.properties
 script:
-- mvn clean package
+- mvn clean install
 after_success:
-- mvn test org.jacoco:jacoco-maven-plugin:prepare-agent cobertura:cobertura coveralls:report sonar:sonar -Dmaven.main.skip
+- mvn verify org.jacoco:jacoco-maven-plugin:prepare-agent cobertura:cobertura coveralls:report sonar:sonar -Dmaven.main.skip

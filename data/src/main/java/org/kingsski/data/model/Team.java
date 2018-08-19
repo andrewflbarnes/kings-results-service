@@ -1,11 +1,5 @@
 package org.kingsski.data.model;
 
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.Nullable;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class Team {
 
     private long id;
@@ -155,26 +149,5 @@ public class Team {
         this.orderedScore3 = scores[2];
         this.orderedScore4 = scores[3];
         this.total = this.r1 + this.r2 + this.r3 + this.r4;
-    }
-
-    public static class TeamMapper implements RowMapper<Team> {
-
-        @Nullable
-        @Override
-        public Team mapRow(ResultSet resultSet, int i) throws SQLException {
-            Team team = new Team();
-            team.setId(resultSet.getInt(1));
-            team.setTeam(resultSet.getString(2));
-            team.setDivision(resultSet.getString(3));
-            team.setLeague(resultSet.getString(4));
-            team.setPosition(resultSet.getInt(5));
-            team.setR1(resultSet.getInt(6));
-            team.setR2(resultSet.getInt(7));
-            team.setR3(resultSet.getInt(8));
-            team.setR4(resultSet.getInt(9));
-            // should be handled implicitly but maybe we want a check?
-//            team.setTotal(rs.getInt(10));
-            return team;
-        }
     }
 }
