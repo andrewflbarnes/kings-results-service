@@ -1,6 +1,6 @@
 CREATE TABLE `kings_teams` (
   `id`          bigint(20)      NOT NULL AUTO_INCREMENT,
-  `teamName`        varchar(255)    NOT NULL,
+  `name`        varchar(255)    NOT NULL,
   `division`    varchar(255)    NOT NULL,
   `league`      varchar(255)    NOT NULL,
   `position`    int(11)         DEFAULT 0,

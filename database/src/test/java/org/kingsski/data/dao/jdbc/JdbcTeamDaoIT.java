@@ -141,7 +141,7 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
     private void addTeam(Team team) {
         jdbcTemplate.update(
                 "INSERT INTO kings_teams(" +
-                        "id, division, league, position, team, r1, r2, r3, r4, total) " +
+                        "id, division, league, position, name, r1, r2, r3, r4, total) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 team.getId(),
                 team.getDivision(),
