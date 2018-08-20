@@ -59,6 +59,7 @@ public class CachingRaceDaoTest {
         verify(raceDaoMock, times(1)).getRacesAll();
 
         Thread.sleep(INTERVAL*2);
+
         reset(raceDaoMock);
         when(raceDaoMock.getRacesAll()).thenReturn(raceListTwo).thenReturn(raceListOne);
 

@@ -2,7 +2,6 @@ package org.kingsski.api.query.controller;
 
 import org.kingsski.api.query.service.IndividualService;
 import org.kingsski.data.model.Individual;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;

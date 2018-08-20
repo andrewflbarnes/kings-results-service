@@ -20,7 +20,7 @@ public class TeamTest {
     public void testConstructor() {
         Team team = new Team(TEAM, LEAGUE, DIVISION, POSITION, SCORE_1, SCORE_2, SCORE_3, SCORE_4);
 
-        assertEquals(TEAM, team.getTeam());
+        assertEquals(TEAM, team.getTeamName());
         assertEquals(LEAGUE, team.getLeague());
         assertEquals(DIVISION, team.getDivision());
         assertEquals(POSITION, team.getPosition());

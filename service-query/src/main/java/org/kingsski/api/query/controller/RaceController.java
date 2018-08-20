@@ -1,14 +1,12 @@
 package org.kingsski.api.query.controller;
 
-import org.kingsski.data.model.Race;
 import org.kingsski.api.query.service.RaceService;
+import org.kingsski.data.model.Race;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * This class acts as a REST controller for the Kings Race Service providing

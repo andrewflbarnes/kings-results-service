@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * This class acts as a REST controller for the Kings Team Service providing
  * Teams as requested. The base URL for requests is "/Teams". All parameters

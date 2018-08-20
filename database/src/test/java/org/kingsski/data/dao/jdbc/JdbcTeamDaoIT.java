@@ -126,7 +126,7 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
         team.setDivision(DIVISION);
         team.setLeague(LEAGUE);
         team.setPosition(POSITION);
-        team.setTeam(TEAM);
+        team.setTeamName(TEAM);
         team.setR1(3);
         team.setR2(1);
         team.setR3(4);
@@ -147,7 +147,7 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
                 team.getDivision(),
                 team.getLeague(),
                 team.getPosition(),
-                team.getTeam(),
+                team.getTeamName(),
                 team.getR1(),
                 team.getR2(),
                 team.getR3(),
@@ -160,7 +160,7 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
         assertEquals(expected.getDivision(), actual.getDivision());
         assertEquals(expected.getLeague(), actual.getLeague());
         assertEquals(expected.getPosition(), actual.getPosition());
-        assertEquals(expected.getTeam(), actual.getTeam());
+        assertEquals(expected.getTeamName(), actual.getTeamName());
         assertEquals(expected.getR1(), actual.getR1());
         assertEquals(expected.getR2(), actual.getR2());
         assertEquals(expected.getR3(), actual.getR3());

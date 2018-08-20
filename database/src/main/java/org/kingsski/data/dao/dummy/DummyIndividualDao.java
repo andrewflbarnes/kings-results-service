@@ -2,7 +2,6 @@ package org.kingsski.data.dao.dummy;
 
 import org.kingsski.data.dao.IndividualDao;
 import org.kingsski.data.dao.TeamDao;
-import org.kingsski.data.dao.jdbc.mapper.IndividualMapper;
 import org.kingsski.data.model.Individual;
 import org.kingsski.data.model.Team;
 
@@ -26,20 +25,21 @@ public class DummyIndividualDao implements IndividualDao {
     private static final String LS = "Ladies ski";
     private static final String MB = "Mens board";
     private static final String LB = "Ladies board";
+    private static final String NAME = "Aidan Faria";
 
     // Static initialiser for the INDIVIDUALS variable
     static {
         List<Individual> dummyIndividuals = new ArrayList<>();
-        dummyIndividuals.add(createIndividual(1, MS, SKUM, "Aidan Faria", 10, 12, 1));
-        dummyIndividuals.add(createIndividual(2, MS, LEEDS, "Aidan Faria", 10, 14, 2));
-        dummyIndividuals.add(createIndividual(3, MS, SKUM, "Aidan Faria", 13, 12, 3));
-        dummyIndividuals.add(createIndividual(1, LS, LEEDS, "Aidan Faria", 10, 12, 1));
-        dummyIndividuals.add(createIndividual(2, LS, LEEDS, "Aidan Faria", 15, 12, 2));
-        dummyIndividuals.add(createIndividual(3, LS, SKUM, "Aidan Faria", 17, 12, 4));
-        dummyIndividuals.add(createIndividual(1, MB, LEEDS, "Aidan Faria", 10, 12, 1));
-        dummyIndividuals.add(createIndividual(2, MB, SKUM, "Aidan Faria", 13, 12, 2));
-        dummyIndividuals.add(createIndividual(1, LB, SKUM, "Aidan Faria", 10, 12, 1));
-        dummyIndividuals.add(createIndividual(2, LB, LEEDS, "Aidan Faria", 18, 12, 2));
+        dummyIndividuals.add(createIndividual(1, MS, SKUM, NAME, 10, 12, 1));
+        dummyIndividuals.add(createIndividual(2, MS, LEEDS, NAME, 10, 14, 2));
+        dummyIndividuals.add(createIndividual(3, MS, SKUM, NAME, 13, 12, 3));
+        dummyIndividuals.add(createIndividual(1, LS, LEEDS, NAME, 10, 12, 1));
+        dummyIndividuals.add(createIndividual(2, LS, LEEDS, NAME, 15, 12, 2));
+        dummyIndividuals.add(createIndividual(3, LS, SKUM, NAME, 17, 12, 4));
+        dummyIndividuals.add(createIndividual(1, MB, LEEDS, NAME, 10, 12, 1));
+        dummyIndividuals.add(createIndividual(2, MB, SKUM, NAME, 13, 12, 2));
+        dummyIndividuals.add(createIndividual(1, LB, SKUM, NAME, 10, 12, 1));
+        dummyIndividuals.add(createIndividual(2, LB, LEEDS, NAME, 18, 12, 2));
 
         INDIVIDUALS = Collections.unmodifiableList(dummyIndividuals);
     }

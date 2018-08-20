@@ -3,7 +3,7 @@ package org.kingsski.data.model;
 public class Team {
 
     private long id;
-    private String team;
+    private String teamName;
     private String league;
     private String division;
     private int position;
@@ -17,10 +17,12 @@ public class Team {
     private int orderedScore3;
     private int orderedScore4;
 
-    public Team() {}
+    public Team() {
+        // default constructor
+    }
 
-    public Team(String team, String league, String division, int position, int r1, int r2, int r3, int r4) {
-        this.team = team;
+    public Team(String teamName, String league, String division, int position, int r1, int r2, int r3, int r4) {
+        this.teamName = teamName;
         this.league = league;
         this.division = division;
         this. position = position;
@@ -39,12 +41,12 @@ public class Team {
         this.id = id;
     }
 
-    public String getTeam() {
-        return team;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam(String team) {
-        this.team = team;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public String getLeague() {

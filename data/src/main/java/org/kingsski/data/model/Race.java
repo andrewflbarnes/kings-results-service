@@ -21,7 +21,9 @@ public class Race {
     private String teamTwoDsq;
     private boolean next;
 
-    public Race() {}
+    public Race() {
+        // default constructor
+    }
 
     /**
      * Standard constructor for a new {@link Race}

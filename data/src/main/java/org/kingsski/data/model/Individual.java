@@ -11,7 +11,9 @@ public class Individual {
     private int time2;
     private int totalTime;
 
-    public Individual() {}
+    public Individual() {
+        // default constructor
+    }
 
     public long getId() {
         return id;
