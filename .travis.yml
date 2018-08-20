@@ -27,4 +27,5 @@ before_script:
 script:
 - mvn clean install
 after_success:
-- mvn -P coverage
+- mvn -P coverage-sonar
+- mvn -P coverage-coveralls

@@ -17,18 +17,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- project -->
+        <!-- custom property defaults -->
+        <skipIntegrationTests>false</skipIntegrationTests>
+        <!-- project dependencies -->
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
         <spring.data.version>2.0.8.RELEASE</spring.data.version>
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
-        <!-- test -->
+        <!-- test dependencies -->
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
         <failsafe.version>2.22.0</failsafe.version>
+        <!-- coverage and code analysis -->
         <jacoco.version>0.7.7.201606060606</jacoco.version>
         <cobertura.version>2.7</cobertura.version>
+        <coveralls.version>4.3.0</coveralls.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -45,15 +49,11 @@
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
         </profile>
+
         <profile>
-            <id>coverage</id>
-            <activation>
-                <property>
-                    <name>coverage</name>
-                </property>
-            </activation>
+            <id>coverage-sonar</id>
             <build>
-                <defaultGoal>cobertura:cobertura-integration-test coveralls:report sonar:sonar</defaultGoal>
+                <defaultGoal>clean install sonar:sonar</defaultGoal>
                 <plugins>
                     <!-- jacoco for sonar -->
                     <plugin>
@@ -71,13 +71,29 @@
                         <executions>
                             <execution>
                                 <id>prepare-jacoco</id>
+                                <phase>initialize</phase>
                                 <goals>
                                     <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>prepare-jacoco-integration</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
                                     <goal>prepare-agent-integration</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>coverage-coveralls</id>
+            <build>
+                <defaultGoal>cobertura:cobertura-integration-test coveralls:report</defaultGoal>
+                <plugins>
                     <!-- cobertura for coveralls -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -104,15 +120,7 @@
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>4.3.0</version>
-                        <executions>
-                            <execution>
-                                <id>coveralls-coverage</id>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+                        <version>${coveralls.version}</version>
                     </plugin>
                 </plugins>
             </build>
