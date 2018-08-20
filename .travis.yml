@@ -27,4 +27,4 @@ before_script:
 script:
 - mvn clean install
 after_success:
-- mvn verify org.jacoco:jacoco-maven-plugin:prepare-agent cobertura:cobertura coveralls:report sonar:sonar -Dmaven.main.skip
+- mvn cobertura:cobertura-integration-test coveralls:report sonar:sonar

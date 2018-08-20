@@ -22,6 +22,7 @@ public class IndividualTest {
         Individual indi1D = createIndividual(1, MS, BATH, AIDAN, 1, 3, 1);
         Individual indi1E = createIndividual(1, MS, BATH, AIDAN, 1, 3, 2);
 
+        assertEqualsAndHashCode(indi1A, indi1A);
         assertEqualsAndHashCode(indi1A, indi1B);
         assertEqualsAndHashCode(indi1A, indi1C);
         assertEqualsAndHashCode(indi1A, indi1D);
@@ -35,6 +36,18 @@ public class IndividualTest {
 
         Individual indi4 = createIndividual(1, MS, BATH, JAMES, 1, 2, 1);
         assertNotEqualsAndHashCode(indi1A, indi4);
+
+        Individual indi1F = createIndividual(1, null, BATH, AIDAN, 1, 2, 1);
+        Individual indi1G = createIndividual(1, MS, null, AIDAN, 1, 2, 1);
+        Individual indi1H = createIndividual(1, MS, BATH, null, 1, 2, 1);
+
+        Object notAnIndividual = new Object();
+
+        assertNotEquals(indi1A, null);
+        assertNotEqualsAndHashCode(indi1A, indi1F);
+        assertNotEqualsAndHashCode(indi1A, indi1G);
+        assertNotEqualsAndHashCode(indi1A, indi1H);
+        assertNotEqualsAndHashCode(indi1A, notAnIndividual);
     }
 
     private static Individual createIndividual(int id, String discipline, String club, String name, int time1, int time2, int position) {
@@ -54,11 +67,13 @@ public class IndividualTest {
 
     private static void assertNotEqualsAndHashCode(Object expected, Object actual) {
         assertNotEquals(expected, actual);
+        assertNotEquals(actual, expected);
         assertNotEquals(expected.hashCode(), actual.hashCode());
     }
 
     private static void assertEqualsAndHashCode(Object expected, Object actual) {
         assertEquals(expected, actual);
+        assertEquals(actual, expected);
         assertEquals(expected.hashCode(), actual.hashCode());
     }
 }

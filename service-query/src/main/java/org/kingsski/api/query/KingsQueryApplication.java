@@ -8,15 +8,15 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @ImportResource("classpath:application-spring.xml")
-public class KingsQueryService extends SpringBootServletInitializer {
+public class KingsQueryApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(KingsQueryService.class);
+        return application.sources(KingsQueryApplication.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(KingsQueryService.class, args);
+        SpringApplication.run(KingsQueryApplication.class, args);
     }
 
 }
