@@ -4,105 +4,61 @@
     <artifactId>kings-race-service</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <name>kings-race-service</name>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.1.RELEASE</version>
-    </parent>
+
+    <modules>
+        <module>data</module>
+        <module>database</module>
+        <!--<module>service</module>-->
+        <module>service-query</module>
+    </modules>
 
     <properties>
-        <java.version>1.8</java.version>
-        <spring.boot.version>2.0.1.RELEASE</spring.boot.version>
+        <!-- maven -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- project -->
+        <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+        <spring.data.version>2.0.8.RELEASE</spring.data.version>
+        <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
+        <jayway.version>2.2.0</jayway.version>
+        <!-- test -->
+        <junit.version>4.12</junit.version>
+        <mockito.version>2.19.1</mockito.version>
+        <failsafe.version>2.22.0</failsafe.version>
     </properties>
 
+    <packaging>pom</packaging>
+
     <profiles>
-        <!-- containers -->
         <profile>
-            <id>tomcat</id>
+            <id>skipIntegrationTests</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>skipTests</name>
+                </property>
             </activation>
             <properties>
-                <spring.boot.container>spring-boot-starter-tomcat</spring.boot.container>
+                <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
-        </profile>
-        <profile>
-            <id>jetty</id>
-            <properties>
-                <spring.boot.container>spring-boot-starter-jetty</spring.boot.container>
-            </properties>
-        </profile>
-        <profile>
-            <id>undertow</id>
-            <properties>
-                <spring.boot.container>spring-boot-starter-undertow</spring.boot.container>
-            </properties>
-        </profile>
-        <!-- db -->
-        <profile>
-            <id>mysql</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>6.0.6</version>
-                </dependency>
-            </dependencies>
         </profile>
     </profiles>
 
-    <packaging>war</packaging>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring.boot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-        </dependency>
-
-        <!-- build dependent dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>${spring.boot.container}</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
-        <finalName>kings-race-service</finalName>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <configuration>
+                    <skip>${skipIntegrationTests}</skip>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>repackage</goal>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -112,6 +68,13 @@
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
+                    <instrumentation>
+                        <ignoreTrivial>true</ignoreTrivial>
+                        <excludes>
+                            <exclude>**/*Config.class</exclude>
+                            <exclude>**/*Application.class</exclude>
+                        </excludes>
+                    </instrumentation>
                     <formats>
                         <format>html</format>
                         <format>xml</format>
@@ -129,6 +92,22 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <repositories>
         <repository>
