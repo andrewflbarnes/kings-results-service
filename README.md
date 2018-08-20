@@ -2,8 +2,8 @@
 
 Master:  
 [![Master Build Status](https://travis-ci.org/andrewflbarnes/kings-results-service.svg?branch=master)](https://travis-ci.org/andrewflbarnes/kings-results-service) 
-[![Coverage Status](https://coveralls.io/repos/github/andrewflbarnes/kings-results-service/badge.svg?branch=master)](https://coveralls.io/github/andrewflbarnes/kings-results-service?branch=master)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=org.kingsski:kings-race-service)](https://sonarcloud.io/dashboard?id=org.kingsski:kings-race-service)
+[![Coverage Status](https://img.shields.io/coveralls/github/andrewflbarnes/kings-results-service.svg)](https://coveralls.io/github/andrewflbarnes/kings-results-service?branch=master)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=org.kingsski%3Akings-race-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.kingsski:kings-race-service)
 
 Modules:
 - data (lib): contains entity models

@@ -27,4 +27,4 @@ before_script:
 script:
 - mvn clean install
 after_success:
-- mvn cobertura:cobertura-integration-test coveralls:report sonar:sonar
+- mvn -P coverage
