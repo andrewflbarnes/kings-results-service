@@ -61,8 +61,6 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>${jacoco.version}</version>
                         <configuration>
-                            <append>true</append>
-                            <destFile>${project.build.directory}/jacoco.exec</destFile>
                             <excludes>
                                 <exclude>**/*Config.class</exclude>
                                 <exclude>**/*Application.class</exclude>
