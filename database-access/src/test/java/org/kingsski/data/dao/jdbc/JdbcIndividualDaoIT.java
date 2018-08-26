@@ -36,7 +36,7 @@ public class JdbcIndividualDaoIT extends AbstractDaoIT {
     private IndividualDao individualDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         individualDao = new JdbcIndividualDao(jdbcTemplate, jdbcStatements);
         jdbcTemplate.execute(DELETE_ALL);

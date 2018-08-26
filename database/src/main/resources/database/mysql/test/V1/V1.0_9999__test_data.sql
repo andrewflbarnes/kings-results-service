@@ -143,53 +143,73 @@ VALUES
   )
 ;
 
-INSERT INTO t_regional
-  ( league_id
+INSERT INTO t_season
+  ( competition_id
   , name
   )
 VALUES
-  ( (SELECT league_id FROM t_league WHERE name = 'Northern')
+  ( (SELECT competition_id FROM t_competition WHERE name = 'Kings Ski')
+  , '2017'
+  )
+;
+
+INSERT INTO t_regional
+  ( season_id
+  , league_id
+  , name
+  )
+VALUES
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , 'Round 1'
   )
 ;
 
 INSERT INTO t_regional
-  ( league_id
+  ( season_id
+  , league_id
   , name
   )
 VALUES
-  ( (SELECT league_id FROM t_league WHERE name = 'Northern')
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , 'Round 2'
   )
 ;
 
 INSERT INTO t_regional
-  ( league_id
+  ( season_id
+  , league_id
   , name
   )
 VALUES
-  ( (SELECT league_id FROM t_league WHERE name = 'Northern')
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , 'Round 3'
   )
 ;
 
 INSERT INTO t_regional
-  ( league_id
+  ( season_id
+  , league_id
   , name
   )
 VALUES
-  ( (SELECT league_id FROM t_league WHERE name = 'Northern')
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , 'Round 4'
   )
 ;
 
 INSERT INTO t_register
   ( team_id
+  , season_id
   , league_id
   , division_id
   )
 VALUES
   ( (SELECT team_id FROM t_team WHERE name = 'SKUM 1')
+  , (SELECT season_id FROM t_season WHERE name = '2017')
   , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
   )
@@ -197,11 +217,13 @@ VALUES
 
 INSERT INTO t_register
   ( team_id
+  , season_id
   , league_id
   , division_id
   )
 VALUES
   ( (SELECT team_id FROM t_team WHERE name = 'SKUM 2')
+  , (SELECT season_id FROM t_season WHERE name = '2017')
   , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
   )
@@ -209,11 +231,13 @@ VALUES
 
 INSERT INTO t_register
   ( team_id
+  , season_id
   , league_id
   , division_id
   )
 VALUES
   ( (SELECT team_id FROM t_team WHERE name = 'Leeds 1')
+  , (SELECT season_id FROM t_season WHERE name = '2017')
   , (SELECT league_id FROM t_league WHERE name = 'Northern')
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
   )
@@ -221,11 +245,13 @@ VALUES
 
 INSERT INTO t_register
   ( team_id
+  , season_id
   , league_id
   , division_id
   )
 VALUES
   ( (SELECT team_id FROM t_team WHERE name = 'Bath 1')
+  , (SELECT season_id FROM t_season WHERE name = '2017')
   , (SELECT league_id FROM t_league WHERE name = 'Western')
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
   )
@@ -239,7 +265,9 @@ INSERT INTO t_match
   , winner
   )
 VALUES
-  ( (SELECT regional_id FROM t_regional WHERE name = 'Round 1' AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern'))
+  ( (SELECT regional_id FROM t_regional WHERE name = 'Round 1'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
   , (SELECT team_id FROM t_team WHERE name = 'Leeds 1')
   , (SELECT team_id FROM t_team WHERE name = 'SKUM 1')
@@ -254,7 +282,9 @@ INSERT INTO t_match
   , team_2_id
   )
 VALUES
-  ( (SELECT regional_id FROM t_regional WHERE name = 'Round 1' AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern'))
+  ( (SELECT regional_id FROM t_regional WHERE name = 'Round 1'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
   , (SELECT team_id FROM t_team WHERE name = 'SKUM 1')
   , (SELECT team_id FROM t_team WHERE name = 'Leeds 1')

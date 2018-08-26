@@ -8,7 +8,7 @@
     <modules>
         <module>data</module>
         <module>database</module>
-        <!--<module>service</module>-->
+        <module>database-access</module>
         <module>service-query</module>
     </modules>
 
@@ -25,6 +25,7 @@
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
+        <mysql.version>6.0.6</mysql.version>
         <!-- test dependencies -->
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
@@ -48,6 +49,23 @@
             <properties>
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
+        </profile>
+
+        <profile>
+            <id>mysql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.type>mysql</db.type>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>${mysql.version}</version>
+                </dependency>
+            </dependencies>
         </profile>
 
         <profile>

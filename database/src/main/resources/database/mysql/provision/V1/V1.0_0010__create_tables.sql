@@ -67,8 +67,22 @@ FOREIGN KEY (competition_id) REFERENCES t_competition(competition_id);
 ALTER TABLE t_division ADD CONSTRAINT UNIQUE_DIVISION_COMPETITION_ID_NAME
 UNIQUE (competition_id, name);
 
+CREATE TABLE t_season (
+  season_id           bigint              NOT NULL AUTO_INCREMENT,
+  competition_id      bigint              NOT NULL,
+  name                varchar(255)        NOT NULL,
+  PRIMARY KEY         (season_id)
+);
+
+ALTER TABLE t_season ADD CONSTRAINT FK_SEASON_COMPETITION_COMPETITION_ID
+FOREIGN KEY (season_id) REFERENCES t_competition(competition_id);
+
+ALTER TABLE t_season ADD CONSTRAINT UNIQUE_SEASON_COMPETITION_ID_NAME
+UNIQUE (competition_id, name);
+
 CREATE TABLE t_regional (
   regional_id         bigint              NOT NULL AUTO_INCREMENT,
+  season_id           bigint              NOT NULL,
   league_id           bigint              NOT NULL,
   name                varchar(255)        NOT NULL,
   PRIMARY KEY         (regional_id)
@@ -77,9 +91,13 @@ CREATE TABLE t_regional (
 ALTER TABLE t_regional ADD CONSTRAINT FK_REGIONAL_LEAGUE_LEAGUE_ID
 FOREIGN KEY (league_id) REFERENCES t_league(league_id);
 
+ALTER TABLE t_regional ADD CONSTRAINT FK_REGIONAL_SEASON_SEASON_ID
+FOREIGN KEY (season_id) REFERENCES t_season(season_id);
+
 CREATE TABLE t_register (
   register_id         bigint              NOT NULL AUTO_INCREMENT,
   team_id             bigint              NOT NULL,
+  season_id           bigint              NOT NULL,
   league_id           bigint              NOT NULL,
   division_id         bigint              NOT NULL,
   PRIMARY KEY         (register_id)
@@ -87,6 +105,9 @@ CREATE TABLE t_register (
 
 ALTER TABLE t_register ADD CONSTRAINT FK_REGISTER_TEAM_TEAM_ID
 FOREIGN KEY (team_id) REFERENCES t_team(team_id);
+
+ALTER TABLE t_register ADD CONSTRAINT FK_REGISTER_SEASON_SEASON_ID
+FOREIGN KEY (season_id) REFERENCES t_season(season_id);
 
 ALTER TABLE t_register ADD CONSTRAINT FK_REGISTER_LEAGUE_LEAGUE_ID
 FOREIGN KEY (league_id) REFERENCES t_league(league_id);

@@ -3,6 +3,7 @@ package org.kingsski.data.dao.jdbc;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.TestPropertySource;
@@ -12,22 +13,22 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource("classpath:test.properties")
+@TestPropertySource("classpath:${test.profile}-test.properties")
 public abstract class AbstractDaoIT {
 
     @Resource(name = "jdbcShared")
     private Map<String, String> jdbcStatements;
 
-    @Value("${db.full.url}")
+    @Value("${testdb.full.url}")
     private String url;
 
-    @Value("${db.username}")
+    @Value("${testdb.username}")
     private String user;
 
-    @Value("${db.password}")
+    @Value("${testdb.password}")
     private String password;
 
-    @Value("${db.driver}")
+    @Value("${testdb.driver}")
     private String driver;
 
     protected DriverManagerDataSource dataSource;
@@ -35,7 +36,7 @@ public abstract class AbstractDaoIT {
     protected JdbcTemplate jdbcTemplate;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setUsername(user);

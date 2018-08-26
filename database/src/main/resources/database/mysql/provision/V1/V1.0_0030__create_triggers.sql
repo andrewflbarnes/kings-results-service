@@ -17,10 +17,11 @@ FOR EACH ROW BEGIN
            AND rl.league_id = l.league_id
            AND NEW.team_1_id = r.team_id
            AND NEW.division_id = r.division_id
-           AND l.league_id = r.league_id);
+           AND l.league_id = r.league_id
+           AND rl.season_id = r.season_id);
 
     IF register_id IS NULL || register_id = 0 THEN
-        SET msg = 'ERROR trg_match_check_registered: team 1 is not registered to league and division';
+        SET msg = 'ERROR trg_match_check_registered: team 1 is not registered to season, league and division';
         SIGNAL SQLSTATE '45000' SET message_text = msg;
     END IF;
 
@@ -33,10 +34,11 @@ FOR EACH ROW BEGIN
            AND rl.league_id = l.league_id
            AND NEW.team_2_id = r.team_id
            AND NEW.division_id = r.division_id
-           AND l.league_id = r.league_id);
+           AND l.league_id = r.league_id
+           AND rl.season_id = r.season_id);
 
     IF register_id IS NULL || register_id = 0 THEN
-        SET msg = 'ERROR trg_match_check_registered: team 2 is not registered to league and division';
+        SET msg = 'ERROR trg_match_check_registered: team 2 is not registered to season, league and division';
         SIGNAL SQLSTATE '45000' SET message_text = msg;
     END IF;
 END//

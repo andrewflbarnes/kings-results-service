@@ -34,7 +34,7 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
     private TeamDao teamDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         teamDao = new JdbcTeamDao(jdbcTemplate, jdbcStatements);
         jdbcTemplate.execute(DELETE_ALL);

@@ -37,7 +37,7 @@ public class JdbcRaceDaoIT extends AbstractDaoIT {
     private RaceDao raceDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         raceDao = new JdbcRaceDao(jdbcTemplate, jdbcStatements);
         jdbcTemplate.execute(DELETE_ALL);
