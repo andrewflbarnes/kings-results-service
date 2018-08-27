@@ -1,9 +1,7 @@
 package org.kingsski.data.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Team {
@@ -25,12 +23,17 @@ public class Team {
         // default constructor
     }
 
-    public Team(String teamName, String league, String division, int position, List<RegionalScore> scores) {
+    public Team(String clubName, String teamName, String organisation, String competition,
+                String season, String league, String division, int position, List<RegionalScore> scores) {
+        this.clubName = clubName;
+        this.organisation = organisation;
+        this.competition = competition;
         this.teamName = teamName;
+        this.season = season;
         this.league = league;
         this.division = division;
         this.position = position;
-        setScores(scores);
+        resetScores(scores == null ? new ArrayList<>() : scores);
     }
 
     public long getId() {
@@ -125,7 +128,7 @@ public class Team {
     /**
      * Sets a deep copy of the {@link RegionalScore}s for this team
      */
-    public void setScores(List<RegionalScore> scores) {
+    public void resetScores(List<RegionalScore> scores) {
         this.scores = new ArrayList<>(scores.size());
         for (RegionalScore rScore : scores) {
             RegionalScore deepCopy = new RegionalScore();
@@ -135,6 +138,15 @@ public class Team {
         }
 
         updateScores();
+    }
+
+    /**
+     * Sets a deep copy of the {@link RegionalScore}s for this team
+     */
+    public void addScores(List<RegionalScore> scores) {
+        for (RegionalScore rScore : scores) {
+            setScore(rScore);
+        }
     }
 
     public int getTotal() {
@@ -169,6 +181,15 @@ public class Team {
     public int getScore(final int ordinal) {
         RegionalScore regionalScore = scores.get(ordinal);
         return regionalScore == null ? 0 : regionalScore.getScore();
+    }
+
+    /**
+     * Sets the regional score
+     *
+     * @param regionalScore The regional score to set
+     */
+    public void setScore(final RegionalScore regionalScore) {
+       setScore(regionalScore.getName(), regionalScore.getScore());
     }
 
     /**
@@ -223,5 +244,66 @@ public class Team {
                 .distinct()
                 .sorted()
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (!Team.class.equals(obj.getClass())) {
+            return false;
+        }
+
+        Team other = (Team)obj;
+
+        if (this.clubName == null || this.teamName == null || this.organisation == null ||
+                this.competition == null || this.season == null || this.league == null || this.division == null) {
+            return false;
+        }
+
+        return this.clubName.equals(other.clubName) &&
+                this.teamName.equals(other.teamName) &&
+                this.organisation.equals(other.organisation) &&
+                this.competition.equals(other.competition) &&
+                this.season.equals(other.season) &&
+                this.league.equals(other.league) &&
+                this.division.equals(other.division);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+
+        result = prime * result + (clubName == null ? 0 : clubName.hashCode());
+        result = prime * result + (teamName == null ? 0 : teamName.hashCode());
+        result = prime * result + (organisation == null ? 0 : organisation.hashCode());
+        result = prime * result + (competition == null ? 0 : competition.hashCode());
+        result = prime * result + (season == null ? 0 : season.hashCode());
+        result = prime * result + (league == null ? 0 : league.hashCode());
+        result = prime * result + (division == null ? 0 : division.hashCode());
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Team[" +
+                "club:" + clubName + ";" +
+                "team:" + teamName + ";" +
+                "organisation:" + organisation + ";" +
+                "competition:" + competition + ";" +
+                "season:" + season + ";" +
+                "league:" + league + ";" +
+                "division:" + division + ";" +
+                "scores:" + scores +
+                "]";
     }
 }

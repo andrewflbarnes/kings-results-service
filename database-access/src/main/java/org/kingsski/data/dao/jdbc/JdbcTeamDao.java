@@ -5,8 +5,10 @@ import org.kingsski.data.dao.jdbc.mapper.TeamMapper;
 import org.kingsski.data.model.Team;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class JdbcTeamDao extends AbstractJdbcDao implements TeamDao {
 
@@ -25,9 +27,18 @@ public class JdbcTeamDao extends AbstractJdbcDao implements TeamDao {
 
     @Override
     public List<Team> getTeamsByLeague(String league) {
-        return jdbcTemplate.query(jdbcStatements.get(SELECT_BY_LEAGUE),
+        List<Team> teams = jdbcTemplate.query(jdbcStatements.get(SELECT_BY_LEAGUE),
                 new Object[] { league },
                 new TeamMapper());
+        List<Team> uniqueTeams = teams
+                .stream()
+                .distinct()
+                .collect(Collectors.toCollection(ArrayList::new));
+        for (Team team : teams) {
+            uniqueTeams.get(uniqueTeams.indexOf(team)).addScores(team.getScores());
+        }
+
+        return uniqueTeams;
     }
 
     @Override

@@ -15,14 +15,13 @@ public class TeamMapper implements RowMapper<Team> {
         Team team = new Team();
         team.setId(resultSet.getInt(1));
         team.setTeamName(resultSet.getString(2));
-        team.setDivision(resultSet.getString(3));
-        team.setLeague(resultSet.getString(4));
-        team.setPosition(resultSet.getInt(5));
-        team.setR1(resultSet.getInt(6));
-        team.setR2(resultSet.getInt(7));
-        team.setR3(resultSet.getInt(8));
-        team.setR4(resultSet.getInt(9));
-        // TODO emit warning when total is incorrect
+        team.setClubName(resultSet.getString(3));
+        team.setOrganisation(resultSet.getString(4));
+        team.setCompetition(resultSet.getString(5));
+        team.setSeason(resultSet.getString(6));
+        team.setLeague(resultSet.getString(7));
+        team.setDivision(resultSet.getString(8));
+        team.setScore(resultSet.getString(9), resultSet.getInt(10));
         return team;
     }
 }

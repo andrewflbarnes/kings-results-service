@@ -88,4 +88,12 @@ public class RegionalScore implements Comparable {
 
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "RegionalScore[" +
+                "regional:" + name + ";" +
+                "score:" + score
+                + "]";
+    }
 }

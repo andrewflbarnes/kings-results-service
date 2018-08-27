@@ -5,14 +5,17 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class TeamTest {
 
     private static final String TEAM = "TEAM";
+    private static final String CLUB = "CLUB";
+    private static final String ORGANISATION = "Kings";
+    private static final String COMPETITION = "Kings Ski";
+    private static final String SEASON = "2017";
     private static final String LEAGUE = "LEAGUE";
     private static final String DIVISION = "DIVISION";
     private static final int POSITION = 1;
@@ -44,13 +47,52 @@ public class TeamTest {
     }
 
     @Test
-    public void testConstructor() {
-        Team team = new Team(TEAM, LEAGUE, DIVISION, POSITION, SCORES);
+    public void testEquals() {
+        Team team = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+        assertEqualsAndHashCode(team, team);
+        // identical
+        Team team2 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+        assertEqualsAndHashCode(team, team2);
+        // equal
+        Team team3 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION + 1, SCORES);
+        assertEqualsAndHashCode(team, team3);
+        Team team4 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, null);
+        assertEqualsAndHashCode(team, team4);
+        // not equal
+        Team team5 = new Team(CLUB + "1", TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team5);
+        Team team6 = new Team(CLUB, TEAM + "1", ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team6);
+        Team team7 = new Team(CLUB, TEAM, ORGANISATION + "1", COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team7);
+        Team team8 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION + "1", SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team8);
+        Team team9 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON + "1", LEAGUE, DIVISION, POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team9);
+        Team team10 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE + "1", DIVISION, POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team10);
+        Team team11 = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION + "1", POSITION, SCORES);
+        assertNotEqualsAndHashCode(team, team11);
+        // null
+        assertNotEquals(team, null);
+    }
 
-        assertEquals(TEAM, team.getTeamName());
-        assertEquals(LEAGUE, team.getLeague());
-        assertEquals(DIVISION, team.getDivision());
-        assertEquals(POSITION, team.getPosition());
+    private void assertEqualsAndHashCode(Object expected, Object actual) {
+        assertEquals(expected, actual);
+        assertEquals(actual, expected);
+        assertEquals(expected.hashCode(), actual.hashCode());
+    }
+
+    private void assertNotEqualsAndHashCode(Object expected, Object actual) {
+        assertNotEquals(expected, actual);
+        assertNotEquals(actual, expected);
+        assertNotEquals(expected.hashCode(), actual.hashCode());
+    }
+
+    @Test
+    public void testConstructor() {
+        Team team = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, SCORES);
+
         assertEquals(SCORE_1, team.getScore(0));
         assertEquals(SCORE_2, team.getScore(1));
         assertEquals(SCORE_3, team.getScore(2));
@@ -75,12 +117,8 @@ public class TeamTest {
         messyScores.add(new RegionalScore(ROUND_4, SCORE_2));
         messyScores.add(new RegionalScore(ROUND_5, SCORE_4));
 
-        team = new Team(TEAM, LEAGUE, DIVISION, POSITION, messyScores);
+        team = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, messyScores);
 
-        assertEquals(TEAM, team.getTeamName());
-        assertEquals(LEAGUE, team.getLeague());
-        assertEquals(DIVISION, team.getDivision());
-        assertEquals(POSITION, team.getPosition());
         assertEquals(SCORE_5, team.getScore(0));
         assertEquals(SCORE_3, team.getScore(1));
         assertEquals(SCORE_1, team.getScore(2));
@@ -104,7 +142,7 @@ public class TeamTest {
         List<RegionalScore> theseScores = new ArrayList<>();
         theseScores.add(new RegionalScore(ROUND_1, SCORE_1));
 
-        Team team = new Team(TEAM, LEAGUE, DIVISION, POSITION, theseScores);
+        Team team = new Team(CLUB, TEAM, ORGANISATION, COMPETITION, SEASON, LEAGUE, DIVISION, POSITION, theseScores);
 
         assertEquals(SCORE_1, team.getScore(ROUND_1));
         assertEquals(0, team.getScore(ROUND_2));

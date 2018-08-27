@@ -127,10 +127,10 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
         team.setLeague(LEAGUE);
         team.setPosition(POSITION);
         team.setTeamName(TEAM);
-        team.setR1(3);
-        team.setR2(1);
-        team.setR3(4);
-        team.setR4(2);
+//        team.setR1(3);
+//        team.setR2(1);
+//        team.setR3(4);
+//        team.setR4(2);
         team.setTotal(10);
 
         addTeam(team);
@@ -148,10 +148,10 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
                 team.getLeague(),
                 team.getPosition(),
                 team.getTeamName(),
-                team.getR1(),
-                team.getR2(),
-                team.getR3(),
-                team.getR4(),
+//                team.getR1(),
+//                team.getR2(),
+//                team.getR3(),
+//                team.getR4(),
                 team.getTotal());
     }
 
@@ -161,14 +161,14 @@ public class JdbcTeamDaoIT extends AbstractDaoIT {
         assertEquals(expected.getLeague(), actual.getLeague());
         assertEquals(expected.getPosition(), actual.getPosition());
         assertEquals(expected.getTeamName(), actual.getTeamName());
-        assertEquals(expected.getR1(), actual.getR1());
-        assertEquals(expected.getR2(), actual.getR2());
-        assertEquals(expected.getR3(), actual.getR3());
-        assertEquals(expected.getR4(), actual.getR4());
+//        assertEquals(expected.getR1(), actual.getR1());
+//        assertEquals(expected.getR2(), actual.getR2());
+//        assertEquals(expected.getR3(), actual.getR3());
+//        assertEquals(expected.getR4(), actual.getR4());
         assertEquals(expected.getTotal(), actual.getTotal());
-        assertEquals(expected.getOrderedScore1(), actual.getOrderedScore1());
-        assertEquals(expected.getOrderedScore2(), actual.getOrderedScore2());
-        assertEquals(expected.getOrderedScore3(), actual.getOrderedScore3());
-        assertEquals(expected.getOrderedScore4(), actual.getOrderedScore4());
+//        assertEquals(expected.getOrderedScore1(), actual.getOrderedScore1());
+//        assertEquals(expected.getOrderedScore2(), actual.getOrderedScore2());
+//        assertEquals(expected.getOrderedScore3(), actual.getOrderedScore3());
+//        assertEquals(expected.getOrderedScore4(), actual.getOrderedScore4());
     }
 }
