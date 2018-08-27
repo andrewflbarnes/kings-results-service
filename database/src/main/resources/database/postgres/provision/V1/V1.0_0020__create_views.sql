@@ -149,7 +149,7 @@ SELECT t_club.name
      , t_league.name
      , t_regional.name
      , t_division.name
-     , IFNULL(t_score.score, 0)
+     , COALESCE(t_score.score, 0) score
   FROM t_organisation
   JOIN t_competition        USING (organisation_id)
   JOIN t_season             USING (competition_id)
@@ -167,7 +167,7 @@ SELECT t_club.name
      , t_league.name
      , t_regional.name
      , t_division.name
-     , t_score.score DESC
+     , score DESC
 ;
 
 CREATE OR REPLACE VIEW score_competition
@@ -187,7 +187,7 @@ SELECT t_club.name
      , t_season.name
      , t_league.name
      , t_division.name
-     , SUM(IFNULL(t_score.score, 0))
+     , SUM(COALESCE(t_score.score, 0)) score
   FROM t_organisation
   JOIN t_competition        USING (organisation_id)
   JOIN t_season             USING (competition_id)
@@ -204,13 +204,15 @@ SELECT t_club.name
      , t_organisation.name
      , t_competition.name
      , t_season.name
+     , t_league.name
+     , t_division.name
  ORDER
     BY t_organisation.name
      , t_competition.name
      , t_season.name
      , t_league.name
      , t_division.name
-     , SUM(t_score.score) DESC
+     , score DESC
 ;
 
 CREATE OR REPLACE VIEW register
@@ -246,7 +248,7 @@ SELECT t_club.name
      , t_division.name
 ;
 
-CREATE OR REPLACE VIEW `match`
+CREATE OR REPLACE VIEW match
   ( competition
   , season
   , league

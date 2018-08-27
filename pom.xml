@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.kingsski</groupId>
     <artifactId>kings-race-service</artifactId>
@@ -26,6 +27,7 @@
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
         <mysql.version>6.0.6</mysql.version>
+        <postgres.version>42.2.4</postgres.version>
         <!-- test dependencies -->
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
@@ -52,10 +54,24 @@
         </profile>
 
         <profile>
-            <id>mysql</id>
+            <id>postgres</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <db.type>postgres</db.type>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgres.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>mysql</id>
             <properties>
                 <db.type>mysql</db.type>
             </properties>
@@ -127,7 +143,7 @@
                                 <format>html</format>
                                 <format>xml</format>
                             </formats>
-                            <check />
+                            <check/>
                             <maxmem>256m</maxmem>
                             <!-- aggregated reports for multi-module projects -->
                             <aggregate>true</aggregate>

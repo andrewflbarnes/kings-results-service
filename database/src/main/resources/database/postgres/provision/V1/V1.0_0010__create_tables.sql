@@ -1,6 +1,6 @@
 -- Club Domain
 CREATE TABLE t_club
-  ( club_id             bigint              NOT NULL AUTO_INCREMENT
+  ( club_id             bigserial           NOT NULL
   , name                varchar(255)        NOT NULL
   , PRIMARY KEY         (club_id)
 );
@@ -9,7 +9,7 @@ ALTER TABLE t_club ADD CONSTRAINT UNIQUE_CLUB_NAME
 UNIQUE (name);
 
 CREATE TABLE t_team
-  ( team_id             bigint              NOT NULL AUTO_INCREMENT
+  ( team_id             bigserial           NOT NULL
   , club_id             bigint              NOT NULL
   , name                varchar(255)        NOT NULL
   , PRIMARY KEY         (team_id)
@@ -20,7 +20,7 @@ FOREIGN KEY (club_id) REFERENCES t_club(club_id);
 
 -- Organisation Domain
 CREATE TABLE t_organisation
-  ( organisation_id     bigint              NOT NULL AUTO_INCREMENT
+  ( organisation_id     bigserial           NOT NULL
   , name                varchar(255)        NOT NULL
   , PRIMARY KEY         (organisation_id)
 );
@@ -29,7 +29,7 @@ ALTER TABLE t_organisation ADD CONSTRAINT UNIQUE_ORGANISATION_NAME
 UNIQUE (name);
 
 CREATE TABLE t_competition
-  ( competition_id      bigint              NOT NULL AUTO_INCREMENT
+  ( competition_id      bigserial           NOT NULL
   , organisation_id     bigint              NOT NULL
   , name                varchar(255)        NOT NULL
   , PRIMARY KEY         (competition_id)
@@ -42,7 +42,7 @@ ALTER TABLE t_competition ADD CONSTRAINT UNIQUE_COMPETITION_ORGANISATION_ID_NAME
 UNIQUE (organisation_id, name);
 
 CREATE TABLE t_league (
-  league_id           bigint              NOT NULL AUTO_INCREMENT,
+  league_id           bigserial           NOT NULL,
   competition_id      bigint              NOT NULL,
   name                varchar(255)        NOT NULL,
   PRIMARY KEY         (league_id)
@@ -55,7 +55,7 @@ ALTER TABLE t_league ADD CONSTRAINT UNIQUE_LEAGUE_COMPETITION_ID_NAME
 UNIQUE (competition_id, name);
 
 CREATE TABLE t_division
-  ( division_id         bigint              NOT NULL AUTO_INCREMENT
+  ( division_id         bigserial           NOT NULL
   , competition_id      bigint              NOT NULL
   , name                varchar(255)        NOT NULL
   , PRIMARY KEY         (division_id)
@@ -68,7 +68,7 @@ ALTER TABLE t_division ADD CONSTRAINT UNIQUE_DIVISION_COMPETITION_ID_NAME
 UNIQUE (competition_id, name);
 
 CREATE TABLE t_season
-  ( season_id           bigint              NOT NULL AUTO_INCREMENT
+  ( season_id           bigserial           NOT NULL
   , competition_id      bigint              NOT NULL
   , name                varchar(255)        NOT NULL
   , PRIMARY KEY         (season_id)
@@ -81,7 +81,7 @@ ALTER TABLE t_season ADD CONSTRAINT UNIQUE_SEASON_COMPETITION_ID_NAME
 UNIQUE (competition_id, name);
 
 CREATE TABLE t_regional
-  ( regional_id         bigint              NOT NULL AUTO_INCREMENT
+  ( regional_id         bigserial           NOT NULL
   , season_id           bigint              NOT NULL
   , league_id           bigint              NOT NULL
   , name                varchar(255)        NOT NULL
@@ -98,7 +98,7 @@ ALTER TABLE t_regional ADD CONSTRAINT UNIQUE_REGIONAL_SEASON_ID_LEAGUE_ID_NAME
 UNIQUE (season_id, league_id, name);
 
 CREATE TABLE t_score
-  ( score_id            bigint              NOT NULL AUTO_INCREMENT
+  ( score_id            bigserial           NOT NULL
   , team_id             bigint              NOT NULL
   , regional_id         bigint              NOT NULL
   , score               bigint              NOT NULL
@@ -115,7 +115,7 @@ ALTER TABLE t_score ADD CONSTRAINT UNIQUE_SCORE_TEAM_ID_REGIONAL_ID
 UNIQUE (team_id, regional_id);
 
 CREATE TABLE t_register
-  ( register_id         bigint              NOT NULL AUTO_INCREMENT
+  ( register_id         bigserial           NOT NULL
   , team_id             bigint              NOT NULL
   , season_id           bigint              NOT NULL
   , league_id           bigint              NOT NULL
@@ -139,7 +139,7 @@ ALTER TABLE t_register ADD CONSTRAINT UNIQUE_REGISTER_TEAM_ID_SEASON_ID
 UNIQUE (team_id, season_id);
 
 CREATE TABLE t_match
-  ( match_id            bigint              NOT NULL AUTO_INCREMENT
+  ( match_id            bigserial           NOT NULL
   , regional_id         bigint              NOT NULL
   , division_id         bigint              NOT NULL
   , team_1_id           bigint              NOT NULL
@@ -161,7 +161,7 @@ ALTER TABLE t_match ADD CONSTRAINT FK_MATCH_REGISTER_TEAM_2_ID
 FOREIGN KEY (team_2_id) REFERENCES t_team(team_id);
 
 CREATE TABLE t_match_meta
-  ( match_meta_id       bigint              NOT NULL AUTO_INCREMENT
+  ( match_meta_id       bigserial           NOT NULL
   , match_id            bigint              NOT NULL
   , meta_key            varchar(255)        NOT NULL
   , meta_value          VARCHAR(255)
