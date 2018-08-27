@@ -201,6 +201,54 @@ VALUES
   )
 ;
 
+INSERT INTO t_regional
+  ( season_id
+  , league_id
+  , name
+  )
+VALUES
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Western')
+  , 'Round 1'
+  )
+;
+
+INSERT INTO t_regional
+  ( season_id
+  , league_id
+  , name
+  )
+VALUES
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Western')
+  , 'Round 2'
+  )
+;
+
+INSERT INTO t_regional
+  ( season_id
+  , league_id
+  , name
+  )
+VALUES
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Western')
+  , 'Round 3'
+  )
+;
+
+INSERT INTO t_regional
+  ( season_id
+  , league_id
+  , name
+  )
+VALUES
+  ( (SELECT season_id FROM t_season WHERE name = '2017')
+  , (SELECT league_id FROM t_league WHERE name = 'Western')
+  , 'Round 4'
+  )
+;
+
 INSERT INTO t_register
   ( team_id
   , season_id
@@ -254,6 +302,76 @@ VALUES
   , (SELECT season_id FROM t_season WHERE name = '2017')
   , (SELECT league_id FROM t_league WHERE name = 'Western')
   , (SELECT division_id FROM t_division WHERE name = 'Mixed')
+  )
+;
+
+INSERT INTO t_score
+  ( team_id
+  , regional_id
+  , score
+  )
+VALUES
+  ( (SELECT team_id FROM t_team WHERE name = 'Leeds 1')
+  , (SELECT regional_id FROM t_regional WHERE name = 'Round 1'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
+  , 20
+  )
+;
+
+INSERT INTO t_score
+  ( team_id
+  , regional_id
+  , score
+  )
+VALUES
+  ( (SELECT team_id FROM t_team WHERE name = 'SKUM 1')
+  , (SELECT regional_id FROM t_regional WHERE name = 'Round 1'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
+  , 18
+  )
+;
+
+INSERT INTO t_score
+  ( team_id
+  , regional_id
+  , score
+  )
+VALUES
+  ( (SELECT team_id FROM t_team WHERE name = 'SKUM 1')
+  , (SELECT regional_id FROM t_regional WHERE name = 'Round 2'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Northern')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
+  , 20
+  )
+;
+
+INSERT INTO t_score
+  ( team_id
+  , regional_id
+  , score
+  )
+VALUES
+  ( (SELECT team_id FROM t_team WHERE name = 'Bath 1')
+  , (SELECT regional_id FROM t_regional WHERE name = 'Round 1'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Western')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
+  , 20
+  )
+;
+
+INSERT INTO t_score
+  ( team_id
+  , regional_id
+  , score
+  )
+VALUES
+  ( (SELECT team_id FROM t_team WHERE name = 'Bath 1')
+  , (SELECT regional_id FROM t_regional WHERE name = 'Round 2'
+                                          AND league_id = (SELECT league_id FROM t_league WHERE name = 'Western')
+                                          AND season_id = (SELECT season_id FROM t_season WHERE name = '2017'))
+  , 20
   )
 ;
 

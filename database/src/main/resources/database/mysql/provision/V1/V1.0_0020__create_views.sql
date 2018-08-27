@@ -6,8 +6,7 @@ CREATE OR REPLACE VIEW club (
 SELECT t_club.name
      , COUNT(t_team.team_id)
   FROM t_club
-LEFT OUTER JOIN t_team
-    ON t_club.club_id = t_team.club_id
+LEFT OUTER JOIN t_team      USING(club_id)
  GROUP
     BY t_club.name
  ORDER
@@ -20,9 +19,8 @@ CREATE OR REPLACE VIEW team (
 ) AS
 SELECT t_club.name
      , t_team.name
-  FROM t_team
-     , t_club
- WHERE t_team.club_id = t_club.club_id
+  FROM t_club
+  JOIN t_team               USING (club_id)
  ORDER
     BY t_club.name ASC
      , t_team.name ASC
@@ -36,8 +34,7 @@ CREATE OR REPLACE VIEW organisation (
 SELECT t_organisation.name
      , COUNT(t_competition.competition_id)
   FROM t_organisation
-LEFT OUTER JOIN t_competition
-    ON t_organisation.organisation_id = t_competition.organisation_id
+LEFT OUTER JOIN t_competition USING (organisation_id)
  GROUP
     BY t_organisation.name
  ORDER
@@ -51,8 +48,7 @@ CREATE OR REPLACE VIEW competition (
 SELECT t_organisation.name
      , t_competition.name
   FROM t_competition
-     , t_organisation
- WHERE t_competition.organisation_id = t_organisation.organisation_id
+  JOIN t_organisation       USING (organisation_id)
  ORDER
     BY t_organisation.name ASC
      , t_competition.name ASC
@@ -67,10 +63,8 @@ SELECT t_organisation.name
      , t_competition.name
      , t_league.name
   FROM t_league
-     , t_organisation
-     , t_competition
- WHERE t_league.competition_id = t_competition.competition_id
-   AND t_competition.organisation_id = t_organisation.organisation_id
+  JOIN t_competition        USING (competition_id)
+  JOIN t_organisation       USING (organisation_id)
  ORDER
     BY t_organisation.name ASC
      , t_competition.name ASC
@@ -86,10 +80,8 @@ SELECT t_organisation.name
      , t_competition.name
      , t_division.name
   FROM t_division
-     , t_organisation
-     , t_competition
- WHERE t_division.competition_id = t_competition.competition_id
-   AND t_competition.organisation_id = t_organisation.organisation_id
+  JOIN t_competition        USING (competition_id)
+  JOIN t_organisation       USING (organisation_id)
  ORDER
     BY t_organisation.name ASC
      , t_competition.name ASC
@@ -105,10 +97,8 @@ SELECT t_organisation.name
      , t_competition.name
      , t_season.name
   FROM t_season
-     , t_organisation
-     , t_competition
- WHERE t_season.competition_id = t_competition.competition_id
-   AND t_competition.organisation_id = t_organisation.organisation_id
+  JOIN t_competition        USING (competition_id)
+  JOIN t_organisation       USING (organisation_id)
  ORDER
     BY t_organisation.name ASC
      , t_competition.name ASC
@@ -128,20 +118,99 @@ SELECT t_organisation.name
      , t_league.name
      , t_regional.name
   FROM t_regional
-     , t_season
-     , t_league
-     , t_organisation
-     , t_competition
- WHERE t_regional.league_id = t_league.league_id
-   AND t_league.competition_id = t_competition.competition_id
-   AND t_competition.organisation_id = t_organisation.organisation_id
-   AND t_regional.season_id = t_season.season_id
+  JOIN t_season             USING (season_id)
+  JOIN t_competition        USING (competition_id)
+  JOIN t_league             USING (competition_id, league_id)
+  JOIN t_organisation       USING (organisation_id)
  ORDER
     BY t_organisation.name ASC
      , t_competition.name ASC
      , t_season.name ASC
-     , t_league.name ASC
-     , t_regional.name ASC
+     , t_league.name
+     , t_regional.name
+;
+
+CREATE OR REPLACE VIEW score_regional
+  ( club
+  , team
+  , organisation
+  , competition
+  , season
+  , league
+  , regional
+  , division
+  , score
+) AS
+SELECT t_club.name
+     , t_team.name
+     , t_organisation.name
+     , t_competition.name
+     , t_season.name
+     , t_league.name
+     , t_regional.name
+     , t_division.name
+     , IFNULL(t_score.score, 0)
+  FROM t_organisation
+  JOIN t_competition        USING (organisation_id)
+  JOIN t_season             USING (competition_id)
+  JOIN t_league             USING (competition_id)
+  JOIN t_division           USING (competition_id)
+  JOIN t_register           USING (league_id, division_id, season_id)
+  JOIN t_team               USING (team_id)
+  JOIN t_club               USING (club_id)
+  JOIN t_regional           USING (league_id, season_id)
+  LEFT OUTER JOIN t_score   USING (team_id, regional_id)
+ ORDER
+    BY t_organisation.name
+     , t_competition.name
+     , t_season.name
+     , t_league.name
+     , t_regional.name
+     , t_division.name
+     , t_score.score DESC
+;
+
+CREATE OR REPLACE VIEW score_competition
+  ( club
+  , team
+  , organisation
+  , competition
+  , season
+  , league
+  , division
+  , score
+) AS
+SELECT t_club.name
+     , t_team.name
+     , t_organisation.name
+     , t_competition.name
+     , t_season.name
+     , t_league.name
+     , t_division.name
+     , SUM(IFNULL(t_score.score, 0))
+  FROM t_organisation
+  JOIN t_competition        USING (organisation_id)
+  JOIN t_season             USING (competition_id)
+  JOIN t_league             USING (competition_id)
+  JOIN t_division           USING (competition_id)
+  JOIN t_register           USING (league_id, division_id, season_id)
+  JOIN t_team               USING (team_id)
+  JOIN t_club               USING (club_id)
+  JOIN t_regional           USING (league_id, season_id)
+  LEFT OUTER JOIN t_score   USING (team_id, regional_id)
+ GROUP
+    BY t_club.name
+     , t_team.name
+     , t_organisation.name
+     , t_competition.name
+     , t_season.name
+ ORDER
+    BY t_organisation.name
+     , t_competition.name
+     , t_season.name
+     , t_league.name
+     , t_division.name
+     , SUM(t_score.score) DESC
 ;
 
 CREATE OR REPLACE VIEW register
@@ -160,21 +229,14 @@ SELECT t_club.name
      , t_season.name
      , t_league.name
      , t_division.name
-  FROM t_register
-     , t_season
-     , t_league
-     , t_division
-     , t_organisation
-     , t_competition
-     , t_club
-     , t_team
- WHERE t_register.league_id = t_league.league_id
-   AND t_register.division_id = t_division.division_id
-   AND t_register.season_id = t_season.season_id
-   AND t_league.competition_id = t_competition.competition_id
-   AND t_competition.organisation_id = t_organisation.organisation_id
-   AND t_register.team_id = t_team.team_id
-   AND t_team.club_id = t_club.club_id
+  FROM t_organisation
+  JOIN t_competition        USING (organisation_id)
+  JOIN t_season             USING (competition_id)
+  JOIN t_league             USING (competition_id)
+  JOIN t_division           USING (competition_id)
+  JOIN t_register           USING (league_id, division_id, season_id)
+  JOIN t_team               USING (team_id)
+  JOIN t_club               USING (club_id)
  ORDER
     BY t_club.name
      , t_team.name
@@ -205,21 +267,15 @@ SELECT t_competition.name
 		 WHEN 1 then team1.name
 		 WHEN 2 then team2.name
 		 ELSE NULL
-	   END AS 'winner'
+	   END
   FROM t_match
-     , t_competition
-     , t_season
-     , t_league
-     , t_division
-     , t_regional
-     , t_team AS team1
-     , t_team AS team2
- WHERE t_match.regional_id = t_regional.regional_id
-   AND t_regional.league_id = t_league.league_id
-   AND t_regional.season_id = t_season.season_id
-   AND t_match.team_1_id = team1.team_id
-   AND t_match.team_2_id = team2.team_id
-   AND t_match.division_id = t_division.division_id
+  JOIN t_team team1         ON (t_match.team_1_id = team1.team_id)
+  JOIN t_team team2         ON (t_match.team_2_id = team2.team_id)
+  JOIN t_regional           USING (regional_id)
+  JOIN t_division           USING (division_id)
+  JOIN t_competition        USING (competition_id)
+  JOIN t_season             USING (competition_id, season_id)
+  JOIN t_league             USING (competition_id, league_id)
  ORDER
     BY t_match.match_id
 ;
