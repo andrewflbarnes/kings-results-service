@@ -16,7 +16,7 @@ BEGIN
            AND rl.season_id = r.season_id);
 
     IF register_id IS NULL OR register_id = 0 THEN
-        RAISE EXCEPTION 'ERROR trg_match_check_registered: team 1 is not registered to season, league and division';
+        RAISE EXCEPTION 'ERROR check_registered: team 1 is not registered to season, league and division';
     END IF;
 
     register_id := (
@@ -32,7 +32,7 @@ BEGIN
            AND rl.season_id = r.season_id);
 
     IF register_id IS NULL OR register_id = 0 THEN
-        RAISE EXCEPTION 'ERROR trg_match_check_registered: team 2 is not registered to season, league and division';
+        RAISE EXCEPTION 'ERROR check_registered: team 2 is not registered to season, league and division';
     END IF;
 
     RETURN NEW;

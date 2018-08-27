@@ -1,36 +1,36 @@
 package org.kingsski.data.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 public class Team {
 
     private long id;
+    private String clubName;
     private String teamName;
+    private String organisation;
+    private String competition;
+    private String season;
     private String league;
     private String division;
     private int position;
-    private int r1;
-    private int r2;
-    private int r3;
-    private int r4;
+    private List<RegionalScore> scores = new ArrayList<>();
     private int total;
-    private int orderedScore1;
-    private int orderedScore2;
-    private int orderedScore3;
-    private int orderedScore4;
+    private RegionalScore[] orderedScores;
 
     public Team() {
         // default constructor
     }
 
-    public Team(String teamName, String league, String division, int position, int r1, int r2, int r3, int r4) {
+    public Team(String teamName, String league, String division, int position, List<RegionalScore> scores) {
         this.teamName = teamName;
         this.league = league;
         this.division = division;
-        this. position = position;
-        this.r1 = r1;
-        this.r2 = r2;
-        this.r3 = r3;
-        this.r4 = r4;
-        updateScores();
+        this.position = position;
+        setScores(scores);
     }
 
     public long getId() {
@@ -41,12 +41,44 @@ public class Team {
         this.id = id;
     }
 
+    public String getClubName() {
+        return clubName;
+    }
+
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
+
     public String getTeamName() {
         return teamName;
     }
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public String getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
+    public String getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(String competition) {
+        this.competition = competition;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
     }
 
     public String getLeague() {
@@ -73,40 +105,36 @@ public class Team {
         this.position = position;
     }
 
-    public int getR1() {
-        return r1;
+    /**
+     * Returns a deep copy of the {@link RegionalScore}s
+     *
+     * @return the {@link RegionalScore}s for this team
+     */
+    public List<RegionalScore> getScores() {
+        List<RegionalScore> deepCopyReturn = new ArrayList<>(scores.size());
+        for (RegionalScore rScore : this.scores) {
+            RegionalScore deepCopy = new RegionalScore();
+            deepCopy.setName(rScore.getName());
+            deepCopy.setScore(rScore.getScore());
+            deepCopyReturn.add(deepCopy);
+        }
+
+        return deepCopyReturn;
     }
 
-    public void setR1(int r1) {
-        this.r1 = r1;
-        this.updateScores();
-    }
+    /**
+     * Sets a deep copy of the {@link RegionalScore}s for this team
+     */
+    public void setScores(List<RegionalScore> scores) {
+        this.scores = new ArrayList<>(scores.size());
+        for (RegionalScore rScore : scores) {
+            RegionalScore deepCopy = new RegionalScore();
+            deepCopy.setName(rScore.getName());
+            deepCopy.setScore(rScore.getScore());
+            this.scores.add(deepCopy);
+        }
 
-    public int getR2() {
-        return r2;
-    }
-
-    public void setR2(int r2) {
-        this.r2 = r2;
-        this.updateScores();
-    }
-
-    public int getR3() {
-        return r3;
-    }
-
-    public void setR3(int r3) {
-        this.r3 = r3;
-        this.updateScores();
-    }
-
-    public int getR4() {
-        return r4;
-    }
-
-    public void setR4(int r4) {
-        this.r4 = r4;
-        this.updateScores();
+        updateScores();
     }
 
     public int getTotal() {
@@ -117,39 +145,83 @@ public class Team {
         this.total = total;
     }
 
-    public int getOrderedScore1() {
-        return this.orderedScore1;
+    /**
+     * Get the score for the specified regional
+     *
+     * @param regional the name of the regional competition
+     * @return the score if it exists, 0 otherwise
+     */
+    public int getScore(final String regional) {
+        return scores
+                .stream()
+                .filter(s -> regional.equalsIgnoreCase(s.getName()))
+                .findFirst()
+                .orElseGet(RegionalScore::new)
+                .getScore();
     }
 
-    public int getOrderedScore2() {
-        return this.orderedScore2;
+    /**
+     * Get the score for the specified regional number (assumes correct ordering!)
+     *
+     * @param ordinal the number of the regional competition
+     * @return the score if it exists, 0 otherwise
+     */
+    public int getScore(final int ordinal) {
+        RegionalScore regionalScore = scores.get(ordinal);
+        return regionalScore == null ? 0 : regionalScore.getScore();
     }
 
-    public int getOrderedScore3() {
-        return this.orderedScore3;
+    /**
+     * Sets the score for a regional round
+     *
+     * @param regional The name of the regional competition
+     * @param score The score to set
+     */
+    public void setScore(final String regional, final int score) {
+        scores
+                .stream()
+                .filter(s -> regional.equalsIgnoreCase(s.getName()))
+                .findFirst()
+                .orElseGet(() -> {
+                    RegionalScore rScore = new RegionalScore();
+                    rScore.setName(regional);
+                    scores.add(rScore);
+                    return rScore;
+                })
+                .setScore(score);
+        this.updateScores();
     }
 
-    public int getOrderedScore4() {
-        return this.orderedScore4;
+    public int getOrderedScore(int ordinal) {
+        if (this.scores.size() <= ordinal) {
+            return 0;
+        }
+
+        return this.orderedScores[ordinal].getScore();
     }
 
     public void updateScores() {
-        int[] scores = new int[]{this.r1, this.r2, this.r3, this.r4};
+        this.orderedScores = this.scores.toArray(new RegionalScore[this.scores.size()]);
 
-        for(int i = 0; i < 3; ++i) {
-            for(int j = i + 1; j < 4; ++j) {
-                if (scores[i] < scores[j]) {
-                    int tempScore = scores[i];
-                    scores[i] = scores[j];
-                    scores[j] = tempScore;
+        this.total = 0;
+
+        for (int i = 0; i < orderedScores.length - 1; ++i) {
+            for (int j = i + 1; j < orderedScores.length; ++j) {
+                if (orderedScores[i].getScore() < orderedScores[j].getScore()) {
+                    RegionalScore tempRScore = orderedScores[i];
+                    orderedScores[i] = orderedScores[j];
+                    orderedScores[j] = tempRScore;
                 }
             }
         }
 
-        this.orderedScore1 = scores[0];
-        this.orderedScore2 = scores[1];
-        this.orderedScore3 = scores[2];
-        this.orderedScore4 = scores[3];
-        this.total = this.r1 + this.r2 + this.r3 + this.r4;
+        for (RegionalScore rScore : this.scores) {
+            this.total += rScore.getScore();
+        }
+
+        this.scores = this.scores.stream()
+                .distinct()
+                .sorted()
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
