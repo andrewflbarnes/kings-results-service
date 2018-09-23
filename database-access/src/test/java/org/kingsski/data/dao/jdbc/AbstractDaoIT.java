@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource("classpath:${test.profile}-test.properties")
+@TestPropertySource("classpath:test.properties")
 public abstract class AbstractDaoIT {
 
     @Resource(name = "jdbcShared")

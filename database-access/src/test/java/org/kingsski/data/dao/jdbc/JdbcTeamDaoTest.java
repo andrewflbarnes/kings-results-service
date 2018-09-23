@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +32,8 @@ public class JdbcTeamDaoTest {
 
     @Mock
     private JdbcTemplate jdbcTemplate;
-    @Mock
-    private List<Team> teams;
+
+    private List<Team> teams = new ArrayList<>();
 
     private Map<String, String> jdbcStatements = new HashMap<>();
 
