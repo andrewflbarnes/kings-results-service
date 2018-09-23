@@ -16,25 +16,6 @@
         <flyway.version>5.1.4</flyway.version>
     </properties>
 
-    <profiles>
-        <!-- test profiles -->
-        <profile>
-            <id>test-default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <test.profile>default</test.profile>
-            </properties>
-        </profile>
-        <profile>
-            <id>travis</id>
-            <properties>
-                <test.profile>travis</test.profile>
-            </properties>
-        </profile>
-    </profiles>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -70,7 +51,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>src/test/resources/${test.profile}-test.properties</file>
+                                <file>src/test/resources/test.properties</file>
                             </files>
                         </configuration>
                     </execution>

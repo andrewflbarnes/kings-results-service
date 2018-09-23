@@ -171,22 +171,22 @@ SELECT t_club.name
 ;
 
 CREATE OR REPLACE VIEW score_competition
-  ( club
-  , team
-  , organisation
+  ( organisation
   , competition
   , season
   , league
   , division
+  , club
+  , team
   , score
 ) AS
-SELECT t_club.name
-     , t_team.name
-     , t_organisation.name
+SELECT t_organisation.name
      , t_competition.name
      , t_season.name
      , t_league.name
      , t_division.name
+     , t_club.name
+     , t_team.name
      , SUM(COALESCE(t_score.score, 0)) score
   FROM t_organisation
   JOIN t_competition        USING (organisation_id)
@@ -199,12 +199,12 @@ SELECT t_club.name
   JOIN t_regional           USING (league_id, season_id)
   LEFT OUTER JOIN t_score   USING (team_id, regional_id)
  GROUP
-    BY t_club.name
-     , t_team.name
-     , t_organisation.name
+    BY t_organisation.name
      , t_competition.name
      , t_season.name
      , t_league.name
+     , t_club.name
+     , t_team.name
      , t_division.name
  ORDER
     BY t_organisation.name

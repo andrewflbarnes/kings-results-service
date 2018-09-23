@@ -23,7 +23,7 @@ notifications:
     - 'Build details: %{build_url}'
 install: true
 before_script:
-- cp database/src/test/resources/travis-test.properties database/src/test/resources/test.properties
+- cp database-access/src/test/resources/travis-test.properties database-access/src/test/resources/test.properties
 script:
 - mvn clean install
 after_success:
