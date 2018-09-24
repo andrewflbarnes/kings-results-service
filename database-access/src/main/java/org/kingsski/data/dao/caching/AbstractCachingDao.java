@@ -1,13 +1,13 @@
 package org.kingsski.data.dao.caching;
 
-import org.kingsski.data.dao.RaceDao;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Decorator implementation of {@link RaceDao} which caches results provided by another {@link RaceDao}.
+ * Base abstraction for creating caching implementation of DAOs
+ *
+ * Not the best approach but has small footprint and is easy to manage for limited DAOs
  */
 public abstract class AbstractCachingDao<T> {
 
