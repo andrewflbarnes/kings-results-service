@@ -1,24 +1,29 @@
 -- Club Domain
 CREATE OR REPLACE VIEW club
-  ( name
+  ( club_id
+  , name
   , teams
 ) AS
-SELECT t_club.name
+SELECT t_club.club_id
+     , t_club.name
      , COUNT(t_team.team_id)
   FROM t_club
 LEFT OUTER JOIN t_team      USING(club_id)
  GROUP
-    BY t_club.name
+    BY t_club.club_id
+     , t_club.name
  ORDER
     BY t_club.name ASC
 ;
 
 CREATE OR REPLACE VIEW team
-  ( club
+  ( team_id
   , name
+  , club
 ) AS
-SELECT t_club.name
+SELECT t_team.team_id
      , t_team.name
+     , t_club.name
   FROM t_club
   JOIN t_team               USING (club_id)
  ORDER
@@ -28,25 +33,30 @@ SELECT t_club.name
 
 -- Organisation Domain
 CREATE OR REPLACE VIEW organisation
-  ( name
+  ( organisation_id
+  , name
   , competitions
 ) AS
-SELECT t_organisation.name
+SELECT t_organisation.organisation_id
+     , t_organisation.name
      , COUNT(t_competition.competition_id)
   FROM t_organisation
 LEFT OUTER JOIN t_competition USING (organisation_id)
  GROUP
-    BY t_organisation.name
+    BY t_organisation.organisation_id
+     , t_organisation.name
  ORDER
     BY t_organisation.name ASC
 ;
 
 CREATE OR REPLACE VIEW competition
-  ( organisation
+  ( competition_id
   , name
+  , organisation
 ) AS
-SELECT t_organisation.name
+SELECT t_competition.competition_id
      , t_competition.name
+     , t_organisation.name
   FROM t_competition
   JOIN t_organisation       USING (organisation_id)
  ORDER
@@ -55,13 +65,15 @@ SELECT t_organisation.name
 ;
 
 CREATE OR REPLACE VIEW league
-  ( organisation
-  , competition
+  ( league_id
   , league
+  , competition
+  , organisation
 ) AS
-SELECT t_organisation.name
-     , t_competition.name
+SELECT t_league.league_id
      , t_league.name
+     , t_competition.name
+     , t_organisation.name
   FROM t_league
   JOIN t_competition        USING (competition_id)
   JOIN t_organisation       USING (organisation_id)
@@ -72,13 +84,15 @@ SELECT t_organisation.name
 ;
 
 CREATE OR REPLACE VIEW division
-  ( organisation
-  , competition
+  ( division_id
   , division
+  , competition
+  , organisation
 ) AS
-SELECT t_organisation.name
-     , t_competition.name
+SELECT t_division.division_id
      , t_division.name
+     , t_competition.name
+     , t_organisation.name
   FROM t_division
   JOIN t_competition        USING (competition_id)
   JOIN t_organisation       USING (organisation_id)
@@ -89,13 +103,15 @@ SELECT t_organisation.name
 ;
 
 CREATE OR REPLACE VIEW season
-  ( organisation
-  , competition
+  ( season_id
   , season
+  , competition
+  , organisation
 ) AS
-SELECT t_organisation.name
-     , t_competition.name
+SELECT t_season.season_id
      , t_season.name
+     , t_competition.name
+     , t_organisation.name
   FROM t_season
   JOIN t_competition        USING (competition_id)
   JOIN t_organisation       USING (organisation_id)
@@ -106,17 +122,19 @@ SELECT t_organisation.name
 ;
 
 CREATE OR REPLACE VIEW regional
-  ( organisation
-  , competition
-  , season
-  , league
+  ( regional_id
   , regional
+  , league
+  , season
+  , competition
+  , organisation
 ) AS
-SELECT t_organisation.name
-     , t_competition.name
-     , t_season.name
-     , t_league.name
+SELECT t_regional.regional_id
      , t_regional.name
+     , t_league.name
+     , t_season.name
+     , t_competition.name
+     , t_organisation.name
   FROM t_regional
   JOIN t_season             USING (season_id)
   JOIN t_competition        USING (competition_id)
@@ -216,21 +234,23 @@ SELECT t_organisation.name
 ;
 
 CREATE OR REPLACE VIEW register
-  ( club
-  , team
+  ( register_id
   , organisation
   , competition
   , season
   , league
   , division
+  , club
+  , team
 ) AS
-SELECT t_club.name
-     , t_team.name
+SELECT t_register.register_id
      , t_organisation.name
      , t_competition.name
      , t_season.name
      , t_league.name
      , t_division.name
+     , t_club.name
+     , t_team.name
   FROM t_organisation
   JOIN t_competition        USING (organisation_id)
   JOIN t_season             USING (competition_id)
@@ -249,7 +269,8 @@ SELECT t_club.name
 ;
 
 CREATE OR REPLACE VIEW match
-  ( competition
+  ( match_id
+  , competition
   , season
   , league
   , regional
@@ -258,7 +279,8 @@ CREATE OR REPLACE VIEW match
   , team_2
   , winner
 ) AS
-SELECT t_competition.name
+SELECT t_match.match_id
+     , t_competition.name
      , t_season.name
      , t_league.name
      , t_regional.name
@@ -284,7 +306,9 @@ SELECT t_competition.name
 ;
 
 CREATE OR REPLACE VIEW match_meta
-  ( competition
+  ( match_meta_id
+  , match_id
+  , competition
   , season
   , league
   , regional
@@ -294,7 +318,9 @@ CREATE OR REPLACE VIEW match_meta
   , meta_key
   , meta_value
 ) AS
-SELECT t_competition.name
+SELECT t_match_meta.match_meta_id
+     , t_match.match_id
+     , t_competition.name
      , t_season.name
      , t_league.name
      , t_regional.name
@@ -304,7 +330,7 @@ SELECT t_competition.name
      , t_match_meta.meta_key
      , t_match_meta.meta_value
   FROM t_match_meta
- RIGHT OUTER JOIN t_match   USING (match_id)
+  LEFT OUTER JOIN t_match   USING (match_id)
   JOIN t_team team1         ON (t_match.team_1_id = team1.team_id)
   JOIN t_team team2         ON (t_match.team_2_id = team2.team_id)
   JOIN t_regional           USING (regional_id)
