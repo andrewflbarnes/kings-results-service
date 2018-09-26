@@ -1,7 +1,7 @@
 package org.kingsski.api.query.config;
 
-import org.kingsski.data.dao.DaoFactory;
-import org.kingsski.data.dao.caching.CachingDaoFactory;
+import org.kingsski.database.dao.DaoFactory;
+import org.kingsski.database.dao.caching.CachingDaoFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

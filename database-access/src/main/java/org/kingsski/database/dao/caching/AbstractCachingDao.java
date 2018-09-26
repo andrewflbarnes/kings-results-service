@@ -1,4 +1,4 @@
-package org.kingsski.data.dao.caching;
+package org.kingsski.database.dao.caching;
 
 import java.util.List;
 import java.util.Map;
