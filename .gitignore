@@ -73,3 +73,4 @@ freeline_project_description.json
 .classpath
 target/
 .settings/
+*/src/main/resources/*properties

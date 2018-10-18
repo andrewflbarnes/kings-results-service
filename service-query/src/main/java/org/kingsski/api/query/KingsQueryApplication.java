@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource("classpath:application-spring.xml")
 public class KingsQueryApplication extends SpringBootServletInitializer {
 
     @Override
