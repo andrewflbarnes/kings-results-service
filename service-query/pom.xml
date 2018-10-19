@@ -34,21 +34,6 @@
                 <spring.boot.container>spring-boot-starter-undertow</spring.boot.container>
             </properties>
         </profile>
-
-        <!-- db -->
-        <!--<profile>-->
-            <!--<id>mysql</id>-->
-            <!--<activation>-->
-                <!--<activeByDefault>true</activeByDefault>-->
-            <!--</activation>-->
-            <!--<dependencies>-->
-                <!--<dependency>-->
-                    <!--<groupId>mysql</groupId>-->
-                    <!--<artifactId>mysql-connector-java</artifactId>-->
-                    <!--<version>6.0.6</version>-->
-                <!--</dependency>-->
-            <!--</dependencies>-->
-        <!--</profile>-->
     </profiles>
 
     <dependencies>

@@ -7,7 +7,6 @@
     <name>kings-race-service</name>
 
     <modules>
-        <module>data</module>
         <module>database</module>
         <module>database-access</module>
         <module>service-query</module>
@@ -26,7 +25,6 @@
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
-        <mysql.version>6.0.6</mysql.version>
         <postgres.version>42.2.4</postgres.version>
         <!-- test dependencies -->
         <junit.version>4.12</junit.version>
@@ -53,6 +51,11 @@
             </properties>
         </profile>
 
+        <!-- This profile exists so that builds can be created without any JDBC drivers -->
+        <profile>
+            <id>nodbdriver</id>
+        </profile>
+
         <profile>
             <id>postgres</id>
             <activation>
@@ -66,20 +69,6 @@
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
                     <version>${postgres.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>mysql</id>
-            <properties>
-                <db.type>mysql</db.type>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>${mysql.version}</version>
                 </dependency>
             </dependencies>
         </profile>

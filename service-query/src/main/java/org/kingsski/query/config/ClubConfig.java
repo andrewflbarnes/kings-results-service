@@ -1,8 +1,7 @@
-package org.kingsski.api.query.config;
+package org.kingsski.query.config;
 
 import org.kingsski.database.dao.ClubDao;
 import org.kingsski.database.dao.DaoFactory;
-import org.kingsski.service.ClubService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,13 +16,5 @@ public class ClubConfig {
     @Bean
     public ClubDao clubDao() {
         return daoFactory.getClubDao();
-    }
-
-    @Bean
-    public ClubService clubService(ClubDao clubDao) {
-        ClubService clubService = new ClubService();
-        clubService.setClubDao(clubDao);
-
-        return clubService;
     }
 }

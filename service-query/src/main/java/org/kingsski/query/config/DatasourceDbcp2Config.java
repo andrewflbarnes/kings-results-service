@@ -1,24 +1,21 @@
-package org.kingsski.api.query.config;
+package org.kingsski.query.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.kingsski.database.dao.DaoFactory;
-import org.kingsski.database.dao.jdbc.JdbcDaoFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
+/**
+ * Database configuration for JDBC connections
+ */
+@Profile("dbcp2")
 @Configuration
-@PropertySources({
-        @PropertySource(value = "classpath:database.properties", ignoreResourceNotFound = true),
-        @PropertySource(value = "classpath:database.yaml", ignoreResourceNotFound = true),
-        @PropertySource(value = "classpath:database.yml", ignoreResourceNotFound = true)
-})
-public class JdbcConfig {
+public class DatasourceDbcp2Config {
 
     @Value("${db.driver}")
     private String driver;
@@ -46,15 +43,5 @@ public class JdbcConfig {
         dataSource.setInitialSize(3);
 
         return dataSource;
-    }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
-
-    @Bean
-    public DaoFactory daoFactory(JdbcTemplate jdbcTemplate) {
-        return new JdbcDaoFactory(jdbcTemplate);
     }
 }

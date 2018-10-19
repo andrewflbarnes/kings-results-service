@@ -1,12 +1,18 @@
-package org.kingsski.api.query;
+package org.kingsski.query;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication
+@PropertySources({
+        @PropertySource(value = "classpath:database.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:database.yaml", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:database.yml", ignoreResourceNotFound = true)
+})
 public class KingsQueryApplication extends SpringBootServletInitializer {
 
     @Override
