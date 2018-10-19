@@ -10,7 +10,7 @@ public interface ClubDao {
      * Create a new club
      * @return the club created including the id
      */
-    public Club createClub(String name);
+    public Club createClub(Club club);
 
     /**
      * Get a list of all clubs
@@ -33,9 +33,8 @@ public interface ClubDao {
     public Club getClubByName(String name);
 
     /**
-     * Update a club by id
-     * @param id the id of the club to update
+     * Update a club
      * @param club the update details
      */
-    public void updateClubById(long id, Club club);
+    public void updateClub(Club club);
 }

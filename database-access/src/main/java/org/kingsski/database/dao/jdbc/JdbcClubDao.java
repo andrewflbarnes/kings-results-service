@@ -26,9 +26,9 @@ public class JdbcClubDao implements ClubDao {
     }
 
     @Override
-    public Club createClub(String name) {
-        jdbcTemplate.update(CREATE, new Object[]{name});
-        return getClubByName(name);
+    public Club createClub(Club club) {
+        jdbcTemplate.update(CREATE, new Object[]{club.getName()});
+        return getClubByName(club.getName());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class JdbcClubDao implements ClubDao {
     }
 
     @Override
-    public void updateClubById(long id, Club club) {
-        jdbcTemplate.update(UPDATE, club.getName(), id);
+    public void updateClub(Club club) {
+        jdbcTemplate.update(UPDATE, club.getName(), club.getId());
     }
 }
