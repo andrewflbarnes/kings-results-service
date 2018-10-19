@@ -97,6 +97,7 @@
                                     <goal>prepare-agent</goal>
                                 </goals>
                             </execution>
+
                             <execution>
                                 <id>prepare-jacoco-integration</id>
                                 <phase>pre-integration-test</phase>
@@ -138,6 +139,7 @@
                             <aggregate>true</aggregate>
                         </configuration>
                     </plugin>
+
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
@@ -177,6 +179,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -190,11 +193,13 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
+
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-releases</id>

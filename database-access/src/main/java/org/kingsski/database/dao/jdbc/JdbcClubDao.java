@@ -3,6 +3,7 @@ package org.kingsski.database.dao.jdbc;
 import org.kingsski.database.dao.ClubDao;
 import org.kingsski.database.dao.jdbc.mapper.ClubMapper;
 import org.kingsski.database.model.Club;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -26,23 +27,31 @@ public class JdbcClubDao implements ClubDao {
 
     @Override
     public Club createClub(String name) {
-        jdbcTemplate.update(CREATE, new Object[] { name });
+        jdbcTemplate.update(CREATE, new Object[]{name});
         return getClubByName(name);
     }
 
     @Override
     public List<Club> getClubs() {
-        return jdbcTemplate.query(SELECT_ALL, new Object[] {}, new ClubMapper());
+        return jdbcTemplate.query(SELECT_ALL, new Object[]{}, new ClubMapper());
     }
 
     @Override
     public Club getClubById(long id) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[] { id }, new ClubMapper());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_ID, new Object[]{id}, new ClubMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public Club getClubByName(String name) {
-        return jdbcTemplate.queryForObject(SELECT_BY_NAME, new Object[] { name }, new ClubMapper());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_NAME, new Object[]{name}, new ClubMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
