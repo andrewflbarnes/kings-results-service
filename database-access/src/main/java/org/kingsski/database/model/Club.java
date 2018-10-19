@@ -3,6 +3,9 @@ package org.kingsski.database.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * Model reflecting the CLUB view in the database
+ */
 public class Club {
 
     private long id;

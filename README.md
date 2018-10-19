@@ -14,8 +14,12 @@ Kings web API implemented as REST server which returns:
 - clubs
 
 Endpoints are:
-- `/clubs`  
+- `GET  /clubs`  
 Returns all clubs
+- `GET  /club/{id}`  
+Returns a club by its ID
+- `GET  /club/{name}`  
+Returns a club by its name
 
 Starting the server:  
 `java -jar kings-race-service-query.jar`

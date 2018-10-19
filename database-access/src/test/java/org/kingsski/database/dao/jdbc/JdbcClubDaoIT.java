@@ -14,6 +14,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Integration tests for {@link JdbcClubDao} which are performed against a database
+ */
 public class JdbcClubDaoIT extends AbstractDaoIT {
 
     private ClubDao clubDao;

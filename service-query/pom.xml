@@ -41,12 +41,6 @@
     <dependencies>
         <dependency>
             <groupId>org.kingsski</groupId>
-            <artifactId>database</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.kingsski</groupId>
             <artifactId>database-access</artifactId>
             <version>${project.version}</version>
         </dependency>

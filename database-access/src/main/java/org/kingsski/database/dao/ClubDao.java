@@ -4,37 +4,40 @@ import org.kingsski.database.model.Club;
 
 import java.util.List;
 
+/**
+ * Defines the DAO operations for the CLUB view (querying)
+ */
 public interface ClubDao {
 
     /**
      * Create a new club
      * @return the club created including the id
      */
-    public Club createClub(Club club);
+    Club createClub(Club club);
 
     /**
      * Get a list of all clubs
      * @return a list of clubs
      */
-    public List<Club> getClubs();
+    List<Club> getClubs();
 
     /**
      * Get a club by id
      * @param id the id of the club
      * @return a club
      */
-    public Club getClubById(long id);
+    Club getClubById(long id);
 
     /**
      * Get a club by name
      * @param name the name of the club
      * @return a club
      */
-    public Club getClubByName(String name);
+    Club getClubByName(String name);
 
     /**
      * Update a club
      * @param club the update details
      */
-    public void updateClub(Club club);
+    void updateClub(Club club);
 }

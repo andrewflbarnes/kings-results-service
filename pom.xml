@@ -52,6 +52,7 @@
         </profile>
 
         <!-- This profile exists so that builds can be created without any JDBC drivers -->
+        <!-- This allows them to be provided in a container or on the classpath -->
         <profile>
             <id>nodbdriver</id>
         </profile>

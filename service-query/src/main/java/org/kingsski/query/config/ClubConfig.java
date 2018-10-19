@@ -15,6 +15,6 @@ public class ClubConfig {
 
     @Bean
     public ClubDao clubDao() {
-        return daoFactory.getClubDao();
+        return daoFactory.newClubDao();
     }
 }

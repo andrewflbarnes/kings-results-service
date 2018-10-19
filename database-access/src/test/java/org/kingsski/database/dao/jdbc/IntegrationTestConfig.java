@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Test configuration to provide a {@link JdbcTemplate}
+ */
 @Configuration
 public abstract class IntegrationTestConfig {
 

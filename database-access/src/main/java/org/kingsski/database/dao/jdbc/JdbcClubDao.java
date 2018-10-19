@@ -13,11 +13,9 @@ import java.util.List;
  */
 public class JdbcClubDao implements ClubDao {
 
-    private final String SELECT_ALL = "SELECT * FROM club";
-    private final String SELECT_BY_ID = "SELECT * FROM club WHERE club_id = ?";
-    private final String SELECT_BY_NAME = "SELECT * FROM club WHERE name = ?";
-    private final String CREATE = "INSERT INTO t_club ( name ) VALUES ( ? )";
-    private final String UPDATE = "UPDATE t_club SET name = ? WHERE club_id = ?";
+    private static final String SELECT_ALL = "SELECT * FROM club";
+    private static final String SELECT_BY_ID = "SELECT * FROM club WHERE club_id = ?";
+    private static final String SELECT_BY_NAME = "SELECT * FROM club WHERE name = ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -27,8 +25,7 @@ public class JdbcClubDao implements ClubDao {
 
     @Override
     public Club createClub(Club club) {
-        jdbcTemplate.update(CREATE, new Object[]{club.getName()});
-        return getClubByName(club.getName());
+        throw new UnsupportedOperationException("create is not yet implemented");
     }
 
     @Override
@@ -56,6 +53,6 @@ public class JdbcClubDao implements ClubDao {
 
     @Override
     public void updateClub(Club club) {
-        jdbcTemplate.update(UPDATE, club.getName(), club.getId());
+        throw new UnsupportedOperationException("update is not yet implemented");
     }
 }

@@ -4,6 +4,9 @@ import org.kingsski.database.dao.ClubDao;
 import org.kingsski.database.dao.DaoFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Implementation providing DAOs backed by JDBC
+ */
 public class JdbcDaoFactory implements DaoFactory {
 
     private JdbcTemplate jdbcTemplate;
@@ -13,7 +16,7 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public ClubDao getClubDao() {
+    public ClubDao newClubDao() {
         return new JdbcClubDao(jdbcTemplate);
     }
 }

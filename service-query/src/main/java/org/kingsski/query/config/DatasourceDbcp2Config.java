@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySources;
 import javax.sql.DataSource;
 
 /**
- * Database configuration for JDBC connections
+ * Database configuration for DBCP2 connection pooling in DataSources
  */
 @Profile("dbcp2")
 @Configuration

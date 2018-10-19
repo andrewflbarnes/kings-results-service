@@ -17,6 +17,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,19 +35,18 @@ public class JdbcClubDaoTest {
     @Before
     public void setUp() throws Exception {
         clubDao = new JdbcClubDao(jdbcTemplate);
-
-        when(jdbcTemplate.query(any(String.class), any(Object[].class), any(ClubMapper.class)))
-                .thenReturn(expectedClubs);
-        when(jdbcTemplate.queryForObject(any(String.class), any(Object[].class), any(ClubMapper.class)))
-                .thenReturn(expectedClub);
     }
 
     @Test
     public void getClubs() throws Exception {
+        given(jdbcTemplate.query(any(String.class), any(Object[].class), any(ClubMapper.class)))
+                .willReturn(expectedClubs);
+
         final List<Club> actualClubs = clubDao.getClubs();
 
-        verify(jdbcTemplate, times(1))
+        then(jdbcTemplate).should(times(1))
                 .query(any(String.class), eq(new Object[] {}), any(ClubMapper.class));
+
         assertNotNull(actualClubs);
         assertEquals(expectedClubs, actualClubs);
     }
@@ -53,11 +54,29 @@ public class JdbcClubDaoTest {
     @Test
     public void getClubById() throws Exception {
         final long id = 1;
+        given(jdbcTemplate.queryForObject(any(String.class), any(Object[].class), any(ClubMapper.class)))
+                .willReturn(expectedClub);
 
         final Club actualClub = clubDao.getClubById(id);
 
-        verify(jdbcTemplate, times(1))
+        then(jdbcTemplate).should(times(1))
                 .queryForObject(any(String.class), eq(new Object[] { id }), any(ClubMapper.class));
+
+        assertNotNull(actualClub);
+        assertEquals(expectedClub, actualClub);
+    }
+
+    @Test
+    public void getClubByName() throws Exception {
+        final String name = "boom";
+        given(jdbcTemplate.queryForObject(any(String.class), any(Object[].class), any(ClubMapper.class)))
+                .willReturn(expectedClub);
+
+        final Club actualClub = clubDao.getClubByName(name);
+
+        then(jdbcTemplate).should(times(1))
+                .queryForObject(any(String.class), eq(new Object[] { name }), any(ClubMapper.class));
+
         assertNotNull(actualClub);
         assertEquals(expectedClub, actualClub);
     }
