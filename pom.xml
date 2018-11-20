@@ -40,10 +40,21 @@
 
     <profiles>
         <profile>
-            <id>skipIntegrationTests</id>
+            <id>skip-tests-integration</id>
             <activation>
                 <property>
                     <name>skipTests</name>
+                </property>
+            </activation>
+            <properties>
+                <skipIntegrationTests>true</skipIntegrationTests>
+            </properties>
+        </profile>
+        <profile>
+            <id>maven-test-skip-integration</id>
+            <activation>
+                <property>
+                    <name>maven.test.skip</name>
                 </property>
             </activation>
             <properties>
