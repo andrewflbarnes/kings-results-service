@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.kingsski</groupId>
     <artifactId>kings-race-service</artifactId>
@@ -6,9 +7,8 @@
     <name>kings-race-service</name>
 
     <modules>
-        <module>data</module>
         <module>database</module>
-        <!--<module>service</module>-->
+        <module>database-access</module>
         <module>service-query</module>
     </modules>
 
@@ -25,6 +25,7 @@
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
+        <postgres.version>42.2.4</postgres.version>
         <!-- test dependencies -->
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
@@ -39,7 +40,7 @@
 
     <profiles>
         <profile>
-            <id>skipIntegrationTests</id>
+            <id>skip-tests-integration</id>
             <activation>
                 <property>
                     <name>skipTests</name>
@@ -48,6 +49,40 @@
             <properties>
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
+        </profile>
+        <profile>
+            <id>maven-test-skip-integration</id>
+            <activation>
+                <property>
+                    <name>maven.test.skip</name>
+                </property>
+            </activation>
+            <properties>
+                <skipIntegrationTests>true</skipIntegrationTests>
+            </properties>
+        </profile>
+
+        <!-- This profile exists so that builds can be created without any JDBC drivers -->
+        <!-- This allows them to be provided in a container or on the classpath -->
+        <profile>
+            <id>nodbdriver</id>
+        </profile>
+
+        <profile>
+            <id>postgres</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.type>postgres</db.type>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgres.version}</version>
+                </dependency>
+            </dependencies>
         </profile>
 
         <profile>
@@ -61,8 +96,6 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>${jacoco.version}</version>
                         <configuration>
-                            <append>true</append>
-                            <destFile>${project.build.directory}/jacoco.exec</destFile>
                             <excludes>
                                 <exclude>**/*Config.class</exclude>
                                 <exclude>**/*Application.class</exclude>
@@ -76,6 +109,7 @@
                                     <goal>prepare-agent</goal>
                                 </goals>
                             </execution>
+
                             <execution>
                                 <id>prepare-jacoco-integration</id>
                                 <phase>pre-integration-test</phase>
@@ -111,12 +145,13 @@
                                 <format>html</format>
                                 <format>xml</format>
                             </formats>
-                            <check />
+                            <check/>
                             <maxmem>256m</maxmem>
                             <!-- aggregated reports for multi-module projects -->
                             <aggregate>true</aggregate>
                         </configuration>
                     </plugin>
+
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
@@ -156,6 +191,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -169,11 +205,13 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
+
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-releases</id>

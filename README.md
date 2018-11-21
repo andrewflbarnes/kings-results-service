@@ -6,52 +6,27 @@ Master:
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=org.kingsski%3Akings-race-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.kingsski:kings-race-service)
 
 Modules:
-- data (lib): contains entity models
-- database (lib): contains DAO interfaces and implementations
-- service-query (app): contains the querying services and API controllers
+- database (lib): contains SQL scripts for generating the DBs
+- database-access (lib): contains DB models, DAO interfaces and implementations which provide these
+- service-query (app): contains the querying services and API controllers as a Spring Boot application
 
 Kings web API implemented as REST server which returns:
-- in progress and historical Kings races
-- current and historical team seedings
-- individual runs
+- clubs
 
 Endpoints are:
-- `/races`  
-Returns races for all leagues for the most recent season and round
-- `/races/league`  
-Returns races for the specific league for the most recent season and round
-- `/races/league/round`  
-Returns races for the specific league and round for the most recent season
-- `/races/season/league/round`  
-Returns races for the specific season, league and round
-- `/teams`  
-Returns teams and scores for all leagues for the most recent season and all divisions
-- `/teams/league`  
-Returns teams and scores for the specific league for the most recent season and all divisions
-- `/teams/league/division`  
-Returns teams and scores for the specific league and division for the most recent season
-- `/teams/season/league/division`  
-Returns teams and scores for the specific season, league and division
-- `/individuals`  
-Returns all individuals and times
-- `/individuals/discipline`  
-Returns individuals and times for the specific discipline
+- `GET  /clubs`  
+Returns all clubs
+- `GET  /club/{id}`  
+Returns a club by its ID
+- `GET  /club/{name}`  
+Returns a club by its name
 
 Starting the server:  
-`java -jar kings-race-service.jar --spring.profiles.active=profile`
+`java -jar kings-race-service-query.jar`
 
+Profiles can be set in application.properties
 Available profiles:
 - `jdbc`  
-JDBC services return results from the specified DB
-- `mysql`  
-Uses a MySQL database for JDBC services
-- `caching`  
-Service results are cached to reduce system load
-- `nocaching`  
-Service results are not cached to ensure results are up to date
-
-Available test profiles:
-- `dummy`  
-Dummy services return the same (or similar) objects for all paths
-- `stub`  
-Stub services return an empty object list for all paths
+Uses JDBC implementations of DAOs - configure them in database.properties
+- `dbcp2`  
+Uses DBCP2 for connection pooling
