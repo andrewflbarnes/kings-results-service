@@ -10,12 +10,6 @@ import java.util.List;
 public interface ClubDao {
 
     /**
-     * Create a new club
-     * @return the club created including the id
-     */
-    Club createClub(Club club);
-
-    /**
      * Get a list of all clubs
      * @return a list of clubs
      */
@@ -34,10 +28,4 @@ public interface ClubDao {
      * @return a club
      */
     Club getClubByName(String name);
-
-    /**
-     * Update a club
-     * @param club the update details
-     */
-    void updateClub(Club club);
 }

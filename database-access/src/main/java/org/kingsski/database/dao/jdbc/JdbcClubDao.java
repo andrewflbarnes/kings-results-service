@@ -24,11 +24,6 @@ public class JdbcClubDao implements ClubDao {
     }
 
     @Override
-    public Club createClub(Club club) {
-        throw new UnsupportedOperationException("create is not yet implemented");
-    }
-
-    @Override
     public List<Club> getClubs() {
         return jdbcTemplate.query(SELECT_ALL, new Object[]{}, new ClubMapper());
     }
@@ -49,10 +44,5 @@ public class JdbcClubDao implements ClubDao {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
-    }
-
-    @Override
-    public void updateClub(Club club) {
-        throw new UnsupportedOperationException("update is not yet implemented");
     }
 }
