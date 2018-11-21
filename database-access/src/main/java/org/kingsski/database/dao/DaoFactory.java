@@ -11,4 +11,11 @@ public interface DaoFactory {
      * @return a DAO
      */
     ClubDao newClubDao();
+
+    /**
+     * Get a new instance of a {@link OrganisationDao}
+     *
+     * @return a DAO
+     */
+    OrganisationDao newOrganisationDao();
 }
