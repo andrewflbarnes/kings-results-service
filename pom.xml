@@ -7,7 +7,6 @@
     <name>kings-race-service</name>
 
     <modules>
-        <module>data</module>
         <module>database</module>
         <module>database-access</module>
         <module>service-query</module>
@@ -26,7 +25,6 @@
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
-        <mysql.version>6.0.6</mysql.version>
         <postgres.version>42.2.4</postgres.version>
         <!-- test dependencies -->
         <junit.version>4.12</junit.version>
@@ -42,7 +40,7 @@
 
     <profiles>
         <profile>
-            <id>skipIntegrationTests</id>
+            <id>skip-tests-integration</id>
             <activation>
                 <property>
                     <name>skipTests</name>
@@ -51,6 +49,23 @@
             <properties>
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
+        </profile>
+        <profile>
+            <id>maven-test-skip-integration</id>
+            <activation>
+                <property>
+                    <name>maven.test.skip</name>
+                </property>
+            </activation>
+            <properties>
+                <skipIntegrationTests>true</skipIntegrationTests>
+            </properties>
+        </profile>
+
+        <!-- This profile exists so that builds can be created without any JDBC drivers -->
+        <!-- This allows them to be provided in a container or on the classpath -->
+        <profile>
+            <id>nodbdriver</id>
         </profile>
 
         <profile>
@@ -66,20 +81,6 @@
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
                     <version>${postgres.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>mysql</id>
-            <properties>
-                <db.type>mysql</db.type>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>${mysql.version}</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -108,6 +109,7 @@
                                     <goal>prepare-agent</goal>
                                 </goals>
                             </execution>
+
                             <execution>
                                 <id>prepare-jacoco-integration</id>
                                 <phase>pre-integration-test</phase>
@@ -149,6 +151,7 @@
                             <aggregate>true</aggregate>
                         </configuration>
                     </plugin>
+
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
@@ -188,6 +191,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -201,11 +205,13 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
+
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-releases</id>

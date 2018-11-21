@@ -38,5 +38,5 @@ before_script:
 script:
 - mvn clean install
 after_success:
-- mvn -P coverage-sonar
-- mvn -P coverage-coveralls
+- mvn -P coverage-sonar,postgres
+- mvn -P coverage-coveralls,postgres

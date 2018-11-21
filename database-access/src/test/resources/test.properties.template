@@ -1,7 +1,7 @@
-testdb.type=mysql
-testdb.base.url=jdbc:mysql://localhost:3306?user=root&useSSL=false
-testdb.full.url=jdbc:mysql://localhost:3306/localkingsit?user=root&useSSL=false
+testdb.type=postgres
+testdb.base.url=jdbc:postgresql://localhost:5432/postgres?user=postgres&ssl=false
+testdb.full.url=jdbc:postgresql://localhost:5432/postgres?user=postgres&ssl=false
 testdb.schema=localkingsit
-testdb.username=root
-testdb.password=root
-testdb.driver=com.mysql.cj.jdbc.Driver
+testdb.username=postgres
+testdb.password=postgres
+testdb.driver=org.postgresql.Driver
