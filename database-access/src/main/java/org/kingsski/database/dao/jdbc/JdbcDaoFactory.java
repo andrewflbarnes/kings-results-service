@@ -1,8 +1,10 @@
 package org.kingsski.database.dao.jdbc;
 
 import org.kingsski.database.dao.ClubDao;
+import org.kingsski.database.dao.CompetitionDao;
 import org.kingsski.database.dao.DaoFactory;
 import org.kingsski.database.dao.OrganisationDao;
+import org.kingsski.database.dao.TeamDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -22,7 +24,17 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
+    public TeamDao newTeamDao() {
+        return new JdbcTeamDao(jdbcTemplate);
+    }
+
+    @Override
     public OrganisationDao newOrganisationDao() {
         return new JdbcOrganisationDao(jdbcTemplate);
+    }
+
+    @Override
+    public CompetitionDao newCompetitionDao() {
+        return new JdbcCompetitionDao(jdbcTemplate);
     }
 }
