@@ -61,6 +61,18 @@
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
         </profile>
+        <profile>
+            <id>it-test-none-integration</id>
+            <activation>
+                <property>
+                    <name>it.test</name>
+                    <value>none</value>
+                </property>
+            </activation>
+            <properties>
+                <skipIntegrationTests>true</skipIntegrationTests>
+            </properties>
+        </profile>
 
         <!-- This profile exists so that builds can be created without any JDBC drivers -->
         <!-- This allows them to be provided in a container or on the classpath -->
