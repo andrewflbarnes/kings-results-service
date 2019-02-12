@@ -9,9 +9,9 @@ import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication
 @PropertySources({
-        @PropertySource(value = "classpath:database.properties", ignoreResourceNotFound = true),
-        @PropertySource(value = "classpath:database.yaml", ignoreResourceNotFound = true),
-        @PropertySource(value = "classpath:database.yml", ignoreResourceNotFound = true)
+        @PropertySource(value = "file:database.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "file:database.yaml", ignoreResourceNotFound = true),
+        @PropertySource(value = "file:database.yml", ignoreResourceNotFound = true)
 })
 public class KingsQueryApplication extends SpringBootServletInitializer {
 

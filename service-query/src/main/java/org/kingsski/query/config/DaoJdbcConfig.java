@@ -1,7 +1,7 @@
 package org.kingsski.query.config;
 
-import org.kingsski.database.dao.DaoFactory;
-import org.kingsski.database.dao.jdbc.JdbcDaoFactory;
+import org.kingsski.database.factory.DaoFactory;
+import org.kingsski.database.factory.JdbcDaoFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
