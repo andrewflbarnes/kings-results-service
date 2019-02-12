@@ -1,0 +1,20 @@
+package org.kingsski.query.club;
+
+import org.kingsski.database.club.ClubDao;
+import org.kingsski.database.factory.DaoFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.Resource;
+
+@Configuration
+public class ClubConfig {
+
+    @Resource
+    private DaoFactory daoFactory;
+
+    @Bean
+    public ClubDao clubDao() {
+        return daoFactory.newClubDao();
+    }
+}
