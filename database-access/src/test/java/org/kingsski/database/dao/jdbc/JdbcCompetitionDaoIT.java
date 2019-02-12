@@ -8,6 +8,7 @@ import org.kingsski.database.model.Competition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -34,17 +35,20 @@ public class JdbcCompetitionDaoIT extends AbstractDaoIT {
 
     @Test
     public void getCompetitions() {
+        // we don't guarantee order of tests so make sure the db is clear
+        clearDb();
+
         List<String> organisationNames = new ArrayList<>();
         List<String> expectedCompetitions = new ArrayList<>();
-        organisationNames.add("Competition A");
-        organisationNames.add("Competition B");
+        organisationNames.add("Organisation A");
+        organisationNames.add("Organisation B");
         int competitionCount = 2;
 
         int expectedCompetitionCount = 0;
-        for (String competition : organisationNames) {
-            addOrganisationAndCompetitions(competition, competitionCount);
+        for (String organisation : organisationNames) {
+            addOrganisationAndCompetitions(organisation, competitionCount);
             for (int i = 1; i <= competitionCount; i++) {
-                expectedCompetitions.add(competition + " " + i);
+                expectedCompetitions.add(organisation + " competition" + i);
                 expectedCompetitionCount++;
             }
         }
@@ -60,14 +64,16 @@ public class JdbcCompetitionDaoIT extends AbstractDaoIT {
 
     @Test
     public void getCompetitionById() {
-        addOrganisationAndCompetitions("Competition C", 3);
+        final String organisation = "Organisation C";
+        final int competitionCount = 3;
+        addOrganisationAndCompetitions(organisation, competitionCount);
 
-        List<Competition> competitions = competitionDao.getCompetitions();
+        // Kind of dumb - we rely on another operation to retrieve the IDs!
+        List<Competition> expectedCompetitions = competitionDao.getCompetitions().stream()
+                .filter(c -> organisation.equals(c.getOrganisation()))
+                .collect(Collectors.toList());
 
-        assertNotNull(competitions);
-        assertEquals(3, competitions.size());
-
-        for (Competition competition : competitions) {
+        for (Competition competition : expectedCompetitions ) {
             Competition competitionById = competitionDao.getCompetitionById(competition.getId());
             assertNotNull(competitionById);
             assertEquals(competition, competitionById);
@@ -83,12 +89,12 @@ public class JdbcCompetitionDaoIT extends AbstractDaoIT {
 
     @Test
     public void getCompetitionByName() {
-        final String organisationName = "Competition D";
+        final String organisationName = "Organisation D";
         final int competitionCount = 4;
         addOrganisationAndCompetitions(organisationName, competitionCount);
 
         for (int i = 1; i <= competitionCount; i++) {
-            Competition competition = competitionDao.getCompetitionByName(organisationName + " " + i);
+            Competition competition = competitionDao.getCompetitionByName(organisationName + " competition" + i);
             assertNotNull(competition);
             assertEquals(competition.getOrganisation(), organisationName);
         }
