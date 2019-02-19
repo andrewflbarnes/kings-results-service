@@ -1,7 +1,10 @@
 language: java
+
 jdk:
 - oraclejdk8
+
 sudo: false
+
 addons:
   postgresql: "10"
   sonarcloud:
@@ -12,13 +15,16 @@ addons:
     packages:
     - postgresql-10
     - postgresql-client-10
+
 env:
   global:
   - PGPORT=5433
+
 cache:
   directories:
   - $HOME/.m2/repository
   - $HOME/.sonar/cache
+
 notifications:
   email: false
   slack:
@@ -27,7 +33,9 @@ notifications:
     template:
     - '%{repository_slug} (%{commit}) to %{branch} by %{author} : %{result}'
     - 'Build details: %{build_url}'
+
 install: true
+
 before_script:
 # FIXME-travis-postgres: see https://github.com/travis-ci/travis-ci/issues/8537
 - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
@@ -35,8 +43,19 @@ before_script:
 - sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
 - sudo service postgresql restart
 - cp database/database-access/src/test/resources/travis-test.properties database/database-access/src/test/resources/test.properties
+
 script:
-- mvn clean install
-after_success:
-- mvn -P coverage-sonar,postgres
-- mvn -P coverage-coveralls,postgres
+- mvn clean install -Dmaven.test.skip
+
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Unit Tests"
+      script: mvn test
+    - name: "Integration Tests"
+      script: mvn verify -Dtest=none -DfailIfNoTests=false
+    - stage: "Coverage"
+      name: "SonarCloud"
+      after_success: mvn -P coverage-sonar,postgres
+    - name: "Coveralls"
+      after_success: mvn -P coverage-coveralls,postgres
