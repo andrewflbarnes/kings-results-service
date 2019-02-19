@@ -34,7 +34,7 @@ before_script:
 # Use 9.6 auth config:
 - sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
 - sudo service postgresql restart
-- cp database-access/src/test/resources/travis-test.properties database-access/src/test/resources/test.properties
+- cp database/database-access/src/test/resources/travis-test.properties database/gitdatabase-access/src/test/resources/test.properties
 script:
 - mvn clean install
 after_success:
