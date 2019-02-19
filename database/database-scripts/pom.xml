@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>database</artifactId>
+        <groupId>org.kingsski.kaas</groupId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>database-scripts</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+
+    <name>KAAS Database Scripts</name>
+    <packaging>jar</packaging>
+
+    <properties>
+        <!-- plugins -->
+        <flyway.version>5.1.4</flyway.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>db-clean</id>
+            <build>
+                <defaultGoal>clean process-resources flyway:clean</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>db-rebuild</id>
+            <build>
+                <defaultGoal>clean process-resources flyway:clean flyway:migrate</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>db-migrate</id>
+            <build>
+                <defaultGoal>clean process-resources flyway:migrate</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>db-load-test</id>
+            <build>
+                <defaultGoal>clean process-resources flyway:migrate</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <configuration>
+                            <locations>
+                                <location>database/${db.type}/test</location>
+                            </locations>
+                            <validateOnMigrate>false</validateOnMigrate>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>${flyway.version}</version>
+                    <configuration>
+                        <url>${db.base.url}</url>
+                        <user>${db.username}</user>
+                        <password>${db.password}</password>
+                        <schemas>
+                            <schema>${db.schema}</schema>
+                        </schemas>
+                        <locations>
+                            <location>database/${db.type}/provision</location>
+                        </locations>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>${postgres.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

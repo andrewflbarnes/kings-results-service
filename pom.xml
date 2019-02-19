@@ -1,15 +1,17 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.kingsski</groupId>
-    <artifactId>kings-race-service</artifactId>
+
+    <groupId>org.kingsski.kaas</groupId>
+    <artifactId>kaas-parent</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>kings-race-service</name>
+
+    <name>KAAS Backend Service</name>
+    <packaging>pom</packaging>
 
     <modules>
         <module>database</module>
-        <module>database-access</module>
-        <module>service-query</module>
+        <module>results-service</module>
     </modules>
 
     <properties>
@@ -36,9 +38,38 @@
         <coveralls.version>4.3.0</coveralls.version>
     </properties>
 
-    <packaging>pom</packaging>
-
     <profiles>
+        <!-- This profile exists so that builds can be created without any JDBC drivers -->
+        <!-- This allows them to be provided in a container or on the classpath -->
+        <profile>
+            <id>nodbdriver</id>
+            <properties>
+                <db.type>none</db.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>postgres</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.type>postgres</db.type>
+                <!-- flyway provisioning in database-scripts -->
+                <db.base.url>jdbc:postgresql://localhost:5434/postgres?user=postgres&amp;ssl=false</db.base.url>
+                <db.username>postgres</db.username>
+                <db.password>postgres</db.password>
+                <db.schema>kaas</db.schema>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgres.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
         <profile>
             <id>skip-tests-integration</id>
             <activation>
@@ -72,29 +103,6 @@
             <properties>
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
-        </profile>
-
-        <!-- This profile exists so that builds can be created without any JDBC drivers -->
-        <!-- This allows them to be provided in a container or on the classpath -->
-        <profile>
-            <id>nodbdriver</id>
-        </profile>
-
-        <profile>
-            <id>postgres</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <db.type>postgres</db.type>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>${postgres.version}</version>
-                </dependency>
-            </dependencies>
         </profile>
 
         <profile>
