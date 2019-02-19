@@ -44,18 +44,21 @@ before_script:
 - sudo service postgresql restart
 - cp database/database-access/src/test/resources/travis-test.properties database/database-access/src/test/resources/test.properties
 
-script:
-- mvn clean install -Dmaven.test.skip
-
 jobs:
+  allow_failures:
+    - script: mvn -P coverage-sonar,postgres
+    - script: mvn -P coverage-coveralls,postgres
   include:
+    - stage: "Build"
+      script: mvn clean package -Dmaven.test.skip
     - stage: "Tests"
       name: "Unit Tests"
+      before_script: true
       script: mvn test
     - name: "Integration Tests"
       script: mvn verify -Dtest=none -DfailIfNoTests=false
     - stage: "Coverage"
       name: "SonarCloud"
-      after_success: mvn -P coverage-sonar,postgres
+      script: mvn -P coverage-sonar,postgres
     - name: "Coveralls"
-      after_success: mvn -P coverage-coveralls,postgres
+      script: mvn -P coverage-coveralls,postgres
