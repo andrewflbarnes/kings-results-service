@@ -36,12 +36,12 @@ kaas_config:
       directories:
       - *m2_cache
       - $HOME:/.sonar/cache
-      addons:
-        <<: *postgres10_addon
-        sonarcloud:
-          organization: "andrewflbarnes-github"
-          token:
-            secure: "Td6s0n36tyq87zvJtgsdgvfC8RgNdLBvFGYGhB3cZvrt7qRqzP3Za3rC+DMiMi76+WZOKqUME6ybLM9ZltwamnrQGEuC93rOfcLYCt2z7m4hSBBb3IXZ9KTbI31QY2b0CeSoRz7yDT8JfVVM/EqR6r8X8Cs0rav8BIlsLfkZ/hQ2vTWLu7KjSuPcAHmxeBFqV/hMqBAaKhLXZXSrypSWGQb/xUkDOQYdJVNCzUNOSoPv3p3HyA+d78JAJUo9lx4iUuST0Y6zaiNwfDJcSVST8oXBKlQI6eGjxh9S7Q4NBucYubdTBwifYywOQRO4NCBLyZK/933I//QPHJIAUG1mQdCeQqecIn1tZL63SvwqjQlLDnXyHNBDQ1GVonTxME57h6jJU3Rbwpv2QBILWgBwnrMXuzcGypabL9/oDnG+pQTnX5EXRq+gyEIzq1FeA9rueqNFTwjmKmy6AguKX0eP9M/aRRo0bPEHVqOVP5o8kuMT8k+QJ2zxexUNnZwHZLevl0WjU9tUTVW9fuZCCBgPLv8G/R182xfikpHzf8XLza/svIyu9HgkDPaBFWA81Bt6ciAlFQvyzzpbhImP/XZMGxymIvZ92ys1dec56VDHIlI9sEJ0NpsN/DIi9plEOkJCAvYZcAO/wUnilA6LbZzwybGYAlSjnbACedJtcUVTPIg="
+    addons:
+      <<: *postgres10_addon
+      sonarcloud:
+        organization: "andrewflbarnes-github"
+        token:
+          secure: "Td6s0n36tyq87zvJtgsdgvfC8RgNdLBvFGYGhB3cZvrt7qRqzP3Za3rC+DMiMi76+WZOKqUME6ybLM9ZltwamnrQGEuC93rOfcLYCt2z7m4hSBBb3IXZ9KTbI31QY2b0CeSoRz7yDT8JfVVM/EqR6r8X8Cs0rav8BIlsLfkZ/hQ2vTWLu7KjSuPcAHmxeBFqV/hMqBAaKhLXZXSrypSWGQb/xUkDOQYdJVNCzUNOSoPv3p3HyA+d78JAJUo9lx4iUuST0Y6zaiNwfDJcSVST8oXBKlQI6eGjxh9S7Q4NBucYubdTBwifYywOQRO4NCBLyZK/933I//QPHJIAUG1mQdCeQqecIn1tZL63SvwqjQlLDnXyHNBDQ1GVonTxME57h6jJU3Rbwpv2QBILWgBwnrMXuzcGypabL9/oDnG+pQTnX5EXRq+gyEIzq1FeA9rueqNFTwjmKmy6AguKX0eP9M/aRRo0bPEHVqOVP5o8kuMT8k+QJ2zxexUNnZwHZLevl0WjU9tUTVW9fuZCCBgPLv8G/R182xfikpHzf8XLza/svIyu9HgkDPaBFWA81Bt6ciAlFQvyzzpbhImP/XZMGxymIvZ92ys1dec56VDHIlI9sEJ0NpsN/DIi9plEOkJCAvYZcAO/wUnilA6LbZzwybGYAlSjnbACedJtcUVTPIg="
     before_script: *postgres10_script
 
 cache: *default_cache
