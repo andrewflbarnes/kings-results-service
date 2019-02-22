@@ -50,6 +50,7 @@ jobs:
     - script: mvn -P coverage-coveralls,postgres
   include:
     - stage: "Build"
+      before_script: true
       script: mvn clean package -Dmaven.test.skip
     - stage: "Tests"
       name: "Unit Tests"
