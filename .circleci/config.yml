@@ -114,8 +114,12 @@ jobs:
     - run:
         name: Generate coverage data
         command: mvn verify -P coverage -B
-    - run: mvn sonar:sonar -P sonar -B
-    - run: mvn coveralls:report -B -DrepoToken=${COVERALLS_REPO_TOKEN}
+    - run:
+        name: Send coverage to sonarcloud.io
+        command: mvn sonar:sonar -P sonar -B
+    - run:
+        name: Send coverage to coveralls.io
+        command: mvn coveralls:report -B -DrepoToken=${COVERALLS_REPO_TOKEN}
     - save_cache:
         paths: *cache_coverage_paths
         key: *cache_coverage
