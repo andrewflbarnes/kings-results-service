@@ -81,11 +81,9 @@ jobs:
     script: mvn verify -Dtest=none -DfailIfNoTests=false
 
   - stage: "Coverage"
-    name: "SonarCloud"
+    name: "SonarCloud and Coveralls w/ Jacoco"
     <<: *sonarcloud_config
-    script: mvn -P coverage-sonar,postgres
-
-  - stage: "Coverage"
-    name: "Coveralls"
-    <<: *postgres10_config
-    script: mvn -P coverage-coveralls,postgres
+    script:
+    - mvn clean install -P coverage,postgres
+    - mvn sonar:sonar
+    - mvn coveralls:report
