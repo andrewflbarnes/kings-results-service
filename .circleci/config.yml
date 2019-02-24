@@ -17,7 +17,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn clean install -B
+      - run: mvn clean install -B -Dmaven.test.skip
 
       - save_cache:
           paths:
