@@ -116,7 +116,14 @@ jobs:
         command: mvn verify -P coverage -B
     - run:
         name: Send coverage to sonarcloud.io
-        command: mvn sonar:sonar -P sonar -B -Dsonar.branch.name=${CIRCLE_BRANCH}
+        command: |
+          if [[ ! -z $CIRCLE_PULL_REQUEST ]]
+          then
+            SONAR_OPTS=-Dsonar.github.pullRequest=${CIRCLE_PULL_REQUEST##*/}
+          else
+            SONAR_OPTS=-Dsonar.branch.name=${CIRCLE_BRANCH}
+          fi
+          mvn sonar:sonar -P sonar -B $SONAR_OPTS
     - run:
         name: Send coverage to coveralls.io
         command: mvn coveralls:report -B -DrepoToken=${COVERALLS_REPO_TOKEN}
