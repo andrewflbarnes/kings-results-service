@@ -27,7 +27,7 @@ jobs:
       - checkout
       - run: *copy_props
       - restore_cache: *restore_cache
-      - run: mvn test -B-
+      - run: mvn test -B
       - run:
           name: Save test results
           command: |
@@ -52,7 +52,7 @@ jobs:
           name: Save test results
           command: |
             mkdir -p ~/integration-tests/
-            find . -type f -regex ".*/target/failesafe-reports/.*xml" -exec cp {} ~/integration-tests/ \;
+            find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/integration-tests/ \;
           when: always
       - store_test_results:
           path: ~/integration-tests
