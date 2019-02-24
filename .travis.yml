@@ -64,8 +64,7 @@ stages:
 
 jobs:
   allow_failures:
-  - script: mvn -P coverage-sonar,postgres
-  - script: mvn -P coverage-coveralls,postgres
+  - stage: "Coverage"
 
   include:
   - stage: "Build"
@@ -84,6 +83,6 @@ jobs:
     name: "SonarCloud and Coveralls w/ Jacoco"
     <<: *sonarcloud_config
     script:
-    - mvn clean install -P coverage,postgres
+    - mvn clean install -P coverage
     - mvn sonar:sonar
     - mvn coveralls:report

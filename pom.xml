@@ -161,6 +161,17 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <!-- coveralls can't be resolved purely by it's prefix :( -->
+            <plugins>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${coveralls.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
