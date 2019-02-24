@@ -74,7 +74,7 @@ jobs:
       - run: mvn coveralls:report -B -DrepoToken=$COVERALLS_REPO_TOKEN
       - save_cache:
           paths:
-          - ~/.m2
+          - ~/.sonar/cache
           key: v1-sonar-{{ checksum "pom.xml" }}
 
 workflows:
