@@ -65,9 +65,17 @@ jobs:
       - checkout
       - run: *copy_props
       - restore_cache: *restore_cache
+      - restore_cache:
+          keys:
+          - v1-sonar-{{ checksum "pom.xml" }}
+          - v1-sonar-
       - run: mvn verify -P coverage -B
       - run: mvn sonar:sonar -P sonar -B
       - run: mvn coveralls:report -B
+      - save_cache:
+          paths:
+          - ~/.m2
+          key: v1-sonar-{{ checksum "pom.xml" }}
 
 workflows:
   version: 2
