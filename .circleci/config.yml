@@ -3,7 +3,7 @@ jobs:
   build:
     docker: &docker_default
       # specify the version you desire here
-      - image: &build_image circleci/openjdk:8-jdk
+      - image: &build_image circleci/openjdk:8u171-jdk
 
     steps:
       - checkout
@@ -15,7 +15,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn clean install
+      - run: mvn clean install -B
 
       - save_cache:
           paths:
@@ -26,7 +26,7 @@ jobs:
     docker: *docker_default
     steps:
       - restore_cache: *restore_cache
-      - run: mvn test
+      - run: mvn test -B
 
   integration-test:
     docker: &docker_integration
@@ -34,13 +34,13 @@ jobs:
       - image: postgres:10
     steps:
       - restore_cache: *restore_cache
-      - run: mvn verify -Dtest=none -DfailIfNoTests=false
+      - run: mvn verify -Dtest=none -DfailIfNoTests=false -B
 
   coverage:
     docker: *docker_integration
     steps:
       - restore_cache: *restore_cache
-      - run: mvn clean install -P coverage
+      - run: mvn clean install -P coverage -B
       - run: echo TODO mvn sonar:sonar
       - run: echo TODO mvn coveralls:report
 
