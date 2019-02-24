@@ -25,7 +25,9 @@ project-config:
     - image: *build_image
     - image: *db_image
   setup_commands:
-  - &copy_props cp database/database-access/src/test/resources/circleci-test.properties database/database-access/src/test/resources/test.properties
+  - copy_props: &copy_props
+      name: Copy circleci test properties
+      command: cp database/database-access/src/test/resources/circleci-test.properties database/database-access/src/test/resources/test.properties
 
 jobs:
   build:
@@ -53,7 +55,9 @@ jobs:
         - *cache_dependencies
         - *cache_test_fallback
         - *cache_dependencies_fallback
-    - run: mvn test -B
+    - run:
+        name: Run unit tests
+        command: mvn test -B
     - run:
         name: Save test results
         command: |
@@ -79,7 +83,9 @@ jobs:
         - *cache_dependencies
         - *cache_integration_fallback
         - *cache_dependencies_fallback
-    - run: mvn verify -Dtest=none -DfailIfNoTests=false -B
+    - run:
+        name: Run integration tests
+        command: mvn verify -Dtest=none -DfailIfNoTests=false -B
     - run:
         name: Save test results
         command: |
@@ -113,6 +119,8 @@ jobs:
     - save_cache:
         paths: *cache_coverage_paths
         key: *cache_coverage
+    - store_artifacts:
+        path: ./jacoco-report/target/site/jacoco-aggregate
 
 workflows:
   version: 2
