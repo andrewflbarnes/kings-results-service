@@ -1,15 +1,17 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.kingsski</groupId>
-    <artifactId>kings-race-service</artifactId>
+
+    <groupId>org.kingsski.kaas</groupId>
+    <artifactId>kaas-parent</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>kings-race-service</name>
+
+    <name>KAAS Backend Service</name>
+    <packaging>pom</packaging>
 
     <modules>
         <module>database</module>
-        <module>database-access</module>
-        <module>service-query</module>
+        <module>results-service</module>
     </modules>
 
     <properties>
@@ -31,14 +33,42 @@
         <mockito.version>2.19.1</mockito.version>
         <failsafe.version>2.22.0</failsafe.version>
         <!-- coverage and code analysis -->
-        <jacoco.version>0.7.7.201606060606</jacoco.version>
-        <cobertura.version>2.7</cobertura.version>
+        <jacoco.version>0.8.3</jacoco.version>
         <coveralls.version>4.3.0</coveralls.version>
     </properties>
 
-    <packaging>pom</packaging>
-
     <profiles>
+        <!-- This profile exists so that builds can be created without any JDBC drivers -->
+        <!-- This allows them to be provided in a container or on the classpath -->
+        <profile>
+            <id>nodbdriver</id>
+            <properties>
+                <db.type>none</db.type>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>postgres</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.type>postgres</db.type>
+                <!-- flyway provisioning in database-scripts -->
+                <db.base.url>jdbc:postgresql://localhost:5434/postgres?user=postgres&amp;ssl=false</db.base.url>
+                <db.username>postgres</db.username>
+                <db.password>postgres</db.password>
+                <db.schema>kaas</db.schema>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgres.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
         <profile>
             <id>skip-tests-integration</id>
             <activation>
@@ -50,6 +80,7 @@
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
         </profile>
+
         <profile>
             <id>maven-test-skip-integration</id>
             <activation>
@@ -61,6 +92,7 @@
                 <skipIntegrationTests>true</skipIntegrationTests>
             </properties>
         </profile>
+
         <profile>
             <id>it-test-none-integration</id>
             <activation>
@@ -74,35 +106,10 @@
             </properties>
         </profile>
 
-        <!-- This profile exists so that builds can be created without any JDBC drivers -->
-        <!-- This allows them to be provided in a container or on the classpath -->
         <profile>
-            <id>nodbdriver</id>
-        </profile>
-
-        <profile>
-            <id>postgres</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <db.type>postgres</db.type>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>${postgres.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>coverage-sonar</id>
+            <id>coverage</id>
             <build>
-                <defaultGoal>clean install sonar:sonar</defaultGoal>
                 <plugins>
-                    <!-- jacoco for sonar -->
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
@@ -110,64 +117,25 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/*Config.class</exclude>
-                                <exclude>**/*Application.class</exclude>
+                                <exclude>**/KaasResultsService.class</exclude>
                             </excludes>
                         </configuration>
                         <executions>
                             <execution>
                                 <id>prepare-jacoco</id>
-                                <phase>initialize</phase>
                                 <goals>
                                     <goal>prepare-agent</goal>
                                 </goals>
                             </execution>
 
                             <execution>
-                                <id>prepare-jacoco-integration</id>
-                                <phase>pre-integration-test</phase>
+                                <id>report-jacoco</id>
+                                <phase>post-integration-test</phase>
                                 <goals>
-                                    <goal>prepare-agent-integration</goal>
+                                    <goal>report</goal>
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>coverage-coveralls</id>
-            <build>
-                <defaultGoal>cobertura:cobertura-integration-test coveralls:report</defaultGoal>
-                <plugins>
-                    <!-- cobertura for coveralls -->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>cobertura-maven-plugin</artifactId>
-                        <version>${cobertura.version}</version>
-                        <configuration>
-                            <instrumentation>
-                                <ignoreTrivial>true</ignoreTrivial>
-                                <excludes>
-                                    <exclude>**/*Config.class</exclude>
-                                    <exclude>**/*Application.class</exclude>
-                                </excludes>
-                            </instrumentation>
-                            <formats>
-                                <format>html</format>
-                                <format>xml</format>
-                            </formats>
-                            <check/>
-                            <maxmem>256m</maxmem>
-                            <!-- aggregated reports for multi-module projects -->
-                            <aggregate>true</aggregate>
-                        </configuration>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.eluder.coveralls</groupId>
-                        <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>${coveralls.version}</version>
                     </plugin>
                 </plugins>
             </build>
@@ -193,6 +161,17 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <!-- coveralls can't be resolved purely by it's prefix :( -->
+            <plugins>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${coveralls.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>

@@ -1,42 +1,88 @@
 language: java
+
 jdk:
 - oraclejdk8
+
 sudo: false
-addons:
-  postgresql: "10"
-  sonarcloud:
-    organization: "andrewflbarnes-github"
-    token:
-      secure: "Td6s0n36tyq87zvJtgsdgvfC8RgNdLBvFGYGhB3cZvrt7qRqzP3Za3rC+DMiMi76+WZOKqUME6ybLM9ZltwamnrQGEuC93rOfcLYCt2z7m4hSBBb3IXZ9KTbI31QY2b0CeSoRz7yDT8JfVVM/EqR6r8X8Cs0rav8BIlsLfkZ/hQ2vTWLu7KjSuPcAHmxeBFqV/hMqBAaKhLXZXSrypSWGQb/xUkDOQYdJVNCzUNOSoPv3p3HyA+d78JAJUo9lx4iUuST0Y6zaiNwfDJcSVST8oXBKlQI6eGjxh9S7Q4NBucYubdTBwifYywOQRO4NCBLyZK/933I//QPHJIAUG1mQdCeQqecIn1tZL63SvwqjQlLDnXyHNBDQ1GVonTxME57h6jJU3Rbwpv2QBILWgBwnrMXuzcGypabL9/oDnG+pQTnX5EXRq+gyEIzq1FeA9rueqNFTwjmKmy6AguKX0eP9M/aRRo0bPEHVqOVP5o8kuMT8k+QJ2zxexUNnZwHZLevl0WjU9tUTVW9fuZCCBgPLv8G/R182xfikpHzf8XLza/svIyu9HgkDPaBFWA81Bt6ciAlFQvyzzpbhImP/XZMGxymIvZ92ys1dec56VDHIlI9sEJ0NpsN/DIi9plEOkJCAvYZcAO/wUnilA6LbZzwybGYAlSjnbACedJtcUVTPIg="
-  apt:
-    packages:
-    - postgresql-10
-    - postgresql-client-10
-env:
-  global:
-  - PGPORT=5433
-cache:
-  directories:
-  - $HOME/.m2/repository
-  - $HOME/.sonar/cache
+
+
+kaas_config:
+  default:
+    cache: &default_cache
+      directories:
+      - &m2_cache $HOME/.m2/repository
+
+  postgres10: &postgres10_config
+    env: &postgres10_env
+      global:
+      - PGPORT=5433
+    addons: &postgres10_addon
+      postgresql: "10"
+      apt:
+        packages:
+        - postgresql-10
+        - postgresql-client-10
+    before_script: &postgres10_script
+    # FIXME-travis-postgres: see https://github.com/travis-ci/travis-ci/issues/8537
+    - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
+    # Use 9.6 auth config:
+    - sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
+    - sudo service postgresql restart
+    - cp database/database-access/src/test/resources/travis-test.properties database/database-access/src/test/resources/test.properties
+
+  sonarcloud: &sonarcloud_config
+    env: *postgres10_env
+    cache:
+      directories:
+      - *m2_cache
+      - $HOME:/.sonar/cache
+    addons:
+      <<: *postgres10_addon
+      sonarcloud:
+        organization: "andrewflbarnes-github"
+        token:
+          secure: "Td6s0n36tyq87zvJtgsdgvfC8RgNdLBvFGYGhB3cZvrt7qRqzP3Za3rC+DMiMi76+WZOKqUME6ybLM9ZltwamnrQGEuC93rOfcLYCt2z7m4hSBBb3IXZ9KTbI31QY2b0CeSoRz7yDT8JfVVM/EqR6r8X8Cs0rav8BIlsLfkZ/hQ2vTWLu7KjSuPcAHmxeBFqV/hMqBAaKhLXZXSrypSWGQb/xUkDOQYdJVNCzUNOSoPv3p3HyA+d78JAJUo9lx4iUuST0Y6zaiNwfDJcSVST8oXBKlQI6eGjxh9S7Q4NBucYubdTBwifYywOQRO4NCBLyZK/933I//QPHJIAUG1mQdCeQqecIn1tZL63SvwqjQlLDnXyHNBDQ1GVonTxME57h6jJU3Rbwpv2QBILWgBwnrMXuzcGypabL9/oDnG+pQTnX5EXRq+gyEIzq1FeA9rueqNFTwjmKmy6AguKX0eP9M/aRRo0bPEHVqOVP5o8kuMT8k+QJ2zxexUNnZwHZLevl0WjU9tUTVW9fuZCCBgPLv8G/R182xfikpHzf8XLza/svIyu9HgkDPaBFWA81Bt6ciAlFQvyzzpbhImP/XZMGxymIvZ92ys1dec56VDHIlI9sEJ0NpsN/DIi9plEOkJCAvYZcAO/wUnilA6LbZzwybGYAlSjnbACedJtcUVTPIg="
+    before_script: *postgres10_script
+
+cache: *default_cache
+
 notifications:
   email: false
   slack:
     rooms:
-    - kingsskiclub:BBL9dzzOo8JFgSqRupOaxr4p#software-integrations
+    - secure: "aFZnWv1I9S0Pn6/6fR3QKWO4o2qPpfd0DspLHN+8ByyQRCJ9ODv6dBhliCbokiOMOJ1l7011+PNFxtViY+ojGwUz68wspldGixIbvU0SzJ4cSeVL1mArSiz9hdplLogZZIIYJ34j/kDHNvF5uxHIxsFjcj6tnZeiR5ll1Yy+w0JCThcJkxvELvZGFpU1sKMSMTyd9zNwvJUvpD4xpNrRwHdXeJznLwV+qgYAa5y//DxlG+iagfXUoKEoBG/HohcnpseUpwbYPLueiYd50LYG+iB+cSuHvBwRYrgaMbubmm3fu4NUXR4sO0NJDZ9PK+ZMW2n5BhLlwciEswSNFqdCvpNCEBdH0NmzwsWmtx5QA4Cu0aPkPHuFYnAVbdLfwUgLOxqhXOT9vIXzIHOMDTr5Uc2FV/ZKky1Hl4Cld3yO5/pBwsI4dfZuCFZ6ZAA8u5G84/8ph57RkgE47tJGoAHOjdwNNxHrcvYJuCFRuneEH4IS5izOTYVNMwTZdRPUXzZdJ6gC5dvztZ+w/WDd2f1jzrxMHPV2tfKyX3Q5gwGc8DCJ2gYQyDZoqs4zek0bMDgECsARL0687ABlo4jZyjOlLKmrO/F1AFDr8aZSeWdMTtwXXV1xACcH58sKFUe8/2g7u3Js6v0ZWg7Snu5E2ud+LiEq600Oqc1tK1x9V6uFkSU="
     template:
     - '%{repository_slug} (%{commit}) to %{branch} by %{author} : %{result}'
     - 'Build details: %{build_url}'
+
 install: true
-before_script:
-# FIXME-travis-postgres: see https://github.com/travis-ci/travis-ci/issues/8537
-- sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
-# Use 9.6 auth config:
-- sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
-- sudo service postgresql restart
-- cp database-access/src/test/resources/travis-test.properties database-access/src/test/resources/test.properties
-script:
-- mvn clean install
-after_success:
-- mvn -P coverage-sonar,postgres
-- mvn -P coverage-coveralls,postgres
+
+stages:
+- "Build"
+- "Tests"
+- "Coverage"
+
+jobs:
+  allow_failures:
+  - stage: "Coverage"
+
+  include:
+  - stage: "Build"
+    script: mvn clean package -Dmaven.test.skip
+
+  - stage: "Tests"
+    name: "Unit Tests"
+    script: mvn test
+
+  - stage: "Tests"
+    name: "Integration Tests"
+    <<: *postgres10_config
+    script: mvn verify -Dtest=none -DfailIfNoTests=false
+
+  - stage: "Coverage"
+    name: "SonarCloud and Coveralls w/ Jacoco"
+    <<: *sonarcloud_config
+    script:
+    - mvn clean install -P coverage
+    - mvn sonar:sonar
+    - mvn coveralls:report
