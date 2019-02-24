@@ -54,11 +54,6 @@
             </activation>
             <properties>
                 <db.type>postgres</db.type>
-                <!-- flyway provisioning in database-scripts -->
-                <db.base.url>jdbc:postgresql://localhost:5434/postgres?user=postgres&amp;ssl=false</db.base.url>
-                <db.username>postgres</db.username>
-                <db.password>postgres</db.password>
-                <db.schema>kaas</db.schema>
             </properties>
             <dependencies>
                 <dependency>

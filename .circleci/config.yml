@@ -8,6 +8,8 @@ jobs:
     steps:
       - checkout
 
+      - run: &copy_props cp database/database-access/src/test/resources/circleci-test.properties database/database-access/src/test/resources/test.properties
+
       # Download and cache dependencies
       - restore_cache: &restore_cache
           keys:
@@ -25,6 +27,8 @@ jobs:
   test:
     docker: *docker_default
     steps:
+      - checkout
+      - run: *copy_props
       - restore_cache: *restore_cache
       - run: mvn test -B
 
@@ -33,12 +37,16 @@ jobs:
       - image: *build_image
       - image: postgres:10
     steps:
+      - checkout
+      - run: *copy_props
       - restore_cache: *restore_cache
       - run: mvn verify -Dtest=none -DfailIfNoTests=false -B
 
   coverage:
     docker: *docker_integration
     steps:
+      - checkout
+      - run: *copy_props
       - restore_cache: *restore_cache
       - run: mvn clean install -P coverage -B
       - run: echo TODO mvn sonar:sonar
