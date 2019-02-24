@@ -7,17 +7,14 @@ jobs:
 
     steps:
       - checkout
-
       - run: &copy_props cp database/database-access/src/test/resources/circleci-test.properties database/database-access/src/test/resources/test.properties
-
-      # Download and cache dependencies
       - restore_cache: &restore_cache
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn clean install -B -Dmaven.test.skip
+      - run: mvn package -B -Dmaven.test.skip
 
       - save_cache:
           paths:
@@ -48,9 +45,9 @@ jobs:
       - checkout
       - run: *copy_props
       - restore_cache: *restore_cache
-      - run: mvn clean install -P coverage -B
-      - run: echo TODO mvn sonar:sonar
-      - run: echo TODO mvn coveralls:report
+      - run: mvn verify -P coverage -B
+      - run: mvn sonar:sonar
+      - run: mvn coveralls:report
 
 workflows:
   version: 2
