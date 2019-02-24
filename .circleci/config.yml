@@ -119,11 +119,15 @@ jobs:
         command: |
           if [[ ! -z $CIRCLE_PULL_REQUEST ]]
           then
-            SONAR_OPTS=-Dsonar.github.pullRequest=${CIRCLE_PULL_REQUEST##*/}
+            mvn sonar:sonar -P sonar -B \
+              -Dsonar.pullrequest.base=master \
+              -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} \
+              -Dsonar.pullrequest.key=${CIRCLE_PULL_REQUEST##*/} \
+              -Dsonar.pullrequest.provider=GitHub \
+              -Dsonar.pullrequest.github.repository=andrewflbarnes/kings-results-service
           else
-            SONAR_OPTS=-Dsonar.branch.name=${CIRCLE_BRANCH}
+            mvn sonar:sonar -Psonar -B -Dsonar.branch.name=${CIRCLE_BRANCH}
           fi
-          mvn sonar:sonar -P sonar -B $SONAR_OPTS
     - run:
         name: Send coverage to coveralls.io
         command: mvn coveralls:report -B -DrepoToken=${COVERALLS_REPO_TOKEN}
