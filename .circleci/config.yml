@@ -42,7 +42,7 @@ jobs:
   integration-test:
     docker: &docker_integration
       - image: *build_image
-      - image: postgres:10
+      - image: circleci/postgres:10-alpine
     steps:
       - checkout
       - run: *copy_props
@@ -71,7 +71,7 @@ jobs:
           - v1-sonar-
       - run: mvn verify -P coverage -B
       - run: mvn sonar:sonar -P sonar -B
-      - run: mvn coveralls:report -B
+      - run: mvn coveralls:report -B -DrepoToken=$COVERALLS_REPO_TOKEN
       - save_cache:
           paths:
           - ~/.m2
