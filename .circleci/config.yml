@@ -1,0 +1,61 @@
+version: 2
+jobs:
+  build:
+    docker: &docker_default
+      # specify the version you desire here
+      - image: &build_image circleci/openjdk:8-jdk
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache: &restore_cache
+          keys:
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: mvn clean install
+
+      - save_cache:
+          paths:
+          - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+  test:
+    docker: *docker_default
+    steps:
+      - restore_cache: *restore_cache
+      - run: mvn test
+
+  integration-test:
+    docker: &docker_integration
+      - image: *build_image
+      - image: postgres:10
+    steps:
+      - restore_cache: *restore_cache
+      - run: mvn verify -Dtest=none -DfailIfNoTests=false
+
+  coverage:
+    docker: *docker_integration
+    steps:
+      - restore_cache: *restore_cache
+      - run: mvn clean install -P coverage
+      - run: echo TODO mvn sonar:sonar
+      - run: echo TODO mvn coveralls:report
+
+workflows:
+  version: 2
+  jobs:
+    - build
+    - test:
+        requires:
+          - build
+    - integration-test:
+        requires:
+          - build
+    - coverage:
+        requires:
+          - test
+          - integration-test
+
