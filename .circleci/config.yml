@@ -46,8 +46,8 @@ jobs:
       - run: *copy_props
       - restore_cache: *restore_cache
       - run: mvn verify -P coverage -B
-      - run: mvn sonar:sonar
-      - run: mvn coveralls:report
+      - run: mvn sonar:sonar -P sonar -B
+      - run: mvn coveralls:report -B
 
 workflows:
   version: 2
