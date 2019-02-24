@@ -46,16 +46,17 @@ jobs:
 
 workflows:
   version: 2
-  jobs:
-    - build
-    - test:
-        requires:
-          - build
-    - integration-test:
-        requires:
-          - build
-    - coverage:
-        requires:
-          - test
-          - integration-test
+  build_test_report:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - integration-test:
+          requires:
+            - build
+      - coverage:
+          requires:
+            - test
+            - integration-test
 
