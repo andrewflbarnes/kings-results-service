@@ -116,7 +116,7 @@ jobs:
         command: mvn verify -P coverage -B
     - run:
         name: Send coverage to sonarcloud.io
-        command: mvn sonar:sonar -P sonar -B
+        command: mvn sonar:sonar -P sonar -B -Dsonar.branch.name=${CIRCLE_BRANCH}
     - run:
         name: Send coverage to coveralls.io
         command: mvn coveralls:report -B -DrepoToken=${COVERALLS_REPO_TOKEN}
