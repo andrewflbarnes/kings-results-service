@@ -17,7 +17,7 @@ project-config:
     - ~/.sonar/cache
   docker:
   - &build_image circleci/openjdk:8u171-jdk
-  - &db_image circleci/openjdk:8u171-jdk
+  - &db_image circleci/postgres:10-alpine
   - docker_build: &docker_build
     # Latest 181 version has a bug with surefire
     - image: *build_image
