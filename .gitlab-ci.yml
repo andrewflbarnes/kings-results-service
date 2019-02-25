@@ -1,0 +1,47 @@
+image: maven:3-jdk-8
+
+stages:
+  - build
+  - test
+  - coverage
+
+cache:
+  key: ${CACHE_VERSION}-dependencies
+  paths:
+    - ~/.m2
+
+build:
+  stage: build
+  script: mvn package -Dmaven.test.skip -B
+
+unit-test:
+  stage: test
+  script: mvn test -B
+  when: on_success
+
+integration-test:
+  stage: test
+  services: &postgres_service
+  - postgres:10
+  variables: &postgres_variables
+    POSTGRES_DB: gitlab_test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: ""
+  before_script: &copy_test_props cp database/database-access/src/test/resources/gitlabci-test.properties database/database-access/src/test/resources/test.properties
+  script: mvn verify -Dtest=none -DfailIfNoTests=false -B
+  when: on_success
+
+test-coverage:
+  stage: coverage
+  services: *postgres_service
+  variables: *postgres_variables
+  cache:
+    key: ${CACHE_VERSION}-coverage
+    paths:
+    - ~/.m2
+    - ~/.sonar/cache
+  script:
+    - mvn verify -P coverage -B
+    - echo TODO mvn sonar:sonar -Psonar
+    - echo TODO mvn coveralls:report
+  when: on_success
