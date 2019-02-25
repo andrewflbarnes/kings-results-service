@@ -1,3 +1,7 @@
+variables:
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+  MAVEN_CLI_OPTS: "-B --errors --show-version --fail-at-end"
+
 image: maven:3-jdk-8
 
 stages:
@@ -8,11 +12,11 @@ stages:
 cache:
   key: ${CACHE_VERSION}-dependencies
   paths:
-  - ~/.m2
+  - .m2/repository
 
 build:
   stage: build
-  script: mvn package -Dmaven.test.skip -B
+  script: mvn $MAVEN_CLI_OPTS package -Dmaven.test.skip
 
 unit-test:
   stage: test
@@ -29,7 +33,7 @@ integration-test:
     POSTGRES_PASSWORD: ""
   before_script: &copy_test_props
   - cp database/database-access/src/test/resources/gitlabci-test.properties database/database-access/src/test/resources/test.properties
-  script: mvn verify -Dtest=none -DfailIfNoTests=false -B
+  script: mvn $MAVEN_CLI_OPTS verify -Dtest=none -DfailIfNoTests=false
   when: on_success
 
 test-coverage:
@@ -39,11 +43,11 @@ test-coverage:
   cache:
     key: ${CACHE_VERSION}-coverage
     paths:
-    - ~/.m2
+    - .m2/repository
     - ~/.sonar/cache
   before_script: *copy_test_props
   script:
-  - mvn verify -P coverage -B
-  - echo TODO mvn sonar:sonar -Psonar
-  - echo TODO mvn coveralls:report
+  - mvn $MAVEN_CLI_OPTS verify -P coverage
+  - echo TODO mvn $MAVEN_CLI_OPTS sonar:sonar -Psonar
+  - echo TODO mvn $MAVEN_CLI_OPTS coveralls:report
   when: on_success
