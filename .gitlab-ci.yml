@@ -1,14 +1,14 @@
 image: maven:3-jdk-8
 
 stages:
-  - build
-  - test
-  - coverage
+- build
+- test
+- coverage
 
 cache:
   key: ${CACHE_VERSION}-dependencies
   paths:
-    - ~/.m2
+  - ~/.m2
 
 build:
   stage: build
@@ -27,7 +27,8 @@ integration-test:
     POSTGRES_DB: gitlab_test
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: ""
-  before_script: &copy_test_props cp database/database-access/src/test/resources/gitlabci-test.properties database/database-access/src/test/resources/test.properties
+  before_script: &copy_test_props
+  - cp database/database-access/src/test/resources/gitlabci-test.properties database/database-access/src/test/resources/test.properties
   script: mvn verify -Dtest=none -DfailIfNoTests=false -B
   when: on_success
 
@@ -40,8 +41,10 @@ test-coverage:
     paths:
     - ~/.m2
     - ~/.sonar/cache
+  before_script:
+  - *copy_test_props
   script:
-    - mvn verify -P coverage -B
-    - echo TODO mvn sonar:sonar -Psonar
-    - echo TODO mvn coveralls:report
+  - mvn verify -P coverage -B
+  - echo TODO mvn sonar:sonar -Psonar
+  - echo TODO mvn coveralls:report
   when: on_success
