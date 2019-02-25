@@ -41,8 +41,7 @@ test-coverage:
     paths:
     - ~/.m2
     - ~/.sonar/cache
-  before_script:
-  - *copy_test_props
+  before_script: *copy_test_props
   script:
   - mvn verify -P coverage -B
   - echo TODO mvn sonar:sonar -Psonar
