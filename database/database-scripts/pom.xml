@@ -20,11 +20,12 @@
         <!-- plugins -->
         <flyway.version>5.1.4</flyway.version>
         <!-- flyway provisioning in database-scripts -->
-        <flyway.port>5434</flyway.port>
-        <flyway.url>jdbc:postgresql://localhost:${flyway.port}/postgres?user=postgres&amp;ssl=false</flyway.url>
-        <flyway.username>postgres</flyway.username>
-        <flyway.password>postgres</flyway.password>
-        <flyway.schema>kaas</flyway.schema>
+        <db.port>5434</db.port>
+        <db.host>localhost</db.host>
+        <db.url>jdbc:postgresql://${db.host}:${db.port}/postgres?user=postgres&amp;ssl=false</db.url>
+        <db.username>postgres</db.username>
+        <db.password>postgres</db.password>
+        <db.schema>kaas</db.schema>
     </properties>
 
     <profiles>
@@ -95,11 +96,11 @@
                     <artifactId>flyway-maven-plugin</artifactId>
                     <version>${flyway.version}</version>
                     <configuration>
-                        <url>${flyway.url}</url>
-                        <user>${flyway.username}</user>
-                        <password>${flyway.password}</password>
+                        <url>${db.url}</url>
+                        <user>${db.username}</user>
+                        <password>${db.password}</password>
                         <schemas>
-                            <schema>${flyway.schema}</schema>
+                            <schema>${db.schema}</schema>
                         </schemas>
                         <locations>
                             <location>database/${db.type}/provision</location>

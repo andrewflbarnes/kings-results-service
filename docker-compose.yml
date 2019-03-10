@@ -3,7 +3,7 @@ services:
   postgres10:
     image: postgres:10
     ports:
-      - "5434:5432"
+    - "${db_port}:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -16,3 +16,18 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: andrewflbarnes@hotmail.co.uk
       PGADMIN_DEFAULT_PASSWORD: postgres
+
+  results-service:
+    image: kaas/results-service
+    deploy:
+      replicas: 2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - "${results_service_port}:8080"
+    volumes:
+    - "./docker/application.properties:/app/application.properties"
+    - "./docker/database.properties:/app/database.properties"
+    depends_on:
+      - postgres10
