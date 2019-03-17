@@ -61,13 +61,13 @@ jobs:
     - run:
         name: Save test results
         command: |
-          mkdir -p ~/junit/
-          find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+          mkdir -p ~/test-results/junit/
+          find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
         when: always
     - store_test_results:
-        path: ~/junit
+        path: ~/test-results
     - store_artifacts:
-        path: ~/junit
+        path: ~/test-results/junit
     - save_cache:
         paths: *cache_default_paths
         key: *cache_test
@@ -89,13 +89,13 @@ jobs:
     - run:
         name: Save test results
         command: |
-          mkdir -p ~/integration-tests/
-          find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/integration-tests/ \;
+          mkdir -p ~/integration-tests/junit
+          find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/integration-tests/junit \;
         when: always
     - store_test_results:
         path: ~/integration-tests
     - store_artifacts:
-        path: ~/integration-tests
+        path: ~/integration-tests/junit
     - save_cache:
         paths: *cache_default_paths
         key: *cache_integration
