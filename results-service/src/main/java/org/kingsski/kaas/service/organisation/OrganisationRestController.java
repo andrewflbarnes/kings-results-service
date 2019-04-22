@@ -3,9 +3,8 @@ package org.kingsski.kaas.service.organisation;
 import org.kingsski.kaas.database.organisation.Organisation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -19,8 +18,7 @@ public class OrganisationRestController {
     @Resource
     private OrganisationService organisationService;
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             path = "/organisations",
             produces = "application/json"
     )
@@ -28,8 +26,7 @@ public class OrganisationRestController {
         return ResponseEntity.ok(organisationService.getOrganisations());
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             path = "/organisation/{id:\\d+}",
             produces = "application/json"
     )
@@ -41,8 +38,7 @@ public class OrganisationRestController {
         return ResponseEntity.ok(organisationService.getOrganisationById(id));
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             path = "/organisation/{name:[A-Za-z]+.*}",
             produces = "application/json"
     )
