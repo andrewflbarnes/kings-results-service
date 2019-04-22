@@ -75,7 +75,7 @@ CREATE TABLE t_season
 );
 
 ALTER TABLE t_season ADD CONSTRAINT FK_SEASON_COMPETITION_COMPETITION_ID
-FOREIGN KEY (season_id) REFERENCES t_competition(competition_id);
+FOREIGN KEY (competition_id) REFERENCES t_competition(competition_id);
 
 ALTER TABLE t_season ADD CONSTRAINT UNIQUE_SEASON_COMPETITION_ID_NAME
 UNIQUE (competition_id, name);
@@ -101,6 +101,7 @@ CREATE TABLE t_score
   ( score_id            bigserial           NOT NULL
   , team_id             bigint              NOT NULL
   , regional_id         bigint              NOT NULL
+  , position            bigint
   , score               bigint              NOT NULL
   , PRIMARY KEY         (score_id)
 );
