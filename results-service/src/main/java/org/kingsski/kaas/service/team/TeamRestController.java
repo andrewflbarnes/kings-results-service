@@ -3,9 +3,8 @@ package org.kingsski.kaas.service.team;
 import org.kingsski.kaas.database.team.Team;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -19,8 +18,7 @@ public class TeamRestController {
     @Resource
     private TeamService teamService;
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             path = "/teams",
             produces = "application/json"
     )
@@ -28,8 +26,7 @@ public class TeamRestController {
         return ResponseEntity.ok(teamService.getTeams());
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             path = "/team/{id:\\d+}",
             produces = "application/json"
     )
@@ -41,8 +38,7 @@ public class TeamRestController {
         return ResponseEntity.ok(teamService.getTeamById(id));
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             path = "/team/{name:[A-Za-z]+.*}",
             produces = "application/json"
     )
