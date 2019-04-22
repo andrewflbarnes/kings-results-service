@@ -37,7 +37,7 @@ public class ClubRestControllerTest {
     @Test
     public void getClubs() throws Exception {
         final Club club = new Club();
-        club.name("boom");
+        club.setName("boom");
         final List<Club> clubs = new ArrayList<>();
         clubs.add(club);
 
@@ -54,7 +54,7 @@ public class ClubRestControllerTest {
         final String name = "boom";
         final String badName = "pow";
         final Club club = new Club();
-        club.name(name);
+        club.setName(name);
 
         given(clubService.getClubByName(not(eq(name)))).willReturn(null);
         given(clubService.getClubByName(name)).willReturn(club);
@@ -72,7 +72,7 @@ public class ClubRestControllerTest {
         final long id = 1;
         final long badId = 2;
         final Club club = new Club();
-        club.id(id);
+        club.setId(id);
 
         given(clubService.getClubById(not(eq(id)))).willReturn(null);
         given(clubService.getClubById(id)).willReturn(club);

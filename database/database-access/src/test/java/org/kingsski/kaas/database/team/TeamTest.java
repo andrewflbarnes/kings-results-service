@@ -11,10 +11,11 @@ public class TeamTest {
 
     @Test
     public void equalityTests() {
-        Team a = new Team().name("A").id(1).club("X");
-        Team a2 = new Team().name("A").id(1).club("X");
-        Team b = new Team().name("B").id(2).club("Y");
-        Team c = new Team().name("C").id(1).club("X");
+        Team.TeamBuilder builder = Team.builder();
+        Team a = builder.name("A").id(1).club("X").build();
+        Team a2 = builder.name("A").id(1).club("X").build();
+        Team b = builder.name("B").id(2).club("Y").build();
+        Team c = builder.name("C").id(1).club("X").build();
 
         assertFalse(a.equals(null));
         assertFalse(a.equals("boom"));
@@ -38,7 +39,7 @@ public class TeamTest {
         final String clubName = "vve5ujddth";
         final long id = 341213L;
 
-        Team team = new Team().name(teamName).id(id).club(clubName);
+        Team team = Team.builder().name(teamName).id(id).club(clubName).build();
         String teamString = team.toString();
         assertTrue(teamString.contains(teamName));
         assertTrue(teamString.contains(String.valueOf(id)));

@@ -11,10 +11,11 @@ public class OrganisationTest {
 
     @Test
     public void equalityTests() {
-        Organisation a = new Organisation().name("A").id(1).competitionCount(1);
-        Organisation a2 = new Organisation().name("A").id(1).competitionCount(1);
-        Organisation b = new Organisation().name("B").id(2).competitionCount(2);
-        Organisation c = new Organisation().name("C").id(1).competitionCount(1);
+        Organisation.OrganisationBuilder builder = Organisation.builder();
+        Organisation a = builder.name("A").id(1).competitionCount(1).build();
+        Organisation a2 = builder.name("A").id(1).competitionCount(1).build();
+        Organisation b = builder.name("B").id(2).competitionCount(2).build();
+        Organisation c = builder.name("C").id(1).competitionCount(1).build();
 
         assertFalse(a.equals(null));
         assertFalse(a.equals("boom"));
@@ -34,7 +35,7 @@ public class OrganisationTest {
 
     @Test
     public void string() {
-        Organisation organisation = new Organisation().name("organisation").id(123).competitionCount(456);
+        Organisation organisation = Organisation.builder().name("organisation").id(123).competitionCount(456).build();
         String organisationString = organisation.toString();
         assertTrue(organisationString.contains("organisation"));
         assertTrue(organisationString.contains("123"));

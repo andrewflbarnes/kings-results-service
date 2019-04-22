@@ -37,7 +37,7 @@ public class OrganisationRestControllerTest {
     @Test
     public void getOrganisations() throws Exception {
         final Organisation organisation = new Organisation();
-        organisation.name("boom");
+        organisation.setName("boom");
         final List<Organisation> organisations = new ArrayList<>();
         organisations.add(organisation);
 
@@ -54,7 +54,7 @@ public class OrganisationRestControllerTest {
         final String name = "boom";
         final String badName = "pow";
         final Organisation organisation = new Organisation();
-        organisation.name(name);
+        organisation.setName(name);
 
         given(organisationService.getOrganisationByName(not(eq(name)))).willReturn(null);
         given(organisationService.getOrganisationByName(name)).willReturn(organisation);
@@ -72,7 +72,7 @@ public class OrganisationRestControllerTest {
         final long id = 1;
         final long badId = 2;
         final Organisation organisation = new Organisation();
-        organisation.id(id);
+        organisation.setId(id);
 
         given(organisationService.getOrganisationById(not(eq(id)))).willReturn(null);
         given(organisationService.getOrganisationById(id)).willReturn(organisation);

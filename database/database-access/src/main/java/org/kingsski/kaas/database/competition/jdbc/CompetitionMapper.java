@@ -20,9 +20,10 @@ public class CompetitionMapper implements RowMapper<Competition> {
     @Nullable
     @Override
     public Competition mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Competition()
+        return Competition.builder()
                 .id(resultSet.getLong("competition_id"))
                 .name(resultSet.getString("name"))
-                .organisation(resultSet.getString("organisation"));
+                .organisation(resultSet.getString("organisation"))
+                .build();
     }
 }

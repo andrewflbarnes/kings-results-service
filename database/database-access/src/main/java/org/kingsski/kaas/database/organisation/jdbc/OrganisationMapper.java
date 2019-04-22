@@ -20,9 +20,10 @@ public class OrganisationMapper implements RowMapper<Organisation> {
     @Nullable
     @Override
     public Organisation mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Organisation()
+        return Organisation.builder()
                 .id(resultSet.getLong(1))
                 .name(resultSet.getString(2))
-                .competitionCount(resultSet.getLong(3));
+                .competitionCount(resultSet.getLong(3))
+                .build();
     }
 }
