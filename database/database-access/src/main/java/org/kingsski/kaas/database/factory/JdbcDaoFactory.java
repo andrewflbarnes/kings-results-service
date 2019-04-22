@@ -6,6 +6,8 @@ import org.kingsski.kaas.database.competition.CompetitionDao;
 import org.kingsski.kaas.database.competition.jdbc.JdbcCompetitionDao;
 import org.kingsski.kaas.database.organisation.jdbc.JdbcOrganisationDao;
 import org.kingsski.kaas.database.organisation.OrganisationDao;
+import org.kingsski.kaas.database.scoreregional.ScoreRegionalDao;
+import org.kingsski.kaas.database.scoreregional.jdbc.JdbcScoreRegionalDao;
 import org.kingsski.kaas.database.team.jdbc.JdbcTeamDao;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,5 +41,10 @@ public class JdbcDaoFactory implements DaoFactory {
     @Override
     public CompetitionDao newCompetitionDao() {
         return new JdbcCompetitionDao(jdbcTemplate);
+    }
+
+    @Override
+    public ScoreRegionalDao newScoreRegionalDao() {
+        return new JdbcScoreRegionalDao(jdbcTemplate);
     }
 }

@@ -3,6 +3,7 @@ package org.kingsski.kaas.database.factory;
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.competition.CompetitionDao;
 import org.kingsski.kaas.database.organisation.OrganisationDao;
+import org.kingsski.kaas.database.scoreregional.ScoreRegionalDao;
 import org.kingsski.kaas.database.team.TeamDao;
 
 /**
@@ -37,4 +38,11 @@ public interface DaoFactory {
      * @return a DAO
      */
     CompetitionDao newCompetitionDao();
+
+    /**
+     * Get a new instance of a {@link ScoreRegionalDao}
+     *
+     * @return a DAO
+     */
+    ScoreRegionalDao newScoreRegionalDao();
 }
