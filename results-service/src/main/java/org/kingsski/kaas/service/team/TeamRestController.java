@@ -19,7 +19,7 @@ public class TeamRestController {
     private TeamService teamService;
 
     @GetMapping(
-            path = "/teams",
+            path = "/team",
             produces = "application/json"
     )
     public ResponseEntity teams() {

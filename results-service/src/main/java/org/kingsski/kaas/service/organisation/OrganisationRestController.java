@@ -19,7 +19,7 @@ public class OrganisationRestController {
     private OrganisationService organisationService;
 
     @GetMapping(
-            path = "/organisations",
+            path = "/organisation",
             produces = "application/json"
     )
     public ResponseEntity organisations() {
