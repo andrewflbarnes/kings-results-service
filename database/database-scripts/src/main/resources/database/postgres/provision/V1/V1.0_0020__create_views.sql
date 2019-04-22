@@ -157,6 +157,7 @@ CREATE OR REPLACE VIEW score_regional
   , league
   , regional
   , division
+  , position
   , score
 ) AS
 SELECT t_club.name
@@ -167,6 +168,7 @@ SELECT t_club.name
      , t_league.name
      , t_regional.name
      , t_division.name
+     , t_score.position
      , COALESCE(t_score.score, 0) score
   FROM t_organisation
   JOIN t_competition        USING (organisation_id)

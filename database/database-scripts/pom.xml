@@ -104,6 +104,7 @@
                         </schemas>
                         <locations>
                             <location>database/${db.type}/provision</location>
+                            <location>database/${db.type}/kings</location>
                         </locations>
                     </configuration>
                     <dependencies>
