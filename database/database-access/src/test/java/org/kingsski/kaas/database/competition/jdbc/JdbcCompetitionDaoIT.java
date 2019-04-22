@@ -74,8 +74,11 @@ public class JdbcCompetitionDaoIT extends AbstractJdbcDaoIT {
         for (Competition competition : expectedCompetitions ) {
             Competition competitionById = competitionDao.getCompetitionById(competition.getId());
             assertNotNull(competitionById);
+
             // Force IDs to match as we can't guarantee what it might be
-            assertEquals(competition.id(123), competitionById.id(123));
+            competition.setId(123);
+            competitionById.setId(123);
+            assertEquals(competition, competitionById);
         }
     }
 

@@ -11,10 +11,11 @@ public class CompetitionTest {
 
     @Test
     public void equalityTests() {
-        Competition a = new Competition().name("A").id(1).organisation("X");
-        Competition a2 = new Competition().name("A").id(1).organisation("X");
-        Competition b = new Competition().name("B").id(2).organisation("Y");
-        Competition c = new Competition().name("C").id(1).organisation("X");
+        Competition.CompetitionBuilder builder = Competition.builder();
+        Competition a = builder.name("A").id(1).organisation("X").build();
+        Competition a2 = builder.name("A").id(1).organisation("X").build();
+        Competition b = builder.name("B").id(2).organisation("Y").build();
+        Competition c = builder.name("C").id(1).organisation("X").build();
 
         assertFalse(a.equals(null));
         assertFalse(a.equals("boom"));
@@ -38,7 +39,7 @@ public class CompetitionTest {
         final String organisationName = "vve5ujddth";
         final long id = 341213L;
 
-        Competition competition = new Competition().name(competitionName).id(id).organisation(organisationName);
+        Competition competition = Competition.builder().name(competitionName).id(id).organisation(organisationName).build();
         String competitionString = competition.toString();
         assertTrue(competitionString.contains(competitionName));
         assertTrue(competitionString.contains(String.valueOf(id)));

@@ -37,7 +37,7 @@ public class TeamRestControllerTest {
     @Test
     public void getTeams() throws Exception {
         final Team team = new Team();
-        team.name("boom");
+        team.setName("boom");
         final List<Team> teams = new ArrayList<>();
         teams.add(team);
 
@@ -54,7 +54,7 @@ public class TeamRestControllerTest {
         final String name = "boom";
         final String badName = "pow";
         final Team team = new Team();
-        team.name(name);
+        team.setName(name);
 
         given(teamService.getTeamByName(not(eq(name)))).willReturn(null);
         given(teamService.getTeamByName(name)).willReturn(team);
@@ -72,7 +72,7 @@ public class TeamRestControllerTest {
         final long id = 1;
         final long badId = 2;
         final Team team = new Team();
-        team.id(id);
+        team.setId(id);
 
         given(teamService.getTeamById(not(eq(id)))).willReturn(null);
         given(teamService.getTeamById(id)).willReturn(team);

@@ -37,7 +37,7 @@ public class CompetitionRestControllerTest {
     @Test
     public void getCompetitions() throws Exception {
         final Competition competition = new Competition();
-        competition.name("boom");
+        competition.setName("boom");
         final List<Competition> competitions = new ArrayList<>();
         competitions.add(competition);
 
@@ -54,7 +54,7 @@ public class CompetitionRestControllerTest {
         final String name = "boom";
         final String badName = "pow";
         final Competition competition = new Competition();
-        competition.name(name);
+        competition.setName(name);
 
         given(competitionService.getCompetitionByName(not(eq(name)))).willReturn(null);
         given(competitionService.getCompetitionByName(name)).willReturn(competition);
@@ -72,7 +72,7 @@ public class CompetitionRestControllerTest {
         final long id = 1;
         final long badId = 2;
         final Competition competition = new Competition();
-        competition.id(id);
+        competition.setId(id);
 
         given(competitionService.getCompetitionById(not(eq(id)))).willReturn(null);
         given(competitionService.getCompetitionById(id)).willReturn(competition);

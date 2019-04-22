@@ -11,10 +11,11 @@ public class ClubTest {
 
     @Test
     public void equalityTests() {
-        Club a = new Club().name("A").id(1).teamCount(1);
-        Club a2 = new Club().name("A").id(1).teamCount(1);
-        Club b = new Club().name("B").id(2).teamCount(2);
-        Club c = new Club().name("C").id(1).teamCount(1);
+        Club.ClubBuilder builder = Club.builder();
+        Club a = builder.name("A").id(1).teamCount(1).build();
+        Club a2 = builder.name("A").id(1).teamCount(1).build();
+        Club b = builder.name("B").id(2).teamCount(2).build();
+        Club c = builder.name("C").id(1).teamCount(1).build();
 
         assertFalse(a.equals(null));
         assertFalse(a.equals("boom"));
@@ -34,7 +35,8 @@ public class ClubTest {
 
     @Test
     public void string() {
-        Club club = new Club().name("club").id(123).teamCount(456);
+        Club.ClubBuilder builder = Club.builder();
+        Club club = builder.name("club").id(123).teamCount(456).build();
         String clubString = club.toString();
         assertTrue(clubString.contains("club"));
         assertTrue(clubString.contains("123"));

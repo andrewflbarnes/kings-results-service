@@ -20,9 +20,10 @@ public class TeamMapper implements RowMapper<Team> {
     @Nullable
     @Override
     public Team mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Team()
+        return Team.builder()
                 .id(resultSet.getLong("team_id"))
                 .name(resultSet.getString("name"))
-                .club(resultSet.getString("club"));
+                .club(resultSet.getString("club"))
+                .build();
     }
 }
