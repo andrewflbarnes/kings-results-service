@@ -2,8 +2,8 @@ package org.kingsski.kaas.service.club;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.club.Club;
+import org.kingsski.kaas.database.club.ClubDao;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
