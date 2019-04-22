@@ -1,7 +1,5 @@
 package org.kingsski.kaas.service.team;
 
-import org.kingsski.kaas.database.club.Club;
-import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.springframework.stereotype.Service;
