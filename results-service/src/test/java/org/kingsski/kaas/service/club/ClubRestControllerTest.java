@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ClubRestController.class)
 public class ClubRestControllerTest {
 
-    private static final String API_CLUBS = "/clubs";
-    private static final String API_CLUB_BY = "/club/";
+    private static final String API_CLUBS = "/club/";
 
     @Resource
     private MockMvc mvc;
@@ -59,11 +58,11 @@ public class ClubRestControllerTest {
         given(clubService.getClubByName(not(eq(name)))).willReturn(null);
         given(clubService.getClubByName(name)).willReturn(club);
 
-        mvc.perform(get(API_CLUB_BY + name))
+        mvc.perform(get(API_CLUBS + name))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(club.getName())));
 
-        mvc.perform(get(API_CLUB_BY + badName))
+        mvc.perform(get(API_CLUBS + badName))
                 .andExpect(status().isNotFound());
     }
 
@@ -77,11 +76,11 @@ public class ClubRestControllerTest {
         given(clubService.getClubById(not(eq(id)))).willReturn(null);
         given(clubService.getClubById(id)).willReturn(club);
 
-        mvc.perform(get(API_CLUB_BY + id))
+        mvc.perform(get(API_CLUBS + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int)club.getId())));
 
-        mvc.perform(get(API_CLUB_BY + badId))
+        mvc.perform(get(API_CLUBS + badId))
                 .andExpect(status().isNotFound());
     }
 }

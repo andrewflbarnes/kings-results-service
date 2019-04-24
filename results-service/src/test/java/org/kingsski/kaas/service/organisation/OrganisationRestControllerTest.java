@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(OrganisationRestController.class)
 public class OrganisationRestControllerTest {
 
-    private static final String API_ORGANISATIONS = "/organisations";
-    private static final String API_ORGANISATION_BY = "/organisation/";
+    private static final String API_ORGANISATION = "/organisation/";
 
     @Resource
     private MockMvc mvc;
@@ -43,7 +42,7 @@ public class OrganisationRestControllerTest {
 
         given(organisationService.getOrganisations()).willReturn(organisations);
 
-        mvc.perform(get(API_ORGANISATIONS))
+        mvc.perform(get(API_ORGANISATION))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(organisation.getName())));
@@ -59,11 +58,11 @@ public class OrganisationRestControllerTest {
         given(organisationService.getOrganisationByName(not(eq(name)))).willReturn(null);
         given(organisationService.getOrganisationByName(name)).willReturn(organisation);
 
-        mvc.perform(get(API_ORGANISATION_BY + name))
+        mvc.perform(get(API_ORGANISATION + name))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(organisation.getName())));
 
-        mvc.perform(get(API_ORGANISATION_BY + badName))
+        mvc.perform(get(API_ORGANISATION + badName))
                 .andExpect(status().isNotFound());
     }
 
@@ -77,11 +76,11 @@ public class OrganisationRestControllerTest {
         given(organisationService.getOrganisationById(not(eq(id)))).willReturn(null);
         given(organisationService.getOrganisationById(id)).willReturn(organisation);
 
-        mvc.perform(get(API_ORGANISATION_BY + id))
+        mvc.perform(get(API_ORGANISATION + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int)organisation.getId())));
 
-        mvc.perform(get(API_ORGANISATION_BY + badId))
+        mvc.perform(get(API_ORGANISATION + badId))
                 .andExpect(status().isNotFound());
     }
 }
