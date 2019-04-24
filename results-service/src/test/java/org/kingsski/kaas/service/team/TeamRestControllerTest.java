@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(TeamRestController.class)
 public class TeamRestControllerTest {
 
-    private static final String API_TEAMS = "/teams";
-    private static final String API_TEAM_BY = "/team/";
+    private static final String API_TEAM = "/team/";
 
     @Resource
     private MockMvc mvc;
@@ -43,7 +42,7 @@ public class TeamRestControllerTest {
 
         given(teamService.getTeams()).willReturn(teams);
 
-        mvc.perform(get(API_TEAMS))
+        mvc.perform(get(API_TEAM))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(team.getName())));
@@ -59,11 +58,11 @@ public class TeamRestControllerTest {
         given(teamService.getTeamByName(not(eq(name)))).willReturn(null);
         given(teamService.getTeamByName(name)).willReturn(team);
 
-        mvc.perform(get(API_TEAM_BY + name))
+        mvc.perform(get(API_TEAM + name))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(team.getName())));
 
-        mvc.perform(get(API_TEAM_BY + badName))
+        mvc.perform(get(API_TEAM + badName))
                 .andExpect(status().isNotFound());
     }
 
@@ -77,11 +76,11 @@ public class TeamRestControllerTest {
         given(teamService.getTeamById(not(eq(id)))).willReturn(null);
         given(teamService.getTeamById(id)).willReturn(team);
 
-        mvc.perform(get(API_TEAM_BY + id))
+        mvc.perform(get(API_TEAM + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int)team.getId())));
 
-        mvc.perform(get(API_TEAM_BY + badId))
+        mvc.perform(get(API_TEAM + badId))
                 .andExpect(status().isNotFound());
     }
 }

@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CompetitionRestController.class)
 public class CompetitionRestControllerTest {
 
-    private static final String API_COMPETITIONS = "/competitions";
-    private static final String API_COMPETITION_BY = "/competition/";
+    private static final String API_COMPETITION = "/competition/";
 
     @Resource
     private MockMvc mvc;
@@ -43,7 +42,7 @@ public class CompetitionRestControllerTest {
 
         given(competitionService.getCompetitions()).willReturn(competitions);
 
-        mvc.perform(get(API_COMPETITIONS))
+        mvc.perform(get(API_COMPETITION))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(competition.getName())));
@@ -59,11 +58,11 @@ public class CompetitionRestControllerTest {
         given(competitionService.getCompetitionByName(not(eq(name)))).willReturn(null);
         given(competitionService.getCompetitionByName(name)).willReturn(competition);
 
-        mvc.perform(get(API_COMPETITION_BY + name))
+        mvc.perform(get(API_COMPETITION + name))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(competition.getName())));
 
-        mvc.perform(get(API_COMPETITION_BY + badName))
+        mvc.perform(get(API_COMPETITION + badName))
                 .andExpect(status().isNotFound());
     }
 
@@ -77,11 +76,11 @@ public class CompetitionRestControllerTest {
         given(competitionService.getCompetitionById(not(eq(id)))).willReturn(null);
         given(competitionService.getCompetitionById(id)).willReturn(competition);
 
-        mvc.perform(get(API_COMPETITION_BY + id))
+        mvc.perform(get(API_COMPETITION + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int)competition.getId())));
 
-        mvc.perform(get(API_COMPETITION_BY + badId))
+        mvc.perform(get(API_COMPETITION + badId))
                 .andExpect(status().isNotFound());
     }
 }

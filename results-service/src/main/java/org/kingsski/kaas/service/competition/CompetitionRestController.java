@@ -19,7 +19,7 @@ public class CompetitionRestController {
     private CompetitionService competitionService;
 
     @GetMapping(
-            path = "/competitions",
+            path = "/competition",
             produces = "application/json"
     )
     public ResponseEntity competitions() {

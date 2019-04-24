@@ -19,7 +19,7 @@ public class ClubRestController {
     private ClubService clubService;
 
     @GetMapping(
-            path = "/clubs",
+            path = "/club",
             produces = "application/json"
     )
     public ResponseEntity clubs() {
