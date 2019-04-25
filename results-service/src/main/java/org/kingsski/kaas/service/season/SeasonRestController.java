@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Defines the API for querying {@link Season}s
  */
@@ -48,7 +50,11 @@ public class SeasonRestController {
     }
 
     private ResponseEntity seasonsByCompetition(String competition) {
-        return ResponseEntity.ok(seasonService.getSeasonsByCompetition(competition));
+        List<Season> seasons = seasonService.getSeasonsByCompetition(competition);
+        if (seasons == null || seasons.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(seasons);
     }
 
     private ResponseEntity seasonByName(String name) {
