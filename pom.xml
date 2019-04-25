@@ -12,6 +12,7 @@
     <modules>
         <module>database</module>
         <module>results-service</module>
+        <module>results-service-sdk</module>
         <module>jacoco-report</module>
     </modules>
 
