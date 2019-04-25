@@ -40,21 +40,24 @@ public class JdbcOrganisationDaoIT extends AbstractJdbcDaoIT {
         organisationNames.add("Organisation B");
 
         for (String organisation : organisationNames) {
-            addOrganisationAndCompetitions(organisation, 0);
+            addOrganisation(organisation);
         }
 
         List<Organisation> organisations = organisationDao.getOrganisations();
 
         assertNotNull(organisations);
         assertEquals(2, organisations.size());
-        assertTrue(organisationNames.contains(organisations.get(0).getName()));
-        assertTrue(organisationNames.contains(organisations.get(1).getName()));
+
+        for (Organisation organisation : organisations) {
+            assertTrue(organisationNames.contains(organisation.getName()));
+        }
     }
 
     @Test
     public void getOrganisationById() {
-        addOrganisationAndCompetitions("Organisation C", 3);
+        addOrganisation("Organisation C", 3);
 
+        // DUMB - but we need a way to find the IDs
         List<Organisation> organisations = organisationDao.getOrganisations();
 
         assertNotNull(organisations);
@@ -76,7 +79,7 @@ public class JdbcOrganisationDaoIT extends AbstractJdbcDaoIT {
     @Test
     public void getOrganisationByName() {
         final String organisationName = "Organisation D";
-        addOrganisationAndCompetitions(organisationName, 4);
+        addOrganisation(organisationName, 0);
 
         Organisation organisation = organisationDao.getOrganisationByName(organisationName);
 
