@@ -51,6 +51,7 @@ This will use the properties files in the docker folder (may not work correctly 
 Entity view endpoints are:
 - `GET  /organisation`  
 - `GET  /competition`  
+- `GET  /season`  
 - `GET  /clubs`  
 - `GET  /teams`
 

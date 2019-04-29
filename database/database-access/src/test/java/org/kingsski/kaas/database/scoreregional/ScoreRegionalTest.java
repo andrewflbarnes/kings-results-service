@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.kingsski.kaas.TestUtil.AssertNotEqualsStrong;
 import static org.kingsski.kaas.TestUtil.assertEqualsStrong;
+import static org.kingsski.kaas.TestUtil.assertNotEqualsStrong;
 
 public class ScoreRegionalTest {
 
@@ -29,38 +29,36 @@ public class ScoreRegionalTest {
         ScoreRegional.ScoreRegionalBuilder builder = ScoreRegional.builder();
         resetBuilder(builder);
 
-        ScoreRegional a = builder.build();
-        // Things which should be equal
-        ScoreRegional a2 = builder.build();
-        ScoreRegional a3 = resetBuilder(builder).score(10).build();
-        ScoreRegional a4 = resetBuilder(builder).position(2).build();
-        // Things which should not be equal
-        ScoreRegional b = resetBuilder(builder).organisation("boom").build();
-        ScoreRegional c = resetBuilder(builder).competition("boom").build();
-        ScoreRegional d = resetBuilder(builder).season("boom").build();
-        ScoreRegional e = resetBuilder(builder).league("boom").build();
-        ScoreRegional f = resetBuilder(builder).regional("boom").build();
-        ScoreRegional g = resetBuilder(builder).division("boom").build();
-        ScoreRegional h = resetBuilder(builder).club("boom").build();
-        ScoreRegional i = resetBuilder(builder).team("boom").build();
+        ScoreRegional defaultScoreRegional = builder.build();
 
-        assertFalse(a.equals(null));
-        assertFalse(a.equals("boom"));
+        assertEqualsStrong(
+                defaultScoreRegional,
+                builder.build(),
+                resetBuilder(builder).score(10).build(),
+                resetBuilder(builder).position(2).build()
+        );
 
-        assertEqualsStrong(a, a);
-        assertEqualsStrong(a, a2);
-        assertEqualsStrong(a, a3);
-        assertEqualsStrong(a, a4);
-        assertEqualsStrong(a3, a4);
-
-        AssertNotEqualsStrong(a, b);
-        AssertNotEqualsStrong(a, c);
-        AssertNotEqualsStrong(a, d);
-        AssertNotEqualsStrong(a, e);
-        AssertNotEqualsStrong(a, f);
-        AssertNotEqualsStrong(a, g);
-        AssertNotEqualsStrong(a, h);
-        AssertNotEqualsStrong(a, i);
+        assertFalse(defaultScoreRegional.equals(null));
+        assertNotEqualsStrong(
+                defaultScoreRegional,
+                resetBuilder(builder).organisation("boom").build(),
+                resetBuilder(builder).organisation(null).build(),
+                resetBuilder(builder).competition("boom").build(),
+                resetBuilder(builder).competition(null).build(),
+                resetBuilder(builder).season("boom").build(),
+                resetBuilder(builder).season(null).build(),
+                resetBuilder(builder).league("boom").build(),
+                resetBuilder(builder).league(null).build(),
+                resetBuilder(builder).regional("boom").build(),
+                resetBuilder(builder).regional(null).build(),
+                resetBuilder(builder).division("boom").build(),
+                resetBuilder(builder).division(null).build(),
+                resetBuilder(builder).club("boom").build(),
+                resetBuilder(builder).club(null).build(),
+                resetBuilder(builder).team("boom").build(),
+                resetBuilder(builder).team(null).build(),
+                "boom"
+        );
     }
 
     @Test

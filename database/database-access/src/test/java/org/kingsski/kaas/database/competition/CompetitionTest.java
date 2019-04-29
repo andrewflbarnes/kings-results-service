@@ -2,48 +2,59 @@ package org.kingsski.kaas.database.competition;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.kingsski.kaas.TestUtil.assertEqualsStrong;
+import static org.kingsski.kaas.TestUtil.assertNotEqualsStrong;
 
 public class CompetitionTest {
+
+    private static final int DEFAULT_ID = 1;
+    private static final String DEFAULT_NAME = "nameValue";
+    private static final String DEFAULT_ORGANISATION = "organisationValue";
+
+    private Competition.CompetitionBuilder resetBuilder(Competition.CompetitionBuilder builder) {
+        builder.id(DEFAULT_ID)
+                .name(DEFAULT_NAME)
+                .organisation(DEFAULT_ORGANISATION);
+
+
+        return builder;
+    }
 
     @Test
     public void equalityTests() {
         Competition.CompetitionBuilder builder = Competition.builder();
-        Competition a = builder.name("A").id(1).organisation("X").build();
-        Competition a2 = builder.name("A").id(1).organisation("X").build();
-        Competition b = builder.name("B").id(2).organisation("Y").build();
-        Competition c = builder.name("C").id(1).organisation("X").build();
+        resetBuilder(builder);
 
-        assertFalse(a.equals(null));
-        assertFalse(a.equals("boom"));
+        Competition defaultCompetition = builder.build();
 
-        assertEquals(a, a2);
-        assertEquals(a2, a);
-        assertEquals(a.hashCode(), a2.hashCode());
+        assertEqualsStrong(
+                defaultCompetition,
+                builder.build()
 
-        assertNotEquals(a, b);
-        assertNotEquals(b, a);
-        assertNotEquals(a.hashCode(), b.hashCode());
+        );
 
-        assertNotEquals(a, c);
-        assertNotEquals(c, a);
-        assertNotEquals(a.hashCode(), c.hashCode());
+        assertFalse(defaultCompetition.equals(null));
+        assertNotEqualsStrong(
+                defaultCompetition,
+                resetBuilder(builder).id(9999).build(),
+                resetBuilder(builder).name("boom").build(),
+                resetBuilder(builder).organisation("boom").build(),
+                resetBuilder(builder).name(null).build(),
+                resetBuilder(builder).organisation(null).build(),
+                "boom"
+        );
     }
 
     @Test
     public void string() {
-        final String competitionName = "aeuogewgow";
-        final String organisationName = "vve5ujddth";
-        final long id = 341213L;
+        Competition competition = resetBuilder(Competition.builder()).build();
 
-        Competition competition = Competition.builder().name(competitionName).id(id).organisation(organisationName).build();
         String competitionString = competition.toString();
-        assertTrue(competitionString.contains(competitionName));
-        assertTrue(competitionString.contains(String.valueOf(id)));
-        assertTrue(competitionString.contains(organisationName));
+        assertTrue(competitionString.contains(DEFAULT_NAME));
+        assertTrue(competitionString.contains(String.valueOf(DEFAULT_ID)));
+        assertTrue(competitionString.contains(DEFAULT_ORGANISATION));
     }
 
 }
