@@ -18,7 +18,7 @@ public class TestUtil {
     public static void assertEqualsStrong(Object... objects) {
         int count = objects.length;
 
-        // Include checking that object[i] equals objcet[i]
+        // Include checking that object[i] equals object[i]
         for (int i = 0; i < count; i ++) {
             for (int j = i; j < count; j++) {
                 Object a = objects[i];
@@ -38,7 +38,7 @@ public class TestUtil {
     public static void assertNotEqualsStrong(Object... objects) {
         int count = objects.length;
 
-        // Exclude checking that object[i] equals objcet[i]
+        // Exclude checking that object[i] equals object[i]
         for (int i = 0; i < count - 1; i ++) {
             for (int j = i + 1; j < count; j++) {
                 Object a = objects[i];

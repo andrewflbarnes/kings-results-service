@@ -44,6 +44,8 @@ public class JdbcCompetitionDaoIT extends AbstractJdbcDaoIT {
         int competitionCount = 2;
 
         for (String organisation : organisationNames) {
+            // The keyset of the map returned by addOrganisation is a Set of the
+            // generated competitions
             expectedCompetitions.addAll(
                     addOrganisation(organisation, competitionCount)
                             .keySet());

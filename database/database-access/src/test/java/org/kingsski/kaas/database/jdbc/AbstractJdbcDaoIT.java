@@ -25,6 +25,19 @@ import java.util.Map;
 @ContextConfiguration(classes = JdbcIntegrationTestConfig.class)
 public abstract class AbstractJdbcDaoIT {
 
+    private static final String TRUNCATE_CASCADE_CLUB = "TRUNCATE t_club CASCADE";
+    private static final String TRUNCATE_CASCADE_ORGANISATION = "TRUNCATE t_organisation CASCADE";
+
+    private static final String ADD_CLUB = "INSERT INTO t_club( name ) VALUES ( ? )";
+    private static final String ADD_TEAM = "INSERT INTO t_team( club_id, name ) VALUES" +
+            "( (SELECT club_id FROM t_club WHERE name = ?), ?)";
+
+    private static final String ADD_ORGANISATION = "INSERT INTO t_organisation( name ) VALUES ( ? )";
+    private static final String ADD_COMPETITION = "INSERT INTO t_competition( organisation_id, name ) VALUES" +
+            "( (SELECT organisation_id FROM t_organisation WHERE name = ?), ?)";
+    private static final String ADD_SEASON = "INSERT INTO t_season( competition_id, name ) " +
+            "VALUES ( (SELECT competition_id FROM t_competition WHERE name = ?), ?)";
+
     @Resource
     protected JdbcTemplate jdbcTemplate;
 
@@ -32,8 +45,8 @@ public abstract class AbstractJdbcDaoIT {
      * Clear the database by truncating all tables
      */
     protected void clearDb() {
-        jdbcTemplate.execute("TRUNCATE t_club CASCADE");
-        jdbcTemplate.execute("TRUNCATE t_organisation CASCADE");
+        jdbcTemplate.execute(TRUNCATE_CASCADE_CLUB);
+        jdbcTemplate.execute(TRUNCATE_CASCADE_ORGANISATION);
     }
 
     /**
@@ -52,13 +65,12 @@ public abstract class AbstractJdbcDaoIT {
      */
     protected void addClubAndTeams(String club, int teamCount) {
         // add club
-        jdbcTemplate.update("INSERT INTO t_club( name ) VALUES ( ? )", club);
+        jdbcTemplate.update(ADD_CLUB, club);
 
         // add teams
         for (int i = 1; i <= teamCount; i++) {
             final String team = club + " " + i;
-            jdbcTemplate.update("INSERT INTO t_team( club_id, name ) " +
-                            "VALUES ( (SELECT club_id FROM t_club WHERE name = ?), ?)",
+            jdbcTemplate.update(ADD_TEAM,
                     club, team
             );
         }
@@ -92,23 +104,21 @@ public abstract class AbstractJdbcDaoIT {
      */
     protected Map<String, List<String>> addOrganisation(String organisation, int competitionCount, int seasonCount) {
         // add organisation
-        jdbcTemplate.update("INSERT INTO t_organisation( name ) VALUES ( ? )", organisation);
+        jdbcTemplate.update(ADD_ORGANISATION, organisation);
 
         Map<String, List<String>> createdCompetitions = new HashMap<>();
 
         // add competitions
         for (int i = 1; i <= competitionCount; i++) {
             final String competition = organisation + " competition" + i;
-            jdbcTemplate.update("INSERT INTO t_competition( organisation_id, name ) " +
-                            "VALUES ( (SELECT organisation_id FROM t_organisation WHERE name = ?), ?)",
+            jdbcTemplate.update(ADD_COMPETITION,
                     organisation, competition
             );
 
             List<String> createdSeasons = new ArrayList<>();
             for (int j = 1; j <= seasonCount; j++) {
                 final String season = competition + " season" + j;
-                jdbcTemplate.update("INSERT INTO t_season( competition_id, name ) " +
-                                "VALUES ( (SELECT competition_id FROM t_competition WHERE name = ?), ?)",
+                jdbcTemplate.update(ADD_SEASON,
                         competition, season
                 );
                 createdSeasons.add(season);
