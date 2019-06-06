@@ -17,7 +17,7 @@ public class SeasonTest {
     private Season.SeasonBuilder resetBuilder(Season.SeasonBuilder builder) {
         builder.id(DEFAULT_ID)
                 .name(DEFAULT_NAME)
-                .comnpetition(DEFAULT_COMPETITION)
+                .competition(DEFAULT_COMPETITION)
                 .organisation(DEFAULT_ORGANISIATION);
 
         return builder;
@@ -41,10 +41,10 @@ public class SeasonTest {
                 resetBuilder(builder).id(2).build(),
                 resetBuilder(builder).name("boom").build(),
                 resetBuilder(builder).organisation("boom").build(),
-                resetBuilder(builder).comnpetition("boom").build(),
+                resetBuilder(builder).competition("boom").build(),
                 resetBuilder(builder).name(null).build(),
                 resetBuilder(builder).organisation(null).build(),
-                resetBuilder(builder).comnpetition(null).build(),
+                resetBuilder(builder).competition(null).build(),
                 "boom"
         );
     }
