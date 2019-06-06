@@ -2,6 +2,7 @@ package org.kingsski.kaas.database.factory;
 
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.competition.CompetitionDao;
+import org.kingsski.kaas.database.league.LeagueDao;
 import org.kingsski.kaas.database.organisation.OrganisationDao;
 import org.kingsski.kaas.database.scoreregional.ScoreRegionalDao;
 import org.kingsski.kaas.database.season.SeasonDao;
@@ -45,6 +46,12 @@ public interface DaoFactory {
      * @return a DAO
      */
     SeasonDao newSeasonDao();
+
+    /**
+     * Get a new instance of a {@link LeagueDao}
+     * @return a DAO
+     */
+    LeagueDao newLeagueDao();
 
     /**
      * Get a new instance of a {@link ScoreRegionalDao}
