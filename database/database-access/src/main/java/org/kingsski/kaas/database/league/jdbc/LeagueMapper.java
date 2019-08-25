@@ -25,7 +25,7 @@ public class LeagueMapper implements RowMapper<League> {
                 .id(resultSet.getLong("league_id"))
                 .name(resultSet.getString("league"))
                 .organisation(resultSet.getString("organisation"))
-                .comnpetition(resultSet.getString("competition"))
+                .competition(resultSet.getString("competition"))
                 .build();
     }
 }
