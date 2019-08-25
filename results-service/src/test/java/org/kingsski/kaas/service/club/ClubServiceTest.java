@@ -4,9 +4,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
+import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -66,7 +68,29 @@ public class ClubServiceTest {
 
         Club returnedClub = clubService.getClubById(id);
 
-        assertEquals(club, returnedClub);
         then(clubDao).should(times(1)).getClubById(id);
+        assertEquals(club, returnedClub);
+    }
+
+
+    @Test
+    public void addClub() {
+        final String name = "sjklgnl";
+        final Club club = Club.builder().name(name).build();
+        given(clubDao.addClub(name)).willReturn(club);
+
+        Club returnedClub = clubService.addClub(name);
+
+        then(clubDao).should(times(1)).addClub(name);
+        assertEquals(club, returnedClub);
+    }
+
+
+    @Test(expected = EntityAlreadyExistsException.class)
+    public void addExistingClub() {
+        final String name = "dfagsrtghrts";
+        given(clubDao.addClub(name)).willThrow(EntityAlreadyExistsException.class);
+
+        clubService.addClub(name);
     }
 }

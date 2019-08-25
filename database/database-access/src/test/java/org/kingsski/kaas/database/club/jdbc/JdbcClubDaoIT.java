@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
+import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.kingsski.kaas.database.jdbc.AbstractJdbcDaoIT;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class JdbcClubDaoIT extends AbstractJdbcDaoIT {
 
     @Before
     public void setUp() {
-        clubDao = new JdbcClubDao(jdbcTemplate);
+        clubDao = new JdbcClubDao(namedParameterJdbcTemplate);
         clearDb();
     }
 
@@ -89,5 +90,24 @@ public class JdbcClubDaoIT extends AbstractJdbcDaoIT {
         Club club = clubDao.getClubByName("Club does not exist");
 
         assertNull(club);
+    }
+
+    @Test
+    public void addClub() {
+        final String name = "Club E";
+        Club club = clubDao.addClub(name);
+        Club clubCheck = clubDao.getClubByName(name);
+
+        assertNotNull(club);
+        assertNotNull(clubCheck);
+        assertEquals(club.getId(), clubCheck.getId());
+        assertEquals(club.getName(), clubCheck.getName());
+    }
+
+    @Test(expected = EntityAlreadyExistsException.class)
+    public void addAlreadyExistingClub() {
+        final String name = "Club E";
+        clubDao.addClub(name);
+        clubDao.addClub(name);
     }
 }

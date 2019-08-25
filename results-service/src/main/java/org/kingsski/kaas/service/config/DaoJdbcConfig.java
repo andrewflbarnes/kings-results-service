@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
 
@@ -22,7 +23,12 @@ public class DaoJdbcConfig {
     }
 
     @Bean
-    public DaoFactory daoFactory(JdbcTemplate jdbcTemplate) {
-        return new JdbcDaoFactory(jdbcTemplate);
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
+        return new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    @Bean
+    public DaoFactory daoFactory(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        return new JdbcDaoFactory(jdbcTemplate, namedParameterJdbcTemplate);
     }
 }

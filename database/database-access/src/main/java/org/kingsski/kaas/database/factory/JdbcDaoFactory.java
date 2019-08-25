@@ -19,21 +19,24 @@ import org.kingsski.kaas.database.season.jdbc.JdbcSeasonDao;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.kingsski.kaas.database.team.jdbc.JdbcTeamDao;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 /**
  * Implementation providing DAOs backed by JDBC
  */
 public class JdbcDaoFactory implements DaoFactory {
 
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcDaoFactory(JdbcTemplate jdbcTemplate) {
+    public JdbcDaoFactory(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
     public ClubDao newClubDao() {
-        return new JdbcClubDao(jdbcTemplate);
+        return new JdbcClubDao(namedParameterJdbcTemplate);
     }
 
     @Override

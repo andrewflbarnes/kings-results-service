@@ -1,7 +1,10 @@
 package org.kingsski.kaas.database.jdbc;
 
 import org.junit.runner.RunWith;
+import org.kingsski.kaas.database.club.ClubDao;
+import org.kingsski.kaas.database.factory.JdbcDaoFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,7 +31,6 @@ public abstract class AbstractJdbcDaoIT {
     private static final String TRUNCATE_CASCADE_CLUB = "TRUNCATE t_club CASCADE";
     private static final String TRUNCATE_CASCADE_ORGANISATION = "TRUNCATE t_organisation CASCADE";
 
-    private static final String ADD_CLUB = "INSERT INTO t_club( name ) VALUES ( ? )";
     private static final String ADD_TEAM = "INSERT INTO t_team( club_id, name ) VALUES" +
             "( (SELECT club_id FROM t_club WHERE name = ?), ?)";
 
@@ -39,7 +41,13 @@ public abstract class AbstractJdbcDaoIT {
             "VALUES ( (SELECT competition_id FROM t_competition WHERE name = ?), ?)";
 
     @Resource
+    private JdbcDaoFactory daoFactory;
+
+    @Resource
     protected JdbcTemplate jdbcTemplate;
+
+    @Resource
+    protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     /**
      * Clear the database by truncating all tables
@@ -65,7 +73,8 @@ public abstract class AbstractJdbcDaoIT {
      */
     protected void addClubAndTeams(String club, int teamCount) {
         // add club
-        jdbcTemplate.update(ADD_CLUB, club);
+        ClubDao clubDao = daoFactory.newClubDao();
+        clubDao.addClub(club);
 
         // add teams
         for (int i = 1; i <= teamCount; i++) {

@@ -1,10 +1,13 @@
 package org.kingsski.kaas.service.club;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.Club;
+import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +21,7 @@ import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -82,5 +86,38 @@ public class ClubRestControllerTest {
 
         mvc.perform(get(API_CLUBS + badId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void addClub() throws Exception {
+        final String name = "boom";
+        final Club club = Club.builder().name(name).id(12334L).build();
+        final ObjectMapper mapper = new ObjectMapper();
+
+        given(clubService.addClub(name))
+                .willReturn(club);
+
+        mvc.perform(post(API_CLUBS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(club)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", is(club.getName())))
+                .andExpect(jsonPath("$.id", is((int)club.getId())));
+    }
+
+    @Test
+    public void addExistingClub() throws Exception {
+        final String name = "boom";
+        final Club club = Club.builder().name(name).build();
+        final ObjectMapper mapper = new ObjectMapper();
+
+        given(clubService.addClub(name))
+                .willThrow(EntityAlreadyExistsException.class);
+
+        mvc.perform(post(API_CLUBS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(club)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").hasJsonPath());
     }
 }
