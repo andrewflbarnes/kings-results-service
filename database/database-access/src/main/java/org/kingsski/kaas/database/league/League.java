@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class League {
     private long id;
     private String name;
-    private String comnpetition;
+    private String competition;
     private String organisation;
 }
