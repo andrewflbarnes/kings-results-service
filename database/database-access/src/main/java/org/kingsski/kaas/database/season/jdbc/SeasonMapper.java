@@ -25,7 +25,7 @@ public class SeasonMapper implements RowMapper<Season> {
                 .id(resultSet.getLong("season_id"))
                 .name(resultSet.getString("season"))
                 .organisation(resultSet.getString("organisation"))
-                .comnpetition(resultSet.getString("competition"))
+                .competition(resultSet.getString("competition"))
                 .build();
     }
 }
