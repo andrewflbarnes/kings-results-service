@@ -51,4 +51,14 @@ public class ClubService {
     public Club getClubById(long id) {
         return clubDao.getClubById(id);
     }
+
+    /**
+     * Add a new club with a given name
+     *
+     * @param name The name of the new club
+     * @return a {@link Club}
+     */
+    public Club addClub(String name) {
+        return clubDao.addClub(name);
+    }
 }
