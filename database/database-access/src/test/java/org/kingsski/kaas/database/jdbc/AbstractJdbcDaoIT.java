@@ -3,6 +3,7 @@ package org.kingsski.kaas.database.jdbc;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.factory.JdbcDaoFactory;
+import org.kingsski.kaas.database.team.TeamDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,9 +31,6 @@ public abstract class AbstractJdbcDaoIT {
 
     private static final String TRUNCATE_CASCADE_CLUB = "TRUNCATE t_club CASCADE";
     private static final String TRUNCATE_CASCADE_ORGANISATION = "TRUNCATE t_organisation CASCADE";
-
-    private static final String ADD_TEAM = "INSERT INTO t_team( club_id, name ) VALUES" +
-            "( (SELECT club_id FROM t_club WHERE name = ?), ?)";
 
     private static final String ADD_ORGANISATION = "INSERT INTO t_organisation( name ) VALUES ( ? )";
     private static final String ADD_COMPETITION = "INSERT INTO t_competition( organisation_id, name ) VALUES" +
@@ -76,12 +74,11 @@ public abstract class AbstractJdbcDaoIT {
         ClubDao clubDao = daoFactory.newClubDao();
         clubDao.addClub(club);
 
+        TeamDao teamDao = daoFactory.newTeamDao();
         // add teams
         for (int i = 1; i <= teamCount; i++) {
             final String team = club + " " + i;
-            jdbcTemplate.update(ADD_TEAM,
-                    club, team
-            );
+            teamDao.addTeam(team, club);
         }
     }
 

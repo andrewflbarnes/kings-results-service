@@ -1,5 +1,11 @@
 package org.kingsski.kaas;
 
+import org.mockito.stubbing.Answer;
+import org.springframework.jdbc.support.KeyHolder;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -53,5 +59,18 @@ public class TestUtil {
 
     private static void assertNotEqualsMsg(Object a, Object b) {
         assertNotEquals(String.format(SHOULD_NOT_EQUAL, a, b), a , b);
+    }
+
+
+    public static Answer<?> generatedKeyAnswer(String col, long id) {
+        return a -> {
+            KeyHolder k = a.getArgument(2);
+
+            Map<String, Object> generatedKey = new HashMap<>();
+            generatedKey.put(col, id);
+            k.getKeyList().add(generatedKey);
+
+            return 1;
+        };
     }
 }

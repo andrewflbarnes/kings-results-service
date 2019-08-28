@@ -64,10 +64,10 @@ public class JdbcClubDao implements ClubDao {
 
     @Override
     public Club addClub(String name) {
-        Club club = Club.builder().name(name).build();
+        final Club club = Club.builder().name(name).build();
+        final BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(club);
+        final KeyHolder keyholder = new GeneratedKeyHolder();
 
-        BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(club);
-        KeyHolder keyholder = new GeneratedKeyHolder();
         try {
             jdbcTemplate.update(ADD_CLUB, params, keyholder);
         } catch (DuplicateKeyException e) {

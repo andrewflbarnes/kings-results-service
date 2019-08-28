@@ -41,7 +41,7 @@ public class JdbcDaoFactory implements DaoFactory {
 
     @Override
     public TeamDao newTeamDao() {
-        return new JdbcTeamDao(jdbcTemplate);
+        return new JdbcTeamDao(namedParameterJdbcTemplate);
     }
 
     @Override

@@ -3,6 +3,9 @@ package org.kingsski.kaas.database.team.jdbc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.kingsski.kaas.database.club.Club;
+import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
+import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.jdbc.AbstractJdbcDaoIT;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
@@ -25,7 +28,7 @@ public class JdbcTeamDaoIT extends AbstractJdbcDaoIT {
 
     @Before
     public void setUp() {
-        teamDao = new JdbcTeamDao(jdbcTemplate);
+        teamDao = new JdbcTeamDao(namedParameterJdbcTemplate);
         clearDb();
     }
 
@@ -105,5 +108,41 @@ public class JdbcTeamDaoIT extends AbstractJdbcDaoIT {
         Team team = teamDao.getTeamByName("Team does not exist");
 
         assertNull(team);
+    }
+
+    @Test
+    public void addTeam() {
+        final String name = "Team E";
+        final String club = "Club E";
+        addClubAndTeams(club, 0);
+        Team team = teamDao.addTeam(name, club);
+        Team teamCheck = teamDao.getTeamByName(name);
+
+        assertNotNull(team);
+        assertNotNull(teamCheck);
+        assertEquals(team.getId(), teamCheck.getId());
+        assertEquals(team.getName(), teamCheck.getName());
+        assertEquals(team.getClub(), teamCheck.getClub());
+    }
+
+    // The way the DB is currently structured means we need to allow non-unique team names.
+    // This causes an obvious issues as it is the only human-readable identifier so without
+    // the context of which leagues a team is associated with we don't which is which.
+    // The structure of the DB should probably be changes to consolidate both the team and
+    // registration tables into a single table.
+    @Test
+    public void addAlreadyExistingTeam() {
+        final String club = "Club F";
+        final String name = "Team F";
+        addClubAndTeams(club, 0);
+        teamDao.addTeam(name, club);
+        teamDao.addTeam(name, club);
+    }
+
+    @Test(expected = EntityConstraintViolationException.class)
+    public void addTeamNoClub() {
+        final String club = "Club G";
+        final String name = "Team G";
+        teamDao.addTeam(name, club);
     }
 }
