@@ -1,10 +1,13 @@
 package org.kingsski.kaas.service.team;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.kingsski.kaas.database.team.Team;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +21,7 @@ import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -82,5 +86,41 @@ public class TeamRestControllerTest {
 
         mvc.perform(get(API_TEAM + badId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void addTeam() throws Exception {
+        final String name = "boom";
+        final String club = "boom a";
+        final Team team = Team.builder().name(name).club(club).id(12334L).build();
+        final ObjectMapper mapper = new ObjectMapper();
+
+        given(teamService.addTeam(name, club))
+                .willReturn(team);
+
+        mvc.perform(post(API_TEAM)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(team)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.club", is(team.getClub())))
+                .andExpect(jsonPath("$.name", is(team.getName())))
+                .andExpect(jsonPath("$.id", is((int)team.getId())));
+    }
+
+    @Test
+    public void addTeamNoClub() throws Exception {
+        final String name = "boom";
+        final String club = "boom a";
+        final Team team = Team.builder().name(name).club(club).id(12334L).build();
+        final ObjectMapper mapper = new ObjectMapper();
+
+        given(teamService.addTeam(name, club))
+                .willReturn(null);
+
+        mvc.perform(post(API_TEAM)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(team)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").hasJsonPath());
     }
 }

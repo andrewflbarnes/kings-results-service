@@ -106,7 +106,7 @@ public class JdbcClubDaoIT extends AbstractJdbcDaoIT {
 
     @Test(expected = EntityAlreadyExistsException.class)
     public void addAlreadyExistingClub() {
-        final String name = "Club E";
+        final String name = "Club F";
         clubDao.addClub(name);
         clubDao.addClub(name);
     }

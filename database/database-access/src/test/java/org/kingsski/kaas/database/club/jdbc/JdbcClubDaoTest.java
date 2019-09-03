@@ -3,6 +3,7 @@ package org.kingsski.kaas.database.club.jdbc;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.kaas.TestUtil;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
@@ -117,16 +118,7 @@ public class JdbcClubDaoTest {
         clubDao.addClub(name);
     }
 
-    public Answer<?> generatedKeyAnswer(long id) {
-        return a -> {
-            KeyHolder k = a.getArgument(2);
-
-            Map<String, Object> generatedKey = new HashMap<>();
-            generatedKey.put("club_id", id);
-            k.getKeyList().add(generatedKey);
-
-            return 1;
-        };
+    private Answer<?> generatedKeyAnswer(long id) {
+        return TestUtil.generatedKeyAnswer("club_id", id);
     }
-
 }

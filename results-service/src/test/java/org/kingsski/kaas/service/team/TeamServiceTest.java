@@ -2,6 +2,9 @@ package org.kingsski.kaas.service.team;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.kaas.database.club.Club;
+import org.kingsski.kaas.database.club.ClubDao;
+import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -31,6 +35,9 @@ public class TeamServiceTest {
 
     @MockBean
     private TeamDao teamDao;
+
+    @MockBean
+    private ClubDao clubDao;
 
     @Resource
     private TeamService teamService;
@@ -68,5 +75,39 @@ public class TeamServiceTest {
 
         assertEquals(team, returnedTeam);
         then(teamDao).should(times(1)).getTeamById(id);
+    }
+
+
+    @Test
+    public void addTeam() {
+        final String name = "team";
+        final String clubName = "club";
+        final Team team = Team.builder().name(name).build();
+        final Club club = Club.builder().name(clubName).build();
+
+        given(clubDao.getClubByName(clubName))
+                .willReturn(club);
+        given(teamDao.addTeam(name, clubName))
+                .willReturn(team);
+
+        Team returnedTeam = teamService.addTeam(name, clubName);
+
+        then(clubDao).should(times(1)).getClubByName(clubName);
+        then(teamDao).should(times(1)).addTeam(name, clubName);
+        assertEquals(team, returnedTeam);
+    }
+
+
+    @Test
+    public void addTeamNoClub() {
+        final String name = "team";
+        final String club = "club";
+
+        given(teamDao.addTeam(name, club))
+                .willThrow(EntityConstraintViolationException.class);
+
+        Team team = teamService.addTeam(name, club);
+
+        assertNull(team);
     }
 }
