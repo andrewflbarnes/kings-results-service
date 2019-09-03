@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.kingsski.kaas.database.jdbc.AbstractJdbcDaoIT;
 import org.kingsski.kaas.database.organisation.Organisation;
 import org.kingsski.kaas.database.organisation.OrganisationDao;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class JdbcOrganisationDaoIT extends AbstractJdbcDaoIT {
 
     @Before
     public void setUp() {
-        organisationDao = new JdbcOrganisationDao(jdbcTemplate);
+        organisationDao = new JdbcOrganisationDao(namedParameterJdbcTemplate);
         clearDb();
     }
 
@@ -92,5 +93,24 @@ public class JdbcOrganisationDaoIT extends AbstractJdbcDaoIT {
         Organisation organisation = organisationDao.getOrganisationByName("Organisation does not exist");
 
         assertNull(organisation);
+    }
+
+    @Test
+    public void addOrganisation() {
+        final String name = "Organisation E";
+        Organisation org = organisationDao.addOrganisation(name);
+        Organisation orgCheck = organisationDao.getOrganisationByName(name);
+
+        assertNotNull(org);
+        assertNotNull(orgCheck);
+        assertEquals(org.getId(), orgCheck.getId());
+        assertEquals(org.getName(), orgCheck.getName());
+    }
+
+    @Test(expected = DuplicateKeyException.class)
+    public void addDuplicateOrganisation() {
+        final String name = "Organisation F";
+        organisationDao.addOrganisation(name);
+        organisationDao.addOrganisation(name);
     }
 }

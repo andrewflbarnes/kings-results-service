@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.organisation.Organisation;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,7 +18,11 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -82,5 +87,44 @@ public class OrganisationRestControllerTest {
 
         mvc.perform(get(API_ORGANISATION + badId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void addOrganisation() throws Exception {
+        final String name = "The bOrg";
+        final Organisation org = Organisation.builder().name(name).build();
+
+        given(organisationService.addOrganisation(name))
+                .willReturn(org);
+
+        mvc.perform(post(API_ORGANISATION)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"name\": \"%s\"}", name)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.id").isNumber());
+
+        then(organisationService)
+                .should(times(1))
+                .addOrganisation(name);
+    }
+
+    @Test
+    public void addExistingOrganisation() throws Exception {
+        final String name = "The bOrg";
+        final Organisation org = Organisation.builder().name(name).build();
+
+        given(organisationService.addOrganisation(name))
+                .willThrow(OrganisationAlreadyExistsException.class);
+
+        mvc.perform(post(API_ORGANISATION)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"name\": \"%s\"}", name)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").hasJsonPath());
+
+        then(organisationService)
+                .should(times(1))
+                .addOrganisation(name);
     }
 }

@@ -26,4 +26,11 @@ public interface OrganisationDao {
      * @return a organisation
      */
     Organisation getOrganisationByName(String name);
+
+    /**
+     * Add a new organisation
+     * @param name the name of the organisation to add
+     * @return a organisation
+     */
+    Organisation addOrganisation(String name);
 }
