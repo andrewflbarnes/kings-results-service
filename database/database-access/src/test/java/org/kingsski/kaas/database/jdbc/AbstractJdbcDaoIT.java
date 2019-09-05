@@ -3,6 +3,8 @@ package org.kingsski.kaas.database.jdbc;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.factory.JdbcDaoFactory;
+import org.kingsski.kaas.database.organisation.Organisation;
+import org.kingsski.kaas.database.organisation.OrganisationDao;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -32,7 +34,6 @@ public abstract class AbstractJdbcDaoIT {
     private static final String TRUNCATE_CASCADE_CLUB = "TRUNCATE t_club CASCADE";
     private static final String TRUNCATE_CASCADE_ORGANISATION = "TRUNCATE t_organisation CASCADE";
 
-    private static final String ADD_ORGANISATION = "INSERT INTO t_organisation( name ) VALUES ( ? )";
     private static final String ADD_COMPETITION = "INSERT INTO t_competition( organisation_id, name ) VALUES" +
             "( (SELECT organisation_id FROM t_organisation WHERE name = ?), ?)";
     private static final String ADD_SEASON = "INSERT INTO t_season( competition_id, name ) " +
@@ -110,7 +111,8 @@ public abstract class AbstractJdbcDaoIT {
      */
     protected Map<String, List<String>> addOrganisation(String organisation, int competitionCount, int seasonCount) {
         // add organisation
-        jdbcTemplate.update(ADD_ORGANISATION, organisation);
+        OrganisationDao orgDao = daoFactory.newOrganisationDao();
+        orgDao.addOrganisation(organisation);
 
         Map<String, List<String>> createdCompetitions = new HashMap<>();
 

@@ -51,4 +51,19 @@ public class OrganisationService {
     public Organisation getOrganisationById(long id) {
         return organisationDao.getOrganisationById(id);
     }
+
+    /**
+     * Add a new {@link Organisation}
+     *
+     * @param name the name of the {@link Organisation} to add
+     * @return a {@link Organisation}
+     * @throws OrganisationAlreadyExistsException
+     */
+    public Organisation addOrganisation(String name) throws OrganisationAlreadyExistsException {
+        Organisation org = organisationDao.getOrganisationByName(name);
+        if (org != null) {
+            throw new OrganisationAlreadyExistsException("name", name);
+        }
+        return organisationDao.addOrganisation(name);
+    }
 }

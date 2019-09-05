@@ -7,6 +7,7 @@ import org.kingsski.kaas.database.organisation.OrganisationDao;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -68,5 +70,39 @@ public class OrganisationServiceTest {
 
         assertEquals(organisation, returnedOrganisation);
         then(organisationDao).should(times(1)).getOrganisationById(id);
+    }
+
+    @Test
+    public void addOrganisation() throws Exception {
+        final String name = "Cunning Stunts";
+        final Organisation org = Organisation.builder().name(name).build();
+
+        given(organisationDao.getOrganisationByName(name))
+                .willReturn(null);
+        given(organisationDao.addOrganisation(name))
+                .willReturn(org);
+
+        Organisation actualOrg = organisationService.addOrganisation(name);
+
+        then(organisationDao)
+                .should(times(1))
+                .getOrganisationByName(name);
+        then(organisationDao)
+                .should(times(1))
+                .addOrganisation(name);
+
+        assertNotNull(actualOrg);
+        assertEquals(org.getName(), actualOrg.getName());
+    }
+
+    @Test(expected = OrganisationAlreadyExistsException.class)
+    public void addExistingOrganisation() throws Exception {
+        final String name = "Stunning Bunts";
+        final Organisation org = Organisation.builder().name(name).build();
+
+        given(organisationDao.getOrganisationByName(name))
+                .willReturn(org);
+
+        organisationService.addOrganisation(name);
     }
 }
