@@ -32,7 +32,6 @@ public interface TeamDao {
      * @param name The name of the team
      * @param club The name of the club to add the team to
      * @return a team representing the newly added team
-     * @throws org.kingsski.kaas.database.exception.EntityConstraintViolationException if a constraint is violated
      */
     Team addTeam(String name, String club);
 }

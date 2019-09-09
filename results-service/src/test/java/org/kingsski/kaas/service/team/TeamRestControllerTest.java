@@ -3,7 +3,6 @@ package org.kingsski.kaas.service.team;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.kingsski.kaas.database.team.Team;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -108,6 +107,23 @@ public class TeamRestControllerTest {
     }
 
     @Test
+    public void addExistingTeam() throws Exception {
+        final String name = "boom";
+        final String club = "boom a";
+        final Team team = Team.builder().name(name).club(club).id(45674L).build();
+        final ObjectMapper mapper = new ObjectMapper();
+
+        given(teamService.addTeam(name, club))
+                .willThrow(TeamAlreadyExistsException.class);
+
+        mvc.perform(post(API_TEAM)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(team)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").hasJsonPath());
+    }
+
+    @Test
     public void addTeamNoClub() throws Exception {
         final String name = "boom";
         final String club = "boom a";
@@ -115,7 +131,7 @@ public class TeamRestControllerTest {
         final ObjectMapper mapper = new ObjectMapper();
 
         given(teamService.addTeam(name, club))
-                .willReturn(null);
+                .willThrow(TeamMissingParentException.class);
 
         mvc.perform(post(API_TEAM)
                 .contentType(MediaType.APPLICATION_JSON)

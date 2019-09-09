@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
-import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -77,9 +75,8 @@ public class TeamServiceTest {
         then(teamDao).should(times(1)).getTeamById(id);
     }
 
-
     @Test
-    public void addTeam() {
+    public void addTeam() throws Exception {
         final String name = "team";
         final String clubName = "club";
         final Team team = Team.builder().name(name).build();
@@ -87,27 +84,43 @@ public class TeamServiceTest {
 
         given(clubDao.getClubByName(clubName))
                 .willReturn(club);
+        given(teamDao.getTeamByName(name))
+                .willReturn(null);
         given(teamDao.addTeam(name, clubName))
                 .willReturn(team);
 
         Team returnedTeam = teamService.addTeam(name, clubName);
 
         then(clubDao).should(times(1)).getClubByName(clubName);
+        then(teamDao).should(times(1)).getTeamByName(name);
         then(teamDao).should(times(1)).addTeam(name, clubName);
         assertEquals(team, returnedTeam);
     }
 
-
-    @Test
-    public void addTeamNoClub() {
+    @Test(expected = TeamAlreadyExistsException.class)
+    public void addExistingTeam() throws Exception {
         final String name = "team";
-        final String club = "club";
+        final String clubName = "club";
+        final Team team = Team.builder().name(name).build();
+        final Club club = Club.builder().name(clubName).build();
 
-        given(teamDao.addTeam(name, club))
-                .willThrow(EntityConstraintViolationException.class);
+        given(clubDao.getClubByName(clubName))
+                .willReturn(club);
+        given(teamDao.getTeamByName(name))
+                .willReturn(team);
 
-        Team team = teamService.addTeam(name, club);
+        teamService.addTeam(name, clubName);
+    }
 
-        assertNull(team);
+
+    @Test(expected = TeamMissingParentException.class)
+    public void addTeamNoClub() throws Exception {
+        final String name = "team";
+        final String clubName = "club";
+
+        given(clubDao.getClubByName(clubName))
+                .willReturn(null);
+
+        teamService.addTeam(name, clubName);
     }
 }

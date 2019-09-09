@@ -6,27 +6,19 @@ import org.junit.runner.RunWith;
 import org.kingsski.kaas.TestUtil;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -104,18 +96,6 @@ public class JdbcClubDaoTest {
         assertNotNull(actualClub);
         assertEquals(name, actualClub.getName());
         assertEquals(id, actualClub.getId());
-    }
-
-    @Test(expected = EntityAlreadyExistsException.class)
-    public void addExistingClub() {
-        final String name = "boom2";
-        final long id = 9876L;
-        given(jdbcTemplate.update(any(String.class), any(SqlParameterSource.class), any(KeyHolder.class)))
-                .willAnswer(generatedKeyAnswer(id))
-                .willThrow(new DuplicateKeyException(""));
-
-        clubDao.addClub(name);
-        clubDao.addClub(name);
     }
 
     private Answer<?> generatedKeyAnswer(long id) {

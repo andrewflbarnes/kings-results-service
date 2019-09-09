@@ -64,13 +64,21 @@ public class TeamService {
      * @param name The name of the new team
      * @param clubName The name of the club to add the team to
      * @return a {@link Team} if added successfully, null if the club did not exist
+     * @throws TeamMissingParentException if the club does not exist
+     * @throws TeamAlreadyExistsException if the team already exists
      */
     @Transactional
-    public Team addTeam(String name, String clubName) {
+    public Team addTeam(String name, String clubName) throws TeamMissingParentException, TeamAlreadyExistsException {
         final Club club = clubDao.getClubByName(clubName);
 
         if (club == null) {
-            return null;
+            throw TeamMissingParentException.ofClub(name, "name", clubName);
+        }
+
+        final Team team = teamDao.getTeamByName(name);
+
+        if (team != null) {
+            throw new TeamAlreadyExistsException("name", name);
         }
 
         return teamDao.addTeam(name, clubName);

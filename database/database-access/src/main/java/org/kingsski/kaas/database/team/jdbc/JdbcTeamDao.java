@@ -1,13 +1,8 @@
 package org.kingsski.kaas.database.team.jdbc;
 
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -69,11 +64,7 @@ public class JdbcTeamDao implements TeamDao {
         final BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(team);
         final KeyHolder keyholder = new GeneratedKeyHolder();
 
-        try {
-            jdbcTemplate.update(ADD_TEAM, params, keyholder);
-        } catch (DataIntegrityViolationException e) {
-            throw new EntityConstraintViolationException("team", e);
-        }
+        jdbcTemplate.update(ADD_TEAM, params, keyholder);
 
         team.setId((long)keyholder.getKeys().get("team_id"));
 

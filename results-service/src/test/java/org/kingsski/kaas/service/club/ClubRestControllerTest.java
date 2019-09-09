@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.Club;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -112,7 +111,7 @@ public class ClubRestControllerTest {
         final ObjectMapper mapper = new ObjectMapper();
 
         given(clubService.addClub(name))
-                .willThrow(EntityAlreadyExistsException.class);
+                .willThrow(ClubAlreadyExistsException.class);
 
         mvc.perform(post(API_CLUBS)
                 .contentType(MediaType.APPLICATION_JSON)

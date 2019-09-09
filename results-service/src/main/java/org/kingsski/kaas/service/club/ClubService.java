@@ -1,7 +1,7 @@
 package org.kingsski.kaas.service.club;
 
-import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.club.Club;
+import org.kingsski.kaas.database.club.ClubDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -57,8 +57,13 @@ public class ClubService {
      *
      * @param name The name of the new club
      * @return a {@link Club}
+     * @throws ClubAlreadyExistsException if the club already exists
      */
-    public Club addClub(String name) {
+    public Club addClub(String name) throws ClubAlreadyExistsException {
+        Club club = clubDao.getClubByName(name);
+        if (club != null) {
+            throw new ClubAlreadyExistsException("name", name);
+        }
         return clubDao.addClub(name);
     }
 }
