@@ -12,7 +12,7 @@
     <modules>
         <module>database</module>
         <module>results-service</module>
-        <module>jacoco-report</module>
+        <module>report-aggregation</module>
     </modules>
 
     <properties>
@@ -36,6 +36,7 @@
         <!-- coverage and code analysis -->
         <jacoco.version>0.8.3</jacoco.version>
         <coveralls.version>4.3.0</coveralls.version>
+        <pitest.version>1.4.7</pitest.version>
     </properties>
 
     <profiles>
@@ -135,6 +136,31 @@
                 <sonar.login>${env.SONARCLOUD_LOGIN}</sonar.login>
                 <sonar.organization>${env.SONARCLOUD_ORG}</sonar.organization>
             </properties>
+        </profile>
+
+        <profile>
+            <id>mutation</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pitest-mutations</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                                <configuration>
+                                    <outputFormats>xml</outputFormats>
+                                    <exportLineCoverage>true</exportLineCoverage>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 

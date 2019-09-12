@@ -2,14 +2,14 @@ version: 2
 
 project-config:
   caching:
-  - &cache_dependencies ${CACHE_VERSION}-dependencies-{{ checksum "pom.xml" }}
+  - &cache_dependencies          ${CACHE_VERSION}-dependencies-{{ checksum "pom.xml" }}
   - &cache_dependencies_fallback ${CACHE_VERSION}-dependencies-
-  - &cache_test ${CACHE_VERSION}-test-{{ checksum "pom.xml" }}
-  - &cache_test_fallback ${CACHE_VERSION}-test-
-  - &cache_integration ${CACHE_VERSION}-integration-{{ checksum "pom.xml" }}
-  - &cache_integration_fallback ${CACHE_VERSION}-integration-
-  - &cache_coverage ${CACHE_VERSION}-coverage-{{ checksum "pom.xml" }}
-  - &cache_coverage_fallback ${CACHE_VERSION}-coverage-
+  - &cache_test                  ${CACHE_VERSION}-test-{{ checksum "pom.xml" }}
+  - &cache_test_fallback         ${CACHE_VERSION}-test-
+  - &cache_integration           ${CACHE_VERSION}-integration-{{ checksum "pom.xml" }}
+  - &cache_integration_fallback  ${CACHE_VERSION}-integration-
+  - &cache_coverage              ${CACHE_VERSION}-coverage-{{ checksum "pom.xml" }}
+  - &cache_coverage_fallback     ${CACHE_VERSION}-coverage-
   - cache_default_paths: &cache_default_paths
     - ~/.m2
   - cache_coverage_paths: &cache_coverage_paths
@@ -113,7 +113,7 @@ jobs:
         - *cache_dependencies_fallback
     - run:
         name: Generate coverage data
-        command: mvn verify -P coverage -B
+        command: mvn verify -Pcoverage,mutation -B
     - run:
         name: Send coverage to sonarcloud.io
         command: |
@@ -134,7 +134,7 @@ jobs:
             SONAR_OPTS="-Dsonar.branch.name=${CIRCLE_BRANCH}"
           fi
 
-          mvn sonar:sonar -P sonar -B $SONAR_OPTS
+          mvn sonar:sonar -Psonar -B $SONAR_OPTS
     - run:
         name: Send coverage to coveralls.io
         command: mvn coveralls:report -B -DrepoToken=${COVERALLS_REPO_TOKEN}
@@ -142,7 +142,9 @@ jobs:
         paths: *cache_coverage_paths
         key: *cache_coverage
     - store_artifacts:
-        path: ./jacoco-report/target/site/jacoco-aggregate
+        path: ./report-aggregation/target/site/jacoco-aggregate
+    - store_artifacts:
+        path: ./report-aggregation/target/pit-reports
 
 workflows:
   version: 2

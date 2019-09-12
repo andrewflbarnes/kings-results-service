@@ -8,13 +8,12 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jacoco-report</artifactId>
+    <artifactId>report-aggregation</artifactId>
     <version>0.0.2-SNAPSHOT</version>
 
-    <name>KAAS Jacoco Report</name>
+    <name>KAAS Report Aggregation</name>
     <description>
-        This module allows a single jacoco report to be generated for all relevant
-        dependencies in this project
+        This module provides aggregation of reports produced across the project
     </description>
     <packaging>pom</packaging>
 
@@ -29,6 +28,26 @@
                         <executions>
                             <execution>
                                 <id>report-jacoco</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>report-aggregate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>mutation</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <id>report-mutation</id>
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>report-aggregate</goal>
