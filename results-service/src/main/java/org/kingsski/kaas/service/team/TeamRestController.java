@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -19,8 +18,11 @@ import java.util.Map;
 @RestController
 public class TeamRestController {
 
-    @Resource
-    private TeamService teamService;
+    private final TeamService teamService;
+
+    public TeamRestController(TeamService teamService) {
+        this.teamService = teamService;
+    }
 
     @GetMapping(
             path = "/team",
@@ -39,7 +41,7 @@ public class TeamRestController {
         if (team == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(teamService.getTeamById(id));
+        return ResponseEntity.ok(team);
     }
 
     @GetMapping(
@@ -51,7 +53,7 @@ public class TeamRestController {
         if (team == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(teamService.getTeamByName(name));
+        return ResponseEntity.ok(team);
     }
 
     @PostMapping(

@@ -1,6 +1,8 @@
 package org.kingsski.kaas.service.season;
 
+import org.kingsski.kaas.database.competition.Competition;
 import org.kingsski.kaas.database.season.Season;
+import org.kingsski.kaas.service.competition.CompetitionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,13 @@ import java.util.List;
 @RestController
 public class SeasonRestController {
 
-    private SeasonService seasonService;
+    private final SeasonService seasonService;
+    private final CompetitionService competitionService;
 
-    public SeasonRestController(SeasonService seasonService) {
+    public SeasonRestController(SeasonService seasonService,
+                                CompetitionService competitionService) {
         this.seasonService = seasonService;
+        this.competitionService = competitionService;
     }
 
     @GetMapping(
@@ -42,26 +47,30 @@ public class SeasonRestController {
             produces = "application/json"
     )
     public ResponseEntity seasonById(@PathVariable("id") long id) {
-        Season season = seasonService.getSeasonById(id);
+        final Season season = seasonService.getSeasonById(id);
         if (season == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(seasonService.getSeasonById(id));
+        return ResponseEntity.ok(season);
     }
 
-    private ResponseEntity seasonsByCompetition(String competition) {
-        List<Season> seasons = seasonService.getSeasonsByCompetition(competition);
-        if (seasons == null || seasons.isEmpty()) {
+    private ResponseEntity seasonsByCompetition(String competitionName) {
+        final Competition competition = competitionService.getCompetitionByName(competitionName);
+
+        if (competition == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        final List<Season> seasons = seasonService.getSeasonsByCompetition(competitionName);
+
         return ResponseEntity.ok(seasons);
     }
 
     private ResponseEntity seasonByName(String name) {
-        Season season = seasonService.getSeasonByName(name);
+        final Season season = seasonService.getSeasonByName(name);
         if (season == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(seasonService.getSeasonByName(name));
+        return ResponseEntity.ok(season);
     }
 }

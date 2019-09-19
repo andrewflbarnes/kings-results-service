@@ -1,6 +1,8 @@
 package org.kingsski.kaas.service.league;
 
+import org.kingsski.kaas.database.competition.Competition;
 import org.kingsski.kaas.database.league.League;
+import org.kingsski.kaas.service.competition.CompetitionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,13 @@ import java.util.List;
 @RestController
 public class LeagueRestController {
 
-    private LeagueService leagueService;
+    private final LeagueService leagueService;
+    private final CompetitionService competitionService;
 
-    public LeagueRestController(LeagueService leagueService) {
+    public LeagueRestController(LeagueService leagueService,
+                                CompetitionService competitionService) {
         this.leagueService = leagueService;
+        this.competitionService = competitionService;
     }
 
     @GetMapping(
@@ -42,18 +47,22 @@ public class LeagueRestController {
             produces = "application/json"
     )
     public ResponseEntity leagueById(@PathVariable("id") long id) {
-        League league = leagueService.getLeagueById(id);
+        final League league = leagueService.getLeagueById(id);
         if (league == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(leagueService.getLeagueById(id));
+        return ResponseEntity.ok(league);
     }
 
-    private ResponseEntity leaguesByCompetition(String competition) {
-        List<League> leagues = leagueService.getLeaguesByCompetition(competition);
-        if (leagues == null || leagues.isEmpty()) {
+    private ResponseEntity leaguesByCompetition(String competitionName) {
+        final Competition competition = competitionService.getCompetitionByName(competitionName);
+
+        if (competition == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        final List<League> leagues = leagueService.getLeaguesByCompetition(competitionName);
+
         return ResponseEntity.ok(leagues);
     }
 
@@ -62,6 +71,6 @@ public class LeagueRestController {
         if (league == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(leagueService.getLeagueByName(name));
+        return ResponseEntity.ok(league);
     }
 }

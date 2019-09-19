@@ -39,7 +39,7 @@ public class OrganisationRestController {
         if (organisation == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(organisationService.getOrganisationById(id));
+        return ResponseEntity.ok(organisation);
     }
 
     @GetMapping(
@@ -51,7 +51,7 @@ public class OrganisationRestController {
         if (organisation == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(organisationService.getOrganisationByName(name));
+        return ResponseEntity.ok(organisation);
     }
 
     @PostMapping(

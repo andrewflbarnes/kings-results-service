@@ -1,7 +1,8 @@
 package org.kingsski.kaas.service.regional;
 
+import org.kingsski.kaas.database.competition.Competition;
 import org.kingsski.kaas.database.regional.Regional;
-import org.kingsski.kaas.service.regional.RegionalService;
+import org.kingsski.kaas.service.competition.CompetitionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,13 @@ import java.util.List;
 @RestController
 public class RegionalRestController {
 
-    private RegionalService regionalService;
+    private final RegionalService regionalService;
+    private final CompetitionService competitionService;
 
-    public RegionalRestController(RegionalService regionalService) {
+    public RegionalRestController(RegionalService regionalService,
+                                  CompetitionService competitionService) {
         this.regionalService = regionalService;
+        this.competitionService = competitionService;
     }
 
     @GetMapping(
@@ -40,18 +44,22 @@ public class RegionalRestController {
             produces = "application/json"
     )
     public ResponseEntity regionalById(@PathVariable("id") long id) {
-        Regional regional = regionalService.getRegionalById(id);
+        final Regional regional = regionalService.getRegionalById(id);
         if (regional == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(regionalService.getRegionalById(id));
+        return ResponseEntity.ok(regional);
     }
 
-    private ResponseEntity regionalsByCompetition(String competition) {
-        List<Regional> regionals = regionalService.getRegionalsByCompetition(competition);
-        if (regionals == null || regionals.isEmpty()) {
+    private ResponseEntity regionalsByCompetition(String competitionName) {
+        final Competition competition = competitionService.getCompetitionByName(competitionName);
+
+        if (competition == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        final List<Regional> regionals = regionalService.getRegionalsByCompetition(competitionName);
+
         return ResponseEntity.ok(regionals);
     }
 }

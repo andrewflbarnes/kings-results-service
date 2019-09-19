@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -19,8 +18,11 @@ import java.util.Map;
 @RestController
 public class ClubRestController {
 
-    @Resource
-    private ClubService clubService;
+    private final ClubService clubService;
+
+    public ClubRestController(ClubService clubService) {
+        this.clubService = clubService;
+    }
 
     @GetMapping(
             path = "/club",
@@ -39,7 +41,7 @@ public class ClubRestController {
         if (club == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(clubService.getClubById(id));
+        return ResponseEntity.ok(club);
     }
 
     @GetMapping(
@@ -51,7 +53,7 @@ public class ClubRestController {
         if (club == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(clubService.getClubByName(name));
+        return ResponseEntity.ok(club);
     }
 
     @PostMapping(
