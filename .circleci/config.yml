@@ -148,7 +148,7 @@ jobs:
 
 workflows:
   version: 2
-  build_test_report:
+  build-test-report:
     jobs:
     - build
     - test:
@@ -161,4 +161,19 @@ workflows:
         requires:
         - test
         - integration-test
-
+  nightly:
+    triggers:
+    - schedule:
+        cron: "0 0 * * *"
+        filters:
+          branches:
+            only:
+            - master
+    jobs:
+    - build
+    - test:
+        requires:
+        - build
+    - integration-test:
+        requires:
+        - build
