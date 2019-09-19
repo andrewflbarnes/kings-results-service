@@ -161,7 +161,7 @@ workflows:
         requires:
         - test
         - integration-test
-  nightly:
+  weekly:
     triggers:
     - schedule:
         cron: "0 0 * * 6"
