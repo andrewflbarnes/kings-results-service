@@ -32,7 +32,6 @@ public class TeamRestControllerTest {
 
     @Resource
     private MockMvc mvc;
-
     @MockBean
     private TeamService teamService;
 
@@ -43,7 +42,8 @@ public class TeamRestControllerTest {
         final List<Team> teams = new ArrayList<>();
         teams.add(team);
 
-        given(teamService.getTeams()).willReturn(teams);
+        given(teamService.getTeams())
+                .willReturn(teams);
 
         mvc.perform(get(API_TEAM))
                 .andExpect(status().isOk())
@@ -58,8 +58,10 @@ public class TeamRestControllerTest {
         final Team team = new Team();
         team.setName(name);
 
-        given(teamService.getTeamByName(not(eq(name)))).willReturn(null);
-        given(teamService.getTeamByName(name)).willReturn(team);
+        given(teamService.getTeamByName(not(eq(name))))
+                .willReturn(null);
+        given(teamService.getTeamByName(name))
+                .willReturn(team);
 
         mvc.perform(get(API_TEAM + name))
                 .andExpect(status().isOk())
@@ -76,8 +78,10 @@ public class TeamRestControllerTest {
         final Team team = new Team();
         team.setId(id);
 
-        given(teamService.getTeamById(not(eq(id)))).willReturn(null);
-        given(teamService.getTeamById(id)).willReturn(team);
+        given(teamService.getTeamById(not(eq(id))))
+                .willReturn(null);
+        given(teamService.getTeamById(id))
+                .willReturn(team);
 
         mvc.perform(get(API_TEAM + id))
                 .andExpect(status().isOk())

@@ -38,7 +38,8 @@ public class ClubServiceTest {
     @Test
     public void getClubs() {
         final List<Club> clubs = new ArrayList<>();
-        given(clubDao.getClubs()).willReturn(clubs);
+        given(clubDao.getClubs())
+                .willReturn(clubs);
 
         List<Club> returnedClubs = clubService.getClubs();
 
@@ -50,7 +51,8 @@ public class ClubServiceTest {
     public void getClubByName() {
         final String name = "name";
         final Club club = new Club();
-        given(clubDao.getClubByName(name)).willReturn(club);
+        given(clubDao.getClubByName(name))
+                .willReturn(club);
 
         Club returnedClub = clubService.getClubByName(name);
 
@@ -62,7 +64,8 @@ public class ClubServiceTest {
     public void getClubById() {
         final long id = 99L;
         final Club club = new Club();
-        given(clubDao.getClubById(id)).willReturn(club);
+        given(clubDao.getClubById(id))
+                .willReturn(club);
 
         Club returnedClub = clubService.getClubById(id);
 
@@ -75,8 +78,10 @@ public class ClubServiceTest {
     public void addClub() throws Exception {
         final String name = "sjklgnl";
         final Club club = Club.builder().name(name).build();
-        given(clubDao.getClubByName(name)).willReturn(null);
-        given(clubDao.addClub(name)).willReturn(club);
+        given(clubDao.getClubByName(name))
+                .willReturn(null);
+        given(clubDao.addClub(name))
+                .willReturn(club);
 
         Club returnedClub = clubService.addClub(name);
 

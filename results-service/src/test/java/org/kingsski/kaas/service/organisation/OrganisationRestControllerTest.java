@@ -45,7 +45,8 @@ public class OrganisationRestControllerTest {
         final List<Organisation> organisations = new ArrayList<>();
         organisations.add(organisation);
 
-        given(organisationService.getOrganisations()).willReturn(organisations);
+        given(organisationService.getOrganisations())
+                .willReturn(organisations);
 
         mvc.perform(get(API_ORGANISATION))
                 .andExpect(status().isOk())
@@ -60,8 +61,10 @@ public class OrganisationRestControllerTest {
         final Organisation organisation = new Organisation();
         organisation.setName(name);
 
-        given(organisationService.getOrganisationByName(not(eq(name)))).willReturn(null);
-        given(organisationService.getOrganisationByName(name)).willReturn(organisation);
+        given(organisationService.getOrganisationByName(not(eq(name))))
+                .willReturn(null);
+        given(organisationService.getOrganisationByName(name))
+                .willReturn(organisation);
 
         mvc.perform(get(API_ORGANISATION + name))
                 .andExpect(status().isOk())
@@ -78,8 +81,10 @@ public class OrganisationRestControllerTest {
         final Organisation organisation = new Organisation();
         organisation.setId(id);
 
-        given(organisationService.getOrganisationById(not(eq(id)))).willReturn(null);
-        given(organisationService.getOrganisationById(id)).willReturn(organisation);
+        given(organisationService.getOrganisationById(not(eq(id))))
+                .willReturn(null);
+        given(organisationService.getOrganisationById(id))
+                .willReturn(organisation);
 
         mvc.perform(get(API_ORGANISATION + id))
                 .andExpect(status().isOk())

@@ -43,7 +43,8 @@ public class ClubRestControllerTest {
         final List<Club> clubs = new ArrayList<>();
         clubs.add(club);
 
-        given(clubService.getClubs()).willReturn(clubs);
+        given(clubService.getClubs())
+                .willReturn(clubs);
 
         mvc.perform(get(API_CLUBS))
                 .andExpect(status().isOk())
@@ -58,8 +59,10 @@ public class ClubRestControllerTest {
         final Club club = new Club();
         club.setName(name);
 
-        given(clubService.getClubByName(not(eq(name)))).willReturn(null);
-        given(clubService.getClubByName(name)).willReturn(club);
+        given(clubService.getClubByName(not(eq(name))))
+                .willReturn(null);
+        given(clubService.getClubByName(name))
+                .willReturn(club);
 
         mvc.perform(get(API_CLUBS + name))
                 .andExpect(status().isOk())
@@ -76,8 +79,10 @@ public class ClubRestControllerTest {
         final Club club = new Club();
         club.setId(id);
 
-        given(clubService.getClubById(not(eq(id)))).willReturn(null);
-        given(clubService.getClubById(id)).willReturn(club);
+        given(clubService.getClubById(not(eq(id))))
+                .willReturn(null);
+        given(clubService.getClubById(id))
+                .willReturn(club);
 
         mvc.perform(get(API_CLUBS + id))
                 .andExpect(status().isOk())

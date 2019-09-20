@@ -45,7 +45,8 @@ public class SeasonRestControllerTest {
         final List<Season> seasons = new ArrayList<>();
         seasons.add(season);
 
-        given(seasonService.getSeasons()).willReturn(seasons);
+        given(seasonService.getSeasons())
+                .willReturn(seasons);
 
         mvc.perform(get(API_SEASON))
                 .andExpect(status().isOk())
@@ -60,8 +61,10 @@ public class SeasonRestControllerTest {
         final Season season = new Season();
         season.setName(name);
 
-        given(seasonService.getSeasonByName(name)).willReturn(season);
-        given(seasonService.getSeasonByName(not(eq(name)))).willReturn(null);
+        given(seasonService.getSeasonByName(name))
+                .willReturn(season);
+        given(seasonService.getSeasonByName(not(eq(name))))
+                .willReturn(null);
 
         mvc.perform(get(API_SEASON_NAME + name))
                 .andExpect(status().isOk())
@@ -108,8 +111,10 @@ public class SeasonRestControllerTest {
         final Season season = new Season();
         season.setId(id);
 
-        given(seasonService.getSeasonById(not(eq(id)))).willReturn(null);
-        given(seasonService.getSeasonById(id)).willReturn(season);
+        given(seasonService.getSeasonById(not(eq(id))))
+                .willReturn(null);
+        given(seasonService.getSeasonById(id))
+                .willReturn(season);
 
         mvc.perform(get(API_SEASON + id))
                 .andExpect(status().isOk())

@@ -40,7 +40,8 @@ public class OrganisationServiceTest {
     @Test
     public void getOrganisations() {
         final List<Organisation> organisations = new ArrayList<>();
-        given(organisationDao.getOrganisations()).willReturn(organisations);
+        given(organisationDao.getOrganisations())
+                .willReturn(organisations);
 
         List<Organisation> returnedOrganisations = organisationService.getOrganisations();
 
@@ -52,7 +53,8 @@ public class OrganisationServiceTest {
     public void getOrganisationByName() {
         final String name = "name";
         final Organisation organisation = new Organisation();
-        given(organisationDao.getOrganisationByName(name)).willReturn(organisation);
+        given(organisationDao.getOrganisationByName(name))
+                .willReturn(organisation);
 
         Organisation returnedOrganisation = organisationService.getOrganisationByName(name);
 
@@ -64,7 +66,8 @@ public class OrganisationServiceTest {
     public void getOrganisationById() {
         final long id = 99L;
         final Organisation organisation = new Organisation();
-        given(organisationDao.getOrganisationById(id)).willReturn(organisation);
+        given(organisationDao.getOrganisationById(id))
+                .willReturn(organisation);
 
         Organisation returnedOrganisation = organisationService.getOrganisationById(id);
 

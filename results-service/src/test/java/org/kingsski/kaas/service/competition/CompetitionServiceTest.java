@@ -38,7 +38,8 @@ public class CompetitionServiceTest {
     @Test
     public void getCompetitions() {
         final List<Competition> competitions = new ArrayList<>();
-        given(competitionDao.getCompetitions()).willReturn(competitions);
+        given(competitionDao.getCompetitions())
+                .willReturn(competitions);
 
         List<Competition> returnedCompetitions = competitionService.getCompetitions();
 
@@ -50,7 +51,8 @@ public class CompetitionServiceTest {
     public void getCompetitionByName() {
         final String name = "name";
         final Competition competition = new Competition();
-        given(competitionDao.getCompetitionByName(name)).willReturn(competition);
+        given(competitionDao.getCompetitionByName(name))
+                .willReturn(competition);
 
         Competition returnedCompetition = competitionService.getCompetitionByName(name);
 
@@ -62,7 +64,8 @@ public class CompetitionServiceTest {
     public void getCompetitionById() {
         final long id = 99L;
         final Competition competition = new Competition();
-        given(competitionDao.getCompetitionById(id)).willReturn(competition);
+        given(competitionDao.getCompetitionById(id))
+                .willReturn(competition);
 
         Competition returnedCompetition = competitionService.getCompetitionById(id);
 

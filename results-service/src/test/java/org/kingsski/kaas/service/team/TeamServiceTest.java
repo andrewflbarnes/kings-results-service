@@ -43,7 +43,8 @@ public class TeamServiceTest {
     @Test
     public void getTeams() {
         final List<Team> teams = new ArrayList<>();
-        given(teamDao.getTeams()).willReturn(teams);
+        given(teamDao.getTeams())
+                .willReturn(teams);
 
         List<Team> returnedTeams = teamService.getTeams();
 
@@ -55,7 +56,8 @@ public class TeamServiceTest {
     public void getTeamByName() {
         final String name = "name";
         final Team team = new Team();
-        given(teamDao.getTeamByName(name)).willReturn(team);
+        given(teamDao.getTeamByName(name))
+                .willReturn(team);
 
         Team returnedTeam = teamService.getTeamByName(name);
 
@@ -67,7 +69,8 @@ public class TeamServiceTest {
     public void getTeamById() {
         final long id = 99L;
         final Team team = new Team();
-        given(teamDao.getTeamById(id)).willReturn(team);
+        given(teamDao.getTeamById(id))
+                .willReturn(team);
 
         Team returnedTeam = teamService.getTeamById(id);
 
