@@ -3,6 +3,7 @@ package org.kingsski.kaas.service.organisation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.organisation.Organisation;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -19,7 +20,6 @@ import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -120,7 +120,7 @@ public class OrganisationRestControllerTest {
         final Organisation org = Organisation.builder().name(name).build();
 
         given(organisationService.addOrganisation(name))
-                .willThrow(OrganisationAlreadyExistsException.class);
+                .willThrow(EntityAlreadyExistsException.class);
 
         mvc.perform(post(API_ORGANISATION)
                 .contentType(MediaType.APPLICATION_JSON)

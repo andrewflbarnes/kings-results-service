@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class RegionalService {
 
-    private RegionalDao regionalDao;
+    private final RegionalDao regionalDao;
 
     public RegionalService(RegionalDao regionalDao) {
         this.regionalDao = regionalDao;

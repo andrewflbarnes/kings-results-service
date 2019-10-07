@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class LeagueService {
 
-    private LeagueDao leagueDao;
+    private final LeagueDao leagueDao;
 
     public LeagueService(LeagueDao leagueDao) {
         this.leagueDao = leagueDao;

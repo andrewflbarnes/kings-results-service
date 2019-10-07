@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.team.Team;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
+import org.kingsski.kaas.service.exception.EntityMissingParentException;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -118,7 +120,7 @@ public class TeamRestControllerTest {
         final ObjectMapper mapper = new ObjectMapper();
 
         given(teamService.addTeam(name, club))
-                .willThrow(TeamAlreadyExistsException.class);
+                .willThrow(EntityAlreadyExistsException.class);
 
         mvc.perform(post(API_TEAM)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -135,7 +137,7 @@ public class TeamRestControllerTest {
         final ObjectMapper mapper = new ObjectMapper();
 
         given(teamService.addTeam(name, club))
-                .willThrow(TeamMissingParentException.class);
+                .willThrow(EntityMissingParentException.class);
 
         mvc.perform(post(API_TEAM)
                 .contentType(MediaType.APPLICATION_JSON)

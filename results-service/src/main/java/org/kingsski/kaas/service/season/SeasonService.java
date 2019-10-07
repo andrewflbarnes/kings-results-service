@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class SeasonService {
 
-    private SeasonDao seasonDao;
+    private final SeasonDao seasonDao;
 
     public SeasonService(SeasonDao seasonDao) {
         this.seasonDao = seasonDao;

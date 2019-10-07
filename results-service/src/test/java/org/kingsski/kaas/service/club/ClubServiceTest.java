@@ -1,15 +1,14 @@
 package org.kingsski.kaas.service.club;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,22 +17,18 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ClubServiceTest {
 
-    @TestConfiguration
-    static class ClubServiceTestConfiguration {
-        @Bean
-        public ClubService clubService() {
-            return new ClubService();
-        }
-    }
-
-    @MockBean
+    @Mock
     private ClubDao clubDao;
 
-    @Resource
-    private ClubService clubService;
+    public ClubService clubService;
+
+    @Before
+    public void setUp() {
+        this.clubService = new ClubService(clubDao);
+    }
 
     @Test
     public void getClubs() {
@@ -91,7 +86,7 @@ public class ClubServiceTest {
     }
 
 
-    @Test(expected = ClubAlreadyExistsException.class)
+    @Test(expected = EntityAlreadyExistsException.class)
     public void addExistingClub() throws Exception {
         final String name = "dfagsrtghrts";
 

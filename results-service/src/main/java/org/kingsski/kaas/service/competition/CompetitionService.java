@@ -4,7 +4,6 @@ import org.kingsski.kaas.database.competition.Competition;
 import org.kingsski.kaas.database.competition.CompetitionDao;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,11 +15,10 @@ import java.util.List;
 @Service
 public class CompetitionService {
 
-    @Resource
-    private CompetitionDao competitionDao;
+    private final CompetitionDao competitionDao;
 
-    public CompetitionService() {
-        // Default constructor
+    public CompetitionService(CompetitionDao competitionDao) {
+        this.competitionDao = competitionDao;
     }
 
     /**

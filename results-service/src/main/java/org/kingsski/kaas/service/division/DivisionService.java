@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class DivisionService {
 
-    private DivisionDao divisionDao;
+    private final DivisionDao divisionDao;
 
     public DivisionService(DivisionDao divisionDao) {
         this.divisionDao = divisionDao;

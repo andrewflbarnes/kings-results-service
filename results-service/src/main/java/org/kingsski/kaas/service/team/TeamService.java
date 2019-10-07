@@ -4,10 +4,11 @@ import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
+import org.kingsski.kaas.service.exception.EntityMissingParentException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,14 +20,13 @@ import java.util.List;
 @Service
 public class TeamService {
 
-    @Resource
-    private TeamDao teamDao;
+    private final TeamDao teamDao;
 
-    @Resource
-    private ClubDao clubDao;
+    private final ClubDao clubDao;
 
-    public TeamService() {
-        // Default constructor
+    public TeamService(TeamDao teamDao, ClubDao clubDao) {
+        this.teamDao = teamDao;
+        this.clubDao = clubDao;
     }
 
     /**
@@ -62,23 +62,23 @@ public class TeamService {
      * Add a new team with a given name
      *
      * @param name The name of the new team
-     * @param clubName The name of the club to add the team to
+     * @param clubName The name of the club to add the texam to
      * @return a {@link Team} if added successfully, null if the club did not exist
-     * @throws TeamMissingParentException if the club does not exist
-     * @throws TeamAlreadyExistsException if the team already exists
+     * @throws EntityMissingParentException if the club does not exist
+     * @throws EntityAlreadyExistsException if the team already exists
      */
     @Transactional
-    public Team addTeam(String name, String clubName) throws TeamMissingParentException, TeamAlreadyExistsException {
+    public Team addTeam(String name, String clubName) throws EntityMissingParentException, EntityAlreadyExistsException {
         final Club club = clubDao.getClubByName(clubName);
 
         if (club == null) {
-            throw TeamMissingParentException.ofClub(name, "name", clubName);
+            throw new EntityMissingParentException("team", name, "club", "name", clubName);
         }
 
         final Team team = teamDao.getTeamByName(name);
 
         if (team != null) {
-            throw new TeamAlreadyExistsException("name", name);
+            throw new EntityAlreadyExistsException("team", "name", name);
         }
 
         return teamDao.addTeam(name, clubName);

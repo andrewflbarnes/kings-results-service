@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.season.Season;
 import org.kingsski.kaas.database.season.SeasonDao;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class SeasonServiceTest {
 
     @Mock

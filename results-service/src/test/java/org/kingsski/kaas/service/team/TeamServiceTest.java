@@ -1,17 +1,17 @@
 package org.kingsski.kaas.service.team;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
+import org.kingsski.kaas.service.exception.EntityMissingParentException;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,25 +20,21 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class TeamServiceTest {
 
-    @TestConfiguration
-    static class TeamServiceTestConfiguration {
-        @Bean
-        public TeamService teamService() {
-            return new TeamService();
-        }
-    }
-
-    @MockBean
+    @Mock
     private TeamDao teamDao;
 
-    @MockBean
+    @Mock
     private ClubDao clubDao;
 
-    @Resource
-    private TeamService teamService;
+    public TeamService teamService;
+
+    @Before
+    public void setUp() {
+        this.teamService = new TeamService(teamDao, clubDao);
+    }
 
     @Test
     public void getTeams() {
@@ -100,7 +96,7 @@ public class TeamServiceTest {
         assertEquals(team, returnedTeam);
     }
 
-    @Test(expected = TeamAlreadyExistsException.class)
+    @Test(expected = EntityAlreadyExistsException.class)
     public void addExistingTeam() throws Exception {
         final String name = "team";
         final String clubName = "club";
@@ -116,7 +112,7 @@ public class TeamServiceTest {
     }
 
 
-    @Test(expected = TeamMissingParentException.class)
+    @Test(expected = EntityMissingParentException.class)
     public void addTeamNoClub() throws Exception {
         final String name = "team";
         final String clubName = "club";
