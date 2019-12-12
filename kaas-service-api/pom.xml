@@ -75,7 +75,7 @@
                             <modelPackage>${project.groupId}.model</modelPackage>
                             <invokerPackage>${project.groupId}.invoker</invokerPackage>
                             <artifactId>${project.artifactId}</artifactId>
-                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <!--<generateSupportingFiles>false</generateSupportingFiles>-->
                             <configOptions>
                                 <!--<configPackage>${project.groupId}.config</configPackage>-->
                                 <!--<sourceFolder>target/generated-sources/java/main</sourceFolder>-->
