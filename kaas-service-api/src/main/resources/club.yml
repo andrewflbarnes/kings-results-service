@@ -1,0 +1,129 @@
+openapi: "3.0.0"
+info:
+  title: "KAAS API"
+  version: "0.1.0"
+tags:
+  - name: KAAS
+    description: KAAS API
+servers:
+  - url: http://kaas.com/api
+    description: Production
+  - url: http://localhost:8080/api
+    description: Local Dev
+
+paths:
+  /club:
+    post:
+      tags:
+        - club
+      operationId: addClub
+      summary: "Add a new club"
+      requestBody:
+        description: "Details of the new club to add"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+            example:
+              name: "SKUM"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+        403:
+          $ref: "#/components/responses/403"
+    get:
+      tags:
+        - club
+      operationId: clubs
+      summary: "Retrieve all clubs"
+      responses:
+        200:
+          $ref: "#/components/responses/ArrayOfClubs"
+        500:
+          $ref: "#/components/responses/50X"
+  /club/{id}:
+    get:
+      tags:
+        - club
+      operationId: clubById
+      summary: "Retrieve a club by ID"
+      parameters:
+        - name: id
+          description: "The club ID"
+          required: true
+          in: path
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: "#/components/responses/Club"
+        404:
+          $ref: "#/components/responses/404"
+        500:
+          $ref: "#/components/responses/50X"
+  /club/{name}:
+    get:
+      tags:
+        - club
+      operationId: clubByName
+      summary: "Retrieve a club by Name"
+      parameters:
+        - name: name
+          description: "The club Name"
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: "#/components/responses/Club"
+        404:
+          $ref: "#/components/responses/404"
+        500:
+          $ref: "#/components/responses/50X"
+components:
+  responses:
+    201:
+      description: "Created"
+    400:
+      description: "Bad request"
+    401:
+      description: "Not authorized"
+    403:
+      description: "Forbidden"
+    404:
+      description: "Record not found"
+    50X:
+      description: "Internal system error"
+    Club:
+      description: "A club"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Club"
+    ArrayOfClubs:
+      description: "Array of Clubs"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ArrayOfClubs"
+  schemas:
+    Club:
+      description: "A club"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    ArrayOfClubs:
+      description: "Array of Clubs"
+      type: array
+      items:
+        $ref: "#/components/schemas/Club"
+

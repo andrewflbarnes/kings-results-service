@@ -1,0 +1,106 @@
+openapi: "3.0.0"
+info:
+  title: "KAAS API"
+  version: "0.1.0"
+tags:
+  - name: KAAS
+    description: KAAS API
+servers:
+  - url: http://kaas.com/api
+    description: Production
+  - url: http://localhost:8080/api
+    description: Local Dev
+
+paths:
+  /organisation:
+    post:
+      tags:
+        - organisation
+      operationId: organisations
+      summary: "Retrieve all organisations"
+      responses:
+        200:
+          $ref: "#/components/responses/ArrayOfOrganisations"
+        500:
+          $ref: "#/components/responses/50X"
+  /organisation/{id}:
+    post:
+      tags:
+        - organisation
+      operationId: organisationById
+      summary: "Retrieve an organisation by ID"
+      parameters:
+        - name: id
+          description: "The organisation ID"
+          required: true
+          in: path
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: "#/components/responses/Organisation"
+        404:
+          $ref: "#/components/responses/404"
+        500:
+          $ref: "#/components/responses/50X"
+  /organisation/{name}:
+    post:
+      tags:
+        - organisation
+      operationId: organisationByName
+      summary: "Retrieve an organisation by Name"
+      parameters:
+        - name: name
+          description: "The organisation Name"
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        200:
+          $ref: "#/components/responses/Organisation"
+        404:
+          $ref: "#/components/responses/404"
+        500:
+          $ref: "#/components/responses/50X"
+components:
+  responses:
+    400:
+      description: "Bad requestr"
+    401:
+      description: "Not authorized"
+    403:
+      description: "Forbidden"
+    404:
+      description: "Record not found"
+    50X:
+      description: "Internal system error"
+    Organisation:
+      description: "An organisation"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Organisation"
+    ArrayOfOrganisations:
+      description: "Array of Organisations"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ArrayOfOrganisations"
+  schemas:
+    Organisation:
+      description: "An organisation"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    ArrayOfOrganisations:
+      description: "Array of Organisations"
+      type: array
+      items:
+        $ref: "#/components/schemas/Organisation"
+

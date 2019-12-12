@@ -11,6 +11,7 @@
 
     <modules>
         <module>database</module>
+        <module>kaas-service-api</module>
         <module>results-service</module>
         <module>report-aggregation</module>
     </modules>
@@ -25,6 +26,7 @@
         <!-- project dependencies -->
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
         <spring.data.version>2.0.8.RELEASE</spring.data.version>
+        <spring.oauth.version>2.0.2.RELEASE</spring.oauth.version>
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
