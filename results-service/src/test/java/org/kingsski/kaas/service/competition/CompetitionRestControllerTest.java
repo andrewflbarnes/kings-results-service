@@ -40,7 +40,8 @@ public class CompetitionRestControllerTest {
         final List<Competition> competitions = new ArrayList<>();
         competitions.add(competition);
 
-        given(competitionService.getCompetitions()).willReturn(competitions);
+        given(competitionService.getCompetitions())
+                .willReturn(competitions);
 
         mvc.perform(get(API_COMPETITION))
                 .andExpect(status().isOk())
@@ -55,8 +56,10 @@ public class CompetitionRestControllerTest {
         final Competition competition = new Competition();
         competition.setName(name);
 
-        given(competitionService.getCompetitionByName(not(eq(name)))).willReturn(null);
-        given(competitionService.getCompetitionByName(name)).willReturn(competition);
+        given(competitionService.getCompetitionByName(not(eq(name))))
+                .willReturn(null);
+        given(competitionService.getCompetitionByName(name))
+                .willReturn(competition);
 
         mvc.perform(get(API_COMPETITION + name))
                 .andExpect(status().isOk())
@@ -73,8 +76,10 @@ public class CompetitionRestControllerTest {
         final Competition competition = new Competition();
         competition.setId(id);
 
-        given(competitionService.getCompetitionById(not(eq(id)))).willReturn(null);
-        given(competitionService.getCompetitionById(id)).willReturn(competition);
+        given(competitionService.getCompetitionById(not(eq(id))))
+                .willReturn(null);
+        given(competitionService.getCompetitionById(id))
+                .willReturn(competition);
 
         mvc.perform(get(API_COMPETITION + id))
                 .andExpect(status().isOk())

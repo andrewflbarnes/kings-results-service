@@ -3,6 +3,7 @@ package org.kingsski.kaas.service.organisation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.organisation.Organisation;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -19,7 +20,6 @@ import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,7 +45,8 @@ public class OrganisationRestControllerTest {
         final List<Organisation> organisations = new ArrayList<>();
         organisations.add(organisation);
 
-        given(organisationService.getOrganisations()).willReturn(organisations);
+        given(organisationService.getOrganisations())
+                .willReturn(organisations);
 
         mvc.perform(get(API_ORGANISATION))
                 .andExpect(status().isOk())
@@ -60,8 +61,10 @@ public class OrganisationRestControllerTest {
         final Organisation organisation = new Organisation();
         organisation.setName(name);
 
-        given(organisationService.getOrganisationByName(not(eq(name)))).willReturn(null);
-        given(organisationService.getOrganisationByName(name)).willReturn(organisation);
+        given(organisationService.getOrganisationByName(not(eq(name))))
+                .willReturn(null);
+        given(organisationService.getOrganisationByName(name))
+                .willReturn(organisation);
 
         mvc.perform(get(API_ORGANISATION + name))
                 .andExpect(status().isOk())
@@ -78,8 +81,10 @@ public class OrganisationRestControllerTest {
         final Organisation organisation = new Organisation();
         organisation.setId(id);
 
-        given(organisationService.getOrganisationById(not(eq(id)))).willReturn(null);
-        given(organisationService.getOrganisationById(id)).willReturn(organisation);
+        given(organisationService.getOrganisationById(not(eq(id))))
+                .willReturn(null);
+        given(organisationService.getOrganisationById(id))
+                .willReturn(organisation);
 
         mvc.perform(get(API_ORGANISATION + id))
                 .andExpect(status().isOk())
@@ -115,7 +120,7 @@ public class OrganisationRestControllerTest {
         final Organisation org = Organisation.builder().name(name).build();
 
         given(organisationService.addOrganisation(name))
-                .willThrow(OrganisationAlreadyExistsException.class);
+                .willThrow(EntityAlreadyExistsException.class);
 
         mvc.perform(post(API_ORGANISATION)
                 .contentType(MediaType.APPLICATION_JSON)

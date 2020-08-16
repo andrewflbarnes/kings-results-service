@@ -1,7 +1,7 @@
 package org.kingsski.kaas.service.organisation;
 
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.kingsski.kaas.database.organisation.Organisation;
+import org.kingsski.kaas.service.exception.EntityConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,7 +39,7 @@ public class OrganisationRestController {
         if (organisation == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(organisationService.getOrganisationById(id));
+        return ResponseEntity.ok(organisation);
     }
 
     @GetMapping(
@@ -52,21 +51,18 @@ public class OrganisationRestController {
         if (organisation == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(organisationService.getOrganisationByName(name));
+        return ResponseEntity.ok(organisation);
     }
 
     @PostMapping(
             path = "/organisation",
             produces = "application/json"
     )
-    public ResponseEntity addClub(@RequestBody Map<String, String> body) {
-        try {
-            Organisation org = organisationService.addOrganisation(body.get("name"));
-            return ResponseEntity.status(HttpStatus.CREATED).body(org);
-        } catch (OrganisationAlreadyExistsException  e) {
-            Map<String, String> error = new HashMap<>();
-            error.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-        }
+    public ResponseEntity addClub(@RequestBody Map<String, String> body) throws EntityConflictException {
+        final String name = body.get("name");
+
+        final Organisation org = organisationService.addOrganisation(name);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(org);
     }
 }

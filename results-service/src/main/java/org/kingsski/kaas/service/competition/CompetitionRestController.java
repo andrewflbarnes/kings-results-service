@@ -35,7 +35,7 @@ public class CompetitionRestController {
         if (competition == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(competitionService.getCompetitionById(id));
+        return ResponseEntity.ok(competition);
     }
 
     @GetMapping(
@@ -47,6 +47,6 @@ public class CompetitionRestController {
         if (competition == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(competitionService.getCompetitionByName(name));
+        return ResponseEntity.ok(competition);
     }
 }

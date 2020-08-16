@@ -4,15 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.TestUtil;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.KeyHolder;
@@ -102,16 +98,6 @@ public class JdbcTeamDaoTest {
         assertEquals(club, actualTeam.getClub());
         assertEquals(name, actualTeam.getName());
         assertEquals(id, actualTeam.getId());
-    }
-
-    @Test(expected = EntityConstraintViolationException.class)
-    public void addTeamNoClub() {
-        final String name = "boom2";
-        final String club = "pow2";
-        given(jdbcTemplate.update(any(String.class), any(SqlParameterSource.class), any(KeyHolder.class)))
-                .willThrow(DataIntegrityViolationException.class);
-
-        teamDao.addTeam(name, club);
     }
 
     private Answer<?> generatedKeyAnswer(long id) {

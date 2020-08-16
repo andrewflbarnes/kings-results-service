@@ -1,16 +1,15 @@
 package org.kingsski.kaas.service.organisation;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.organisation.Organisation;
 import org.kingsski.kaas.database.organisation.OrganisationDao;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,27 +19,29 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class OrganisationServiceTest {
 
-    @TestConfiguration
-    static class OrganisationServiceTestConfiguration {
-        @Bean
-        public OrganisationService organisationService() {
-            return new OrganisationService();
-        }
-    }
-
-    @MockBean
+    @Mock
     private OrganisationDao organisationDao;
 
-    @Resource
     private OrganisationService organisationService;
+
+    @Before
+    public void setUp() {
+        this.organisationService = new OrganisationService(organisationDao);
+    }
+
+    @Bean
+    public OrganisationService organisationService() {
+        return new OrganisationService(organisationDao);
+    }
 
     @Test
     public void getOrganisations() {
         final List<Organisation> organisations = new ArrayList<>();
-        given(organisationDao.getOrganisations()).willReturn(organisations);
+        given(organisationDao.getOrganisations())
+                .willReturn(organisations);
 
         List<Organisation> returnedOrganisations = organisationService.getOrganisations();
 
@@ -52,7 +53,8 @@ public class OrganisationServiceTest {
     public void getOrganisationByName() {
         final String name = "name";
         final Organisation organisation = new Organisation();
-        given(organisationDao.getOrganisationByName(name)).willReturn(organisation);
+        given(organisationDao.getOrganisationByName(name))
+                .willReturn(organisation);
 
         Organisation returnedOrganisation = organisationService.getOrganisationByName(name);
 
@@ -64,7 +66,8 @@ public class OrganisationServiceTest {
     public void getOrganisationById() {
         final long id = 99L;
         final Organisation organisation = new Organisation();
-        given(organisationDao.getOrganisationById(id)).willReturn(organisation);
+        given(organisationDao.getOrganisationById(id))
+                .willReturn(organisation);
 
         Organisation returnedOrganisation = organisationService.getOrganisationById(id);
 
@@ -95,7 +98,7 @@ public class OrganisationServiceTest {
         assertEquals(org.getName(), actualOrg.getName());
     }
 
-    @Test(expected = OrganisationAlreadyExistsException.class)
+    @Test(expected = EntityAlreadyExistsException.class)
     public void addExistingOrganisation() throws Exception {
         final String name = "Stunning Bunts";
         final Organisation org = Organisation.builder().name(name).build();

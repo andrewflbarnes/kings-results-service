@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SeasonConfig {
 
-
     @Bean
     public SeasonDao seasonDao(DaoFactory daoFactory) {
         return daoFactory.newSeasonDao();

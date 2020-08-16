@@ -1,10 +1,10 @@
 package org.kingsski.kaas.service.club;
 
-import org.kingsski.kaas.database.club.ClubDao;
 import org.kingsski.kaas.database.club.Club;
+import org.kingsski.kaas.database.club.ClubDao;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,11 +16,10 @@ import java.util.List;
 @Service
 public class ClubService {
 
-    @Resource
-    private ClubDao clubDao;
+    private final ClubDao clubDao;
 
-    public ClubService() {
-        // Default constructor
+    public ClubService(ClubDao clubDao) {
+        this.clubDao = clubDao;
     }
 
     /**
@@ -57,8 +56,13 @@ public class ClubService {
      *
      * @param name The name of the new club
      * @return a {@link Club}
+     * @throws EntityAlreadyExistsException if the club already exists
      */
-    public Club addClub(String name) {
+    public Club addClub(String name) throws EntityAlreadyExistsException {
+        Club club = clubDao.getClubByName(name);
+        if (club != null) {
+            throw new EntityAlreadyExistsException("club", "name", name);
+        }
         return clubDao.addClub(name);
     }
 }

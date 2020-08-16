@@ -1,7 +1,5 @@
 package org.kingsski.kaas.database.club;
 
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-
 import java.util.List;
 
 /**
@@ -33,7 +31,6 @@ public interface ClubDao {
      * Add a new club
      * @param name The name of the club
      * @return a club representing the newly added club
-     * @throws EntityAlreadyExistsException if a club with the same name already exists
      */
     Club addClub(String name);
 }

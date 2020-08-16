@@ -2,7 +2,9 @@ package org.kingsski.kaas.service.season;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kingsski.kaas.database.competition.Competition;
 import org.kingsski.kaas.database.season.Season;
+import org.kingsski.kaas.service.competition.CompetitionService;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,9 +33,10 @@ public class SeasonRestControllerTest {
 
     @Resource
     private MockMvc mvc;
-
     @MockBean
     private SeasonService seasonService;
+    @MockBean
+    private CompetitionService competitionService;
 
     @Test
     public void getSeasons() throws Exception {
@@ -42,7 +45,8 @@ public class SeasonRestControllerTest {
         final List<Season> seasons = new ArrayList<>();
         seasons.add(season);
 
-        given(seasonService.getSeasons()).willReturn(seasons);
+        given(seasonService.getSeasons())
+                .willReturn(seasons);
 
         mvc.perform(get(API_SEASON))
                 .andExpect(status().isOk())
@@ -57,8 +61,10 @@ public class SeasonRestControllerTest {
         final Season season = new Season();
         season.setName(name);
 
-        given(seasonService.getSeasonByName(name)).willReturn(season);
-        given(seasonService.getSeasonByName(not(eq(name)))).willReturn(null);
+        given(seasonService.getSeasonByName(name))
+                .willReturn(season);
+        given(seasonService.getSeasonByName(not(eq(name))))
+                .willReturn(null);
 
         mvc.perform(get(API_SEASON_NAME + name))
                 .andExpect(status().isOk())
@@ -71,20 +77,30 @@ public class SeasonRestControllerTest {
     @Test
     public void getSeasonByCompetition() throws Exception {
         final String name = "boom";
-        final String badName = "pow";
-        final Season season = new Season();
-        season.setName("popeye");
+        final Competition competition = Competition.builder().name(name).build();
+
+        final Season season = Season.builder().name(name + 1).build();
         final List<Season> seasons = new ArrayList<>();
         seasons.add(season);
 
-        given(seasonService.getSeasonsByCompetition(name)).willReturn(seasons);
-        given(seasonService.getSeasonsByCompetition(not(eq(name)))).willReturn(null);
+        given(competitionService.getCompetitionByName(name))
+                .willReturn(competition);
+        given(seasonService.getSeasonsByCompetition(name))
+                .willReturn(seasons);
 
         mvc.perform(get(API_SEASON_COMPETITION + name))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is(season.getName())));
+    }
 
-        mvc.perform(get(API_SEASON_COMPETITION + badName))
+    @Test
+    public void getSeasonByCompetitionNotExist() throws Exception {
+        final String name = "pow";
+
+        given(competitionService.getCompetitionByName(name))
+                .willReturn(null);
+
+        mvc.perform(get(API_SEASON_COMPETITION + name))
                 .andExpect(status().isNotFound());
     }
 
@@ -95,8 +111,10 @@ public class SeasonRestControllerTest {
         final Season season = new Season();
         season.setId(id);
 
-        given(seasonService.getSeasonById(not(eq(id)))).willReturn(null);
-        given(seasonService.getSeasonById(id)).willReturn(season);
+        given(seasonService.getSeasonById(not(eq(id))))
+                .willReturn(null);
+        given(seasonService.getSeasonById(id))
+                .willReturn(season);
 
         mvc.perform(get(API_SEASON + id))
                 .andExpect(status().isOk())

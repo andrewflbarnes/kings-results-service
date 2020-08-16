@@ -1,6 +1,9 @@
 package org.kingsski.kaas.service.division;
 
+import org.kingsski.kaas.database.competition.Competition;
 import org.kingsski.kaas.database.division.Division;
+import org.kingsski.kaas.service.competition.CompetitionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +19,13 @@ import java.util.List;
 @RestController
 public class DivisionRestController {
 
-    private DivisionService divisionService;
+    private final DivisionService divisionService;
+    private final CompetitionService competitionService;
 
-    public DivisionRestController(DivisionService divisionService) {
+    public DivisionRestController(DivisionService divisionService,
+                                  CompetitionService competitionService) {
         this.divisionService = divisionService;
+        this.competitionService = competitionService;
     }
 
     @GetMapping(
@@ -42,26 +48,30 @@ public class DivisionRestController {
             produces = "application/json"
     )
     public ResponseEntity divisionById(@PathVariable("id") long id) {
-        Division division = divisionService.getDivisionById(id);
+        final Division division = divisionService.getDivisionById(id);
         if (division == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(divisionService.getDivisionById(id));
+        return ResponseEntity.ok(division);
     }
 
-    private ResponseEntity divisionsByCompetition(String competition) {
-        List<Division> divisions = divisionService.getDivisionsByCompetition(competition);
-        if (divisions == null || divisions.isEmpty()) {
+    private ResponseEntity divisionsByCompetition(String competitionName) {
+        final Competition competition = competitionService.getCompetitionByName(competitionName);
+
+        if (competition == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        final List<Division> divisions = divisionService.getDivisionsByCompetition(competitionName);
+
         return ResponseEntity.ok(divisions);
     }
 
     private ResponseEntity divisionByName(String name) {
-        Division division = divisionService.getDivisionByName(name);
+        final Division division = divisionService.getDivisionByName(name);
         if (division == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(divisionService.getDivisionByName(name));
+        return ResponseEntity.ok(division);
     }
 }

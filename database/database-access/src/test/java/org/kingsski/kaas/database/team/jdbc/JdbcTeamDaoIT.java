@@ -3,12 +3,11 @@ package org.kingsski.kaas.database.team.jdbc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kingsski.kaas.database.club.Club;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.jdbc.AbstractJdbcDaoIT;
 import org.kingsski.kaas.database.team.Team;
 import org.kingsski.kaas.database.team.TeamDao;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +138,7 @@ public class JdbcTeamDaoIT extends AbstractJdbcDaoIT {
         teamDao.addTeam(name, club);
     }
 
-    @Test(expected = EntityConstraintViolationException.class)
+    @Test(expected = DataIntegrityViolationException.class)
     public void addTeamNoClub() {
         final String club = "Club G";
         final String name = "Team G";

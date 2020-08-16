@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ScoreRegionalService {
 
-    private ScoreRegionalDao scoreRegionalDao;
+    private final ScoreRegionalDao scoreRegionalDao;
 
     public ScoreRegionalService(ScoreRegionalDao scoreRegionalDao) {
         this.scoreRegionalDao = scoreRegionalDao;

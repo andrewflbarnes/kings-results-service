@@ -2,10 +2,7 @@ package org.kingsski.kaas.database.club.jdbc;
 
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -68,11 +65,7 @@ public class JdbcClubDao implements ClubDao {
         final BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(club);
         final KeyHolder keyholder = new GeneratedKeyHolder();
 
-        try {
-            jdbcTemplate.update(ADD_CLUB, params, keyholder);
-        } catch (DuplicateKeyException e) {
-            throw new EntityAlreadyExistsException("club", "name", name, e);
-        }
+        jdbcTemplate.update(ADD_CLUB, params, keyholder);
 
         club.setId((long)keyholder.getKeys().get("club_id"));
 

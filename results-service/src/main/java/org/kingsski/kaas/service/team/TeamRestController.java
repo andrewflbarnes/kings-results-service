@@ -1,10 +1,7 @@
 package org.kingsski.kaas.service.team;
 
-import org.kingsski.kaas.database.club.Club;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
-import org.kingsski.kaas.database.exception.EntityConstraintViolationException;
 import org.kingsski.kaas.database.team.Team;
-import org.kingsski.kaas.service.club.ClubService;
+import org.kingsski.kaas.service.exception.EntityConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,8 +18,11 @@ import java.util.Map;
 @RestController
 public class TeamRestController {
 
-    @Resource
-    private TeamService teamService;
+    private final TeamService teamService;
+
+    public TeamRestController(TeamService teamService) {
+        this.teamService = teamService;
+    }
 
     @GetMapping(
             path = "/team",
@@ -43,7 +41,7 @@ public class TeamRestController {
         if (team == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(teamService.getTeamById(id));
+        return ResponseEntity.ok(team);
     }
 
     @GetMapping(
@@ -55,23 +53,19 @@ public class TeamRestController {
         if (team == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(teamService.getTeamByName(name));
+        return ResponseEntity.ok(team);
     }
 
     @PostMapping(
             path = "/team",
             produces = "application/json"
     )
-    public ResponseEntity addTeam(@RequestBody Map<String, String> body) {
+    public ResponseEntity addTeam(@RequestBody Map<String, String> body) throws EntityConflictException {
         final String club = body.get("club");
-        final Team team = teamService.addTeam(body.get("name"), club);
+        final String name = body.get("name");
 
-        if (team != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(team);
-        } else {
-            final Map<String, String> error = new HashMap<>();
-            error.put("error", "Cannot add team to non-existent club " + club);
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-        }
+        final Team team = teamService.addTeam(name, club);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(team);
     }
 }

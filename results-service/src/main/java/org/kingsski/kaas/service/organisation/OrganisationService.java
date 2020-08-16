@@ -2,9 +2,9 @@ package org.kingsski.kaas.service.organisation;
 
 import org.kingsski.kaas.database.organisation.Organisation;
 import org.kingsski.kaas.database.organisation.OrganisationDao;
+import org.kingsski.kaas.service.exception.EntityAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,11 +16,10 @@ import java.util.List;
 @Service
 public class OrganisationService {
 
-    @Resource
-    private OrganisationDao organisationDao;
+    private final OrganisationDao organisationDao;
 
-    public OrganisationService() {
-        // Default constructor
+    public OrganisationService(OrganisationDao organisationDao) {
+        this.organisationDao = organisationDao;
     }
 
     /**
@@ -57,12 +56,12 @@ public class OrganisationService {
      *
      * @param name the name of the {@link Organisation} to add
      * @return a {@link Organisation}
-     * @throws OrganisationAlreadyExistsException
+     * @throws EntityAlreadyExistsException
      */
-    public Organisation addOrganisation(String name) throws OrganisationAlreadyExistsException {
+    public Organisation addOrganisation(String name) throws EntityAlreadyExistsException {
         Organisation org = organisationDao.getOrganisationByName(name);
         if (org != null) {
-            throw new OrganisationAlreadyExistsException("name", name);
+            throw new EntityAlreadyExistsException("organisation", "name", name);
         }
         return organisationDao.addOrganisation(name);
     }

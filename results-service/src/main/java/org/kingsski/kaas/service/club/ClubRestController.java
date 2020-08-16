@@ -1,7 +1,7 @@
 package org.kingsski.kaas.service.club;
 
 import org.kingsski.kaas.database.club.Club;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
+import org.kingsski.kaas.service.exception.EntityConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,8 +18,11 @@ import java.util.Map;
 @RestController
 public class ClubRestController {
 
-    @Resource
-    private ClubService clubService;
+    private final ClubService clubService;
+
+    public ClubRestController(ClubService clubService) {
+        this.clubService = clubService;
+    }
 
     @GetMapping(
             path = "/club",
@@ -40,7 +41,7 @@ public class ClubRestController {
         if (club == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(clubService.getClubById(id));
+        return ResponseEntity.ok(club);
     }
 
     @GetMapping(
@@ -52,21 +53,18 @@ public class ClubRestController {
         if (club == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(clubService.getClubByName(name));
+        return ResponseEntity.ok(club);
     }
 
     @PostMapping(
             path = "/club",
             produces = "application/json"
     )
-    public ResponseEntity addClub(@RequestBody Map<String, String> body) {
-        try {
-            Club club = clubService.addClub(body.get("name"));
-            return ResponseEntity.status(HttpStatus.CREATED).body(club);
-        } catch (EntityAlreadyExistsException e) {
-            Map<String, String> error = new HashMap<>();
-            error.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-        }
+    public ResponseEntity addClub(@RequestBody Map<String, String> body) throws EntityConflictException {
+        final String name = body.get("name");
+
+        final Club club = clubService.addClub(name);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(club);
     }
 }

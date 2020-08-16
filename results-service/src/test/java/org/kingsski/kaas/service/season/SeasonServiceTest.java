@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.kingsski.kaas.database.season.Season;
 import org.kingsski.kaas.database.season.SeasonDao;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class SeasonServiceTest {
 
     @Mock
@@ -32,7 +32,8 @@ public class SeasonServiceTest {
     @Test
     public void getSeasons() {
         final List<Season> seasons = new ArrayList<>();
-        given(seasonDao.getSeasons()).willReturn(seasons);
+        given(seasonDao.getSeasons())
+                .willReturn(seasons);
 
         List<Season> returnedSeasons = seasonService.getSeasons();
 
@@ -44,7 +45,8 @@ public class SeasonServiceTest {
     public void getSeasonByCompetition() {
         final List<Season> seasons = new ArrayList<>();
         final String competition = "competition";
-        given(seasonDao.getSeasonsByCompetition(competition)).willReturn(seasons);
+        given(seasonDao.getSeasonsByCompetition(competition))
+                .willReturn(seasons);
 
         List<Season> returnedSeasons = seasonService.getSeasonsByCompetition(competition);
 
@@ -56,7 +58,8 @@ public class SeasonServiceTest {
     public void getSeasonByName() {
         final String name = "name";
         final Season season = new Season();
-        given(seasonDao.getSeasonByName(name)).willReturn(season);
+        given(seasonDao.getSeasonByName(name))
+                .willReturn(season);
 
         Season returnedSeason = seasonService.getSeasonByName(name);
 
@@ -68,7 +71,8 @@ public class SeasonServiceTest {
     public void getSeasonById() {
         final long id = 99L;
         final Season season = new Season();
-        given(seasonDao.getSeasonById(id)).willReturn(season);
+        given(seasonDao.getSeasonById(id))
+                .willReturn(season);
 
         Season returnedSeason = seasonService.getSeasonById(id);
 

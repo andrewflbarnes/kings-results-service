@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.kingsski.kaas.database.club.Club;
 import org.kingsski.kaas.database.club.ClubDao;
-import org.kingsski.kaas.database.exception.EntityAlreadyExistsException;
 import org.kingsski.kaas.database.jdbc.AbstractJdbcDaoIT;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,7 @@ public class JdbcClubDaoIT extends AbstractJdbcDaoIT {
         assertEquals(club.getName(), clubCheck.getName());
     }
 
-    @Test(expected = EntityAlreadyExistsException.class)
+    @Test(expected = DuplicateKeyException.class)
     public void addAlreadyExistingClub() {
         final String name = "Club F";
         clubDao.addClub(name);
