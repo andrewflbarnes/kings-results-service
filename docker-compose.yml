@@ -1,6 +1,7 @@
-version: "3"
+version: "3.5"
 services:
-  postgres10:
+  kaas-database:
+    container_name: krs-kaas-database
     image: postgres:10
     ports:
     - "${db_port}:5432"
@@ -9,7 +10,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
 
-  pgadmin:
+  kaas-database-admin:
+    container_name: krs-kaas-database-admin
     image: dpage/pgadmin4
     ports:
     - "9000:80"
@@ -17,17 +19,20 @@ services:
       PGADMIN_DEFAULT_EMAIL: andrewflbarnes@hotmail.co.uk
       PGADMIN_DEFAULT_PASSWORD: postgres
 
-  results-service:
-    image: kaas/results-service
-    deploy:
-      replicas: 2
+  kaas-backend:
+    container_name: krs-kaas-backend
+    image: andrewflbarnes/kaas-backend
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
     - "${results_service_port}:8080"
     volumes:
     - "./docker/application.properties:/app/application.properties"
     - "./docker/database.properties:/app/database.properties"
     depends_on:
-      - postgres10
+      - kaas-database
+
+networks:
+  default:
+    name: krs
