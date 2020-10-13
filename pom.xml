@@ -30,7 +30,7 @@
         <jayway.version>2.2.0</jayway.version>
         <postgres.version>42.2.4</postgres.version>
         <!-- test dependencies -->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <mockito.version>2.19.1</mockito.version>
         <failsafe.version>2.22.0</failsafe.version>
         <!-- coverage and code analysis -->
