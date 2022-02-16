@@ -28,7 +28,7 @@
         <spring.version>5.0.7.RELEASE</spring.version>
         <hsqldb.version>2.4.0</hsqldb.version>
         <jayway.version>2.2.0</jayway.version>
-        <postgres.version>42.2.4</postgres.version>
+        <postgres.version>42.3.3</postgres.version>
         <!-- test dependencies -->
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
